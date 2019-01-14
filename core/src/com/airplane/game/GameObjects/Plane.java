@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Plane {
@@ -17,6 +18,10 @@ public class Plane {
     public static Vector2 planeDefaultPosition;
     public static Vector2 planePosition;
     private static Vector2 planeVelocity;
+    public static Vector2 tempVector = new Vector2(); // временный вектор для хранения координат касания
+    private static final int TOUCH_IMPULSE = 500;
+    static float tapDrawTime;
+    private static final float TAP_DRAW_TIME_MAX = 1.0f;
     public static float planeAnimTime;
     private static final Vector2 damping = new Vector2(0.99f,0.99f);
     private static Vector2 gravity = new Vector2();
@@ -54,6 +59,15 @@ public class Plane {
         planeVelocity.add(gravity);
         planePosition.mulAdd(planeVelocity, deltaTime);
 
+    }
+
+    // метод handleTouch служит для обработки касаний относительно самолета
+    public static void handleTouch(float x, float y){
+
+        tempVector.set(planePosition.x, planePosition.y);
+        tempVector.sub(x, y).nor();
+        planeVelocity.mulAdd(tempVector, TOUCH_IMPULSE-MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE));
+        tapDrawTime=TAP_DRAW_TIME_MAX;
     }
 
 

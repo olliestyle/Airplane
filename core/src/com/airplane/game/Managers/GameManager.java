@@ -23,6 +23,7 @@ public class GameManager {
     backGroundRegion = atlas.findRegion("background");
     terrainBelow = atlas.findRegion("groundSnow");
 
+
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
 
@@ -36,11 +37,9 @@ public class GameManager {
         batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 7); // отрисовываем первый ландшафт по ширине экрана
         batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 7); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
-
         TextManager.displayMessage(batch);
 
     }
-
 
     public static void updateScene(){
 

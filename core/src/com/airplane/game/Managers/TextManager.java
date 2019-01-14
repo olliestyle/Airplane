@@ -3,6 +3,7 @@ package com.airplane.game.Managers;
 import com.airplane.game.AirplaneGame;
 import com.airplane.game.GameObjects.Plane;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -23,7 +24,7 @@ public class TextManager {
         TextManager.width = width;
         TextManager.height = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
-        font.getData().setScale(width/1000); // масштабируем размер шрифта
+        font.getData().setScale(width/1500); // масштабируем размер шрифта
 
     }
 
@@ -35,17 +36,24 @@ public class TextManager {
         GlyphLayout glyphLayoutTerrainOffset = new GlyphLayout();
         GlyphLayout glyphLayoutDeltaTime = new GlyphLayout();
         GlyphLayout glyphLayoutPlaneAnimTime = new GlyphLayout();
+        GlyphLayout glyphLayoutTouchPositionX = new GlyphLayout();
+        GlyphLayout glyphLayoutTouchPositionY = new GlyphLayout();
+
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
         glyphLayoutTerrainOffset.setText(font, "terrainOffset = " + GameManager.terrainOffset);
         glyphLayoutDeltaTime.setText(font, "deltaTime = " + Plane.deltaTime);
         glyphLayoutPlaneAnimTime.setText(font, "planeAnimTime = " + Plane.planeAnimTime);
+        glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
+        glyphLayoutTouchPositionY.setText(font, "touchPosition Y = " + InputManager.touchPosition.y);
 
-        font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height*0.99));
-        font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.95));
-        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.90));
-        font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height*0.85));
-        font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.80));
+        font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height));
+        font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.97));
+        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.94));
+        font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height*0.91));
+        font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));
+        font.draw(batch, glyphLayoutTouchPositionX, (float) (width*0.01), (float) (height*0.85));
+        font.draw(batch, glyphLayoutTouchPositionY, (float) (width*0.01), (float) (height*0.82));
 
 
     }
