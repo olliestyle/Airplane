@@ -1,6 +1,7 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Managers.GameManager;
+import com.airplane.game.Managers.InputManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,12 +21,13 @@ public class Plane {
     private static Vector2 planeVelocity;
     public static Vector2 tempVector = new Vector2(); // временный вектор для хранения координат касания
     private static final int TOUCH_IMPULSE = 500;
-    static float tapDrawTime;
+    public static float tapDrawTime;
     private static final float TAP_DRAW_TIME_MAX = 1.0f;
     public static float planeAnimTime;
     private static final Vector2 damping = new Vector2(0.99f,0.99f);
     private static Vector2 gravity = new Vector2();
     public static float deltaTime;
+    private static TextureRegion tapIndicator;
 
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public static void initialize(float width, float height){
@@ -40,6 +42,9 @@ public class Plane {
         planeVelocity.set(750,0); // установка скорости самолета
         planePosition = new Vector2(); // инициализация вектора позиции самолета
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
+        tapIndicator = atlas.findRegion("tap2");
+
+
 
     }
 
@@ -48,9 +53,13 @@ public class Plane {
 
         batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
 
+        if(tapDrawTime > 0){
+            batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f); //29.5 половина ширины/высоты нашего изображения
+        }
+
     }
 
-    /*метод update служит для обновления позиций объектов*/
+    /*метод update служит для обновления позиций объектов и времени*/
     public static void update(){
 
         deltaTime = Gdx.graphics.getDeltaTime();
@@ -58,6 +67,7 @@ public class Plane {
         planeVelocity.scl(damping);
         planeVelocity.add(gravity);
         planePosition.mulAdd(planeVelocity, deltaTime);
+        tapDrawTime-=deltaTime;
 
     }
 
@@ -65,11 +75,14 @@ public class Plane {
     public static void handleTouch(float x, float y){
 
         tempVector.set(planePosition.x, planePosition.y);
+        System.out.println("tempVector before subtract = " + tempVector);
+        System.out.println("touchPosition.x = " + x);
+        System.out.println("touchPosition.y = " + y);
         tempVector.sub(x, y).nor();
+        System.out.println("tempVector after subtract = " + tempVector);
         planeVelocity.mulAdd(tempVector, TOUCH_IMPULSE-MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE));
-        tapDrawTime=TAP_DRAW_TIME_MAX;
+        tapDrawTime = TAP_DRAW_TIME_MAX;
+
     }
-
-
 
 }
