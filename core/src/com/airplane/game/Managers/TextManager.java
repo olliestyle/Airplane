@@ -38,6 +38,9 @@ public class TextManager {
         GlyphLayout glyphLayoutPlaneAnimTime = new GlyphLayout();
         GlyphLayout glyphLayoutTouchPositionX = new GlyphLayout();
         GlyphLayout glyphLayoutTouchPositionY = new GlyphLayout();
+        GlyphLayout glyphLayoutTapDrawTime = new GlyphLayout();
+        GlyphLayout glyphLayoutPlanePostitionX = new GlyphLayout();
+        GlyphLayout glyphLayoutPlanePostitionY = new GlyphLayout();
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
@@ -46,6 +49,9 @@ public class TextManager {
         glyphLayoutPlaneAnimTime.setText(font, "planeAnimTime = " + Plane.planeAnimTime);
         glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
         glyphLayoutTouchPositionY.setText(font, "touchPosition Y = " + InputManager.touchPosition.y);
+        glyphLayoutTapDrawTime.setText(font, "tapDrawTime = " + Plane.tapDrawTime);
+        glyphLayoutPlanePostitionX.setText(font, "planePositionX = " + Plane.planePosition.x);
+        glyphLayoutPlanePostitionY.setText(font, "planePositionY = " + Plane.planePosition.y);
 
         font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height));
         font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.97));
@@ -54,6 +60,9 @@ public class TextManager {
         font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));
         font.draw(batch, glyphLayoutTouchPositionX, (float) (width*0.01), (float) (height*0.85));
         font.draw(batch, glyphLayoutTouchPositionY, (float) (width*0.01), (float) (height*0.82));
+        font.draw(batch, glyphLayoutTapDrawTime, (float) (width*0.01), (float) (height*0.79));
+        font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
+        font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
 
 
     }

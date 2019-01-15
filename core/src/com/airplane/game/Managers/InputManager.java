@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class InputManager extends InputAdapter {
 
-    static Vector3 touchPosition = new Vector3(); // объект, хранящий в себе информацию о касании пользователя экрана
+    public static Vector3 touchPosition = new Vector3(); // объект, хранящий в себе информацию о касании пользователя экрана
     OrthographicCamera camera;
 
     //конструктор

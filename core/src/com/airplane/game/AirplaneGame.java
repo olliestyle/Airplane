@@ -20,6 +20,7 @@ public class AirplaneGame implements Screen {
 	private static OrthographicCamera camera = new OrthographicCamera(); // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	MainGame game;
 	private static Viewport viewport;
+	GameState gameState = GameState.INIT;
 
 	public AirplaneGame (MainGame game){
 
@@ -34,6 +35,10 @@ public class AirplaneGame implements Screen {
 		batch = new SpriteBatch();
 		GameManager.initialize(width,height);
         Gdx.input.setInputProcessor(new InputManager(camera));// доступ класса InputManager для получения касаний/нажатий
+	}
+
+	static enum GameState{
+		INIT, ACTION, GAME_OVER
 	}
 
 	@Override
