@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import javax.xml.soap.Text;
 
+import static com.airplane.game.Managers.GameManager.gameState;
+
 public class TextManager {
 
     private static BitmapFont font; // отображаем текст на экране через эту переменную
@@ -41,6 +43,7 @@ public class TextManager {
         GlyphLayout glyphLayoutTapDrawTime = new GlyphLayout();
         GlyphLayout glyphLayoutPlanePostitionX = new GlyphLayout();
         GlyphLayout glyphLayoutPlanePostitionY = new GlyphLayout();
+        GlyphLayout glyphLayoutINIT = new GlyphLayout();
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
@@ -52,6 +55,7 @@ public class TextManager {
         glyphLayoutTapDrawTime.setText(font, "tapDrawTime = " + Plane.tapDrawTime);
         glyphLayoutPlanePostitionX.setText(font, "planePositionX = " + Plane.planePosition.x);
         glyphLayoutPlanePostitionY.setText(font, "planePositionY = " + Plane.planePosition.y);
+        glyphLayoutINIT.setText(font, "Tap next to the airplane to make it move ");
 
         font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height));
         font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.97));
@@ -63,6 +67,9 @@ public class TextManager {
         font.draw(batch, glyphLayoutTapDrawTime, (float) (width*0.01), (float) (height*0.79));
         font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
         font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
+
+        if (gameState == GameManager.GameState.INIT)
+            font.draw(batch, glyphLayoutINIT, (float) (width/3.4), (float) (height/2.1));
 
 
     }

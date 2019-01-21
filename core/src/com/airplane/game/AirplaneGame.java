@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import static com.airplane.game.Managers.GameManager.gameState;
+
 
 public class AirplaneGame implements Screen {
 
@@ -20,7 +22,7 @@ public class AirplaneGame implements Screen {
 	private static OrthographicCamera camera = new OrthographicCamera(); // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	MainGame game;
 	private static Viewport viewport;
-	GameState gameState = GameState.INIT;
+
 
 	public AirplaneGame (MainGame game){
 
@@ -34,12 +36,10 @@ public class AirplaneGame implements Screen {
 		//viewport = new FillViewport(width,height,camera);
 		batch = new SpriteBatch();
 		GameManager.initialize(width,height);
-        Gdx.input.setInputProcessor(new InputManager(camera));// доступ класса InputManager для получения касаний/нажатий
+		Gdx.input.setInputProcessor(new InputManager(camera));// доступ класса InputManager для получения касаний/нажатий
 	}
 
-	static enum GameState{
-		INIT, ACTION, GAME_OVER
-	}
+
 
 	@Override
 	public void show() {
@@ -53,6 +53,7 @@ public class AirplaneGame implements Screen {
 		System.out.println("RENDER HERE");
 		System.out.println("HEIGHT HERE " + camera.viewportHeight);
 		System.out.println("WIDTH HERE " + camera.viewportWidth);
+		System.out.println("Current State = " + gameState);
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

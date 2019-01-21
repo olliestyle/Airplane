@@ -2,6 +2,7 @@ package com.airplane.game.Managers;
 
 import com.airplane.game.AirplaneGame;
 import com.airplane.game.GameObjects.Plane;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -16,18 +17,26 @@ public class GameManager {
     private static TextureRegion terrainBelow;
     public static float terrainOffset;
     private static TextureRegion backGroundRegion;
+    public static GameState gameState;
+
+
+    public enum GameState{
+        INIT, ACTION, GAME_OVER
+    }
 
     public static void initialize(float width, float height){
 
     atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
     backGroundRegion = atlas.findRegion("background");
     terrainBelow = atlas.findRegion("groundSnow");
-
+    gameState = GameState.INIT;
 
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
 
     }
+
+
 
     public static void renderGame(SpriteBatch batch) {
 
@@ -43,14 +52,39 @@ public class GameManager {
 
     public static void updateScene(){
 
-        terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
-        Plane.planePosition.x = Plane.planeDefaultPosition.x;
-        if (terrainOffset*-1> Gdx.graphics.getWidth()){
-            terrainOffset = 0;
+
+        switch (gameState){
+
+            case INIT:
+
+                if(Gdx.input.justTouched()) {
+                    gameState = GameState.ACTION;
+                }
+                break;
+
+            case ACTION:
+
+                terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+                Plane.planePosition.x = Plane.planeDefaultPosition.x;
+                if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
+                    terrainOffset = 0;
+                }
+                if (terrainOffset > 0) {
+                    terrainOffset = -Gdx.graphics.getWidth();
+                }
+
+                break;
+
+            case GAME_OVER:
+
+                break;
+
+            default:
+                break;
         }
-        if (terrainOffset>0){
-            terrainOffset =- Gdx.graphics.getWidth();
-        }
+
+
+
 
     }
 

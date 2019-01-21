@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.airplane.game.Managers.GameManager.gameState;
+
 public class Plane {
 
     /* объявление объектов классов*/
@@ -51,6 +53,10 @@ public class Plane {
     /*метод render служит для отрисовки объектов и анимаций*/
     public static void renderPlane(SpriteBatch batch){
 
+        if (gameState == GameManager.GameState.INIT)
+            batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+
+
         batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
 
         if(tapDrawTime > 0){
@@ -62,14 +68,33 @@ public class Plane {
     /*метод update служит для обновления позиций объектов и времени*/
     public static void update(){
 
-        deltaTime = Gdx.graphics.getDeltaTime();
-        planeAnimTime += deltaTime;
-        planeVelocity.scl(damping);
-        planeVelocity.add(gravity);
-        planePosition.mulAdd(planeVelocity, deltaTime);
-        tapDrawTime-=deltaTime;
+
+        switch (gameState){
+            case INIT:
+
+                break;
+
+            case ACTION:
+
+                deltaTime = Gdx.graphics.getDeltaTime();
+                planeAnimTime += deltaTime;
+                planeVelocity.scl(damping);
+                planeVelocity.add(gravity);
+                planePosition.mulAdd(planeVelocity, deltaTime);
+                tapDrawTime -= deltaTime;
+
+                break;
+
+            case GAME_OVER:
+
+                break;
+
+            default:
+                break;
+        }
 
     }
+
 
     // метод handleTouch служит для обработки касаний относительно самолета
     public static void handleTouch(float x, float y){
