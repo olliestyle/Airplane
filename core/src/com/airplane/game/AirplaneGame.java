@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.airplane.game.Managers.GameManager.gameState;
+import static com.airplane.game.Managers.GameManager.startPointTerrainAboveY;
+import static com.airplane.game.Managers.GameManager.terrainAbove;
 
 
 public class AirplaneGame implements Screen {
@@ -21,7 +23,8 @@ public class AirplaneGame implements Screen {
 	private static SpriteBatch batch; // область для отрисовки спрайтов нашей игры
 	private static OrthographicCamera camera = new OrthographicCamera(); // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	MainGame game;
-	private static Viewport viewport;
+
+	//private static Viewport viewport;
 
 
 	public AirplaneGame (MainGame game){
@@ -33,8 +36,10 @@ public class AirplaneGame implements Screen {
 		float width = Gdx.graphics.getWidth();
 		//camera = new OrthographicCamera();
 		camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
-		//viewport = new FillViewport(width,height,camera);
+
+		//viewport = new FillViewport(3000,1200,camera);
 		batch = new SpriteBatch();
+
 		GameManager.initialize(width,height);
 		Gdx.input.setInputProcessor(new InputManager(camera));// доступ класса InputManager для получения касаний/нажатий
 	}
@@ -75,6 +80,7 @@ public class AirplaneGame implements Screen {
 		System.out.println("RESIZE HERE");
 		System.out.println("width = " + width);
 		System.out.println("height = " + height);
+
 	    //viewport.update(width,height);
 
 	}

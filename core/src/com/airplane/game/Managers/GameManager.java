@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class GameManager {
 
     private static TextureAtlas atlas;
-    private static TextureRegion terrainBelow;
+    public static TextureRegion terrainBelow;
+    public static TextureRegion terrainAbove;
+    public static float startPointTerrainAboveY;
     public static float terrainOffset;
     private static TextureRegion backGroundRegion;
     public static GameState gameState;
@@ -29,6 +31,8 @@ public class GameManager {
     atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
     backGroundRegion = atlas.findRegion("background");
     terrainBelow = atlas.findRegion("groundSnow");
+    terrainAbove = new TextureRegion(terrainBelow);
+    terrainAbove.flip(true,true);
     gameState = GameState.INIT;
 
     Plane.initialize(width, height);
@@ -37,14 +41,16 @@ public class GameManager {
     }
 
 
-
     public static void renderGame(SpriteBatch batch) {
 
         batch.disableBlending(); // blending - смешивание
         batch.draw(backGroundRegion, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // отрисовываем задний фон
         batch.enableBlending(); // blending - смешивание
-        batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 7); // отрисовываем первый ландшафт по ширине экрана
-        batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 7); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
+        batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт по ширине экрана
+        batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
+
+        batch.draw(terrainAbove, terrainOffset, Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем первый ландшафт по ширине экрана
+        batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
         TextManager.displayMessage(batch);
 

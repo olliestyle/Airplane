@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import static com.airplane.game.Managers.GameManager.gameState;
+import static com.airplane.game.Managers.GameManager.terrainAbove;
+import static com.airplane.game.Managers.GameManager.terrainBelow;
 
 public class Plane {
 
@@ -45,8 +47,6 @@ public class Plane {
         planePosition = new Vector2(); // инициализация вектора позиции самолета
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
         tapIndicator = atlas.findRegion("tap2");
-
-
 
     }
 
@@ -82,6 +82,10 @@ public class Plane {
                 planeVelocity.add(gravity);
                 planePosition.mulAdd(planeVelocity, deltaTime);
                 tapDrawTime -= deltaTime;
+
+                if (planePosition.y < terrainBelow.getRegionHeight() - 15 || planePosition.y + atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 15)
+                    if (gameState != GameManager.GameState.GAME_OVER)
+                        gameState = GameManager.GameState.GAME_OVER;
 
                 break;
 

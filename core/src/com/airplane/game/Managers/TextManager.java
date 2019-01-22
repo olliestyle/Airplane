@@ -16,6 +16,7 @@ import static com.airplane.game.Managers.GameManager.gameState;
 public class TextManager {
 
     private static BitmapFont font; // отображаем текст на экране через эту переменную
+    private static BitmapFont fontGameOver;
     private static float width;
     private static float height;
 
@@ -23,10 +24,13 @@ public class TextManager {
     public static void initialize (float width, float height){
 
         font = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
+        fontGameOver = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
         TextManager.width = width;
         TextManager.height = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
         font.getData().setScale(width/1500); // масштабируем размер шрифта
+        fontGameOver.setColor(Color.RED);
+        fontGameOver.getData().setScale(width/1000);
 
     }
 
@@ -44,6 +48,7 @@ public class TextManager {
         GlyphLayout glyphLayoutPlanePostitionX = new GlyphLayout();
         GlyphLayout glyphLayoutPlanePostitionY = new GlyphLayout();
         GlyphLayout glyphLayoutINIT = new GlyphLayout();
+        GlyphLayout glyphLayoutGAMEOVER = new GlyphLayout();
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
@@ -56,6 +61,8 @@ public class TextManager {
         glyphLayoutPlanePostitionX.setText(font, "planePositionX = " + Plane.planePosition.x);
         glyphLayoutPlanePostitionY.setText(font, "planePositionY = " + Plane.planePosition.y);
         glyphLayoutINIT.setText(font, "Tap next to the airplane to make it move ");
+        glyphLayoutGAMEOVER.setText(font, "Tap next to the airplane to make it move ");
+        glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over");
 
         font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height));
         font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.97));
@@ -70,6 +77,9 @@ public class TextManager {
 
         if (gameState == GameManager.GameState.INIT)
             font.draw(batch, glyphLayoutINIT, (float) (width/3.4), (float) (height/2.1));
+
+        if (gameState == GameManager.GameState.GAME_OVER)
+            fontGameOver.draw(batch, glyphLayoutGAMEOVER, width/2 - 100, height/2 );
 
 
     }
