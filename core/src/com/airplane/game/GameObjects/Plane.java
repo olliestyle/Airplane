@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import static com.airplane.game.Managers.GameManager.gameState;
 import static com.airplane.game.Managers.GameManager.terrainAbove;
@@ -18,11 +19,11 @@ import static com.airplane.game.Managers.GameManager.terrainBelow;
 public class Plane {
 
     /* объявление объектов классов*/
-    private static TextureAtlas atlas;
     private static Animation plane;
     public static Vector2 planeDefaultPosition;
     public static Vector2 planePosition;
     private static Vector2 planeVelocity;
+    private static Vector2 scrollVelocity;
     public static Vector2 tempVector = new Vector2(); // временный вектор для хранения координат касания
     private static final int TOUCH_IMPULSE = 500;
     public static float tapDrawTime;
@@ -36,17 +37,18 @@ public class Plane {
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public static void initialize(float width, float height){
 
-        atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack")); // инициализируем атлас текстур
-        plane = new Animation(0.05f, atlas.findRegion("planeGreen1"), atlas.findRegion("planeGreen2"), atlas.findRegion("planeGreen3")); // инициализация анимации объекта plane
+        plane = new Animation(0.05f, GameManager.atlas.findRegion("planeGreen1"), GameManager.atlas.findRegion("planeGreen2"), GameManager.atlas.findRegion("planeGreen3")); // инициализация анимации объекта plane
         plane.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
         planeDefaultPosition = new Vector2(); // инициализация начальной позиции самолета
         planeDefaultPosition.set(width/10, height/1.5f); // установка начальной позиции самолета
         gravity.set(0, -2f); // установка "гравитации"
         planeVelocity = new Vector2(); // инициализация вектора скорости самолета
-        planeVelocity.set(750,0); // установка скорости самолета
+        planeVelocity.set(100,0); // установка скорости самолета
+        scrollVelocity = new Vector2();
+        scrollVelocity.set(4,0);
         planePosition = new Vector2(); // инициализация вектора позиции самолета
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
-        tapIndicator = atlas.findRegion("tap2");
+        tapIndicator = GameManager.atlas.findRegion("tap2");
 
     }
 
@@ -59,9 +61,8 @@ public class Plane {
 
         batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
 
-        if(tapDrawTime > 0){
+        if(tapDrawTime > 0)
             batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f); //29.5 половина ширины/высоты нашего изображения
-        }
 
     }
 
@@ -80,10 +81,11 @@ public class Plane {
                 planeAnimTime += deltaTime;
                 planeVelocity.scl(damping);
                 planeVelocity.add(gravity);
+                planeVelocity.add(scrollVelocity);
                 planePosition.mulAdd(planeVelocity, deltaTime);
                 tapDrawTime -= deltaTime;
 
-                if (planePosition.y < terrainBelow.getRegionHeight() - 15 || planePosition.y + atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 15)
+                if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
                     if (gameState != GameManager.GameState.GAME_OVER)
                         gameState = GameManager.GameState.GAME_OVER;
 

@@ -2,6 +2,7 @@ package com.airplane.game.Managers;
 
 import com.airplane.game.AirplaneGame;
 import com.airplane.game.GameObjects.Plane;
+import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,9 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+
+
 public class GameManager {
 
-    private static TextureAtlas atlas;
+    public static TextureAtlas atlas;
     public static TextureRegion terrainBelow;
     public static TextureRegion terrainAbove;
     public static float startPointTerrainAboveY;
@@ -35,8 +38,10 @@ public class GameManager {
     terrainAbove.flip(true,true);
     gameState = GameState.INIT;
 
+
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
+    RockPillar.initializePillar(width, height);
 
     }
 
@@ -52,7 +57,9 @@ public class GameManager {
         batch.draw(terrainAbove, terrainOffset, Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем первый ландшафт по ширине экрана
         batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
+        RockPillar.renderPillar(batch);
         TextManager.displayMessage(batch);
+
 
     }
 
@@ -71,13 +78,17 @@ public class GameManager {
             case ACTION:
 
                 terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+                RockPillar.updatePillar();
                 Plane.planePosition.x = Plane.planeDefaultPosition.x;
+
                 if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
                     terrainOffset = 0;
                 }
                 if (terrainOffset > 0) {
                     terrainOffset = -Gdx.graphics.getWidth();
                 }
+
+
 
                 break;
 
