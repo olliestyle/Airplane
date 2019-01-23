@@ -41,7 +41,7 @@ public class GameManager {
 
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
-    RockPillar.initializePillar(width, height);
+    RockPillar.initializePillar();
 
     }
 
@@ -78,6 +78,7 @@ public class GameManager {
             case ACTION:
 
                 terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+                System.out.println("terrainOffset = " + terrainOffset);
                 RockPillar.updatePillar();
                 Plane.planePosition.x = Plane.planeDefaultPosition.x;
 

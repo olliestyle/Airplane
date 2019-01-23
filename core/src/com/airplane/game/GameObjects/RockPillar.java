@@ -18,7 +18,7 @@ public class RockPillar {
     private static TextureRegion pillarUp;
     private static TextureRegion pillarDown;
 
-    public static void initializePillar(float width, float height){
+    public static void initializePillar(){
 
         pillars = new Array<Vector2>();
         pillarUp = GameManager.atlas.findRegion("rockSnow");
@@ -36,10 +36,10 @@ public class RockPillar {
         System.out.println("addPillar here");
 
         if(pillars.size == 0) {
-            pillarPosition.x = (float) (width + Math.random()* (width/2));
+            pillarPosition.x =(float) (width + Math.random()* (width/2));
         }
         else {
-            pillarPosition.x = (float) (lastPillarPosition.x + (width + Math.random()* (width/2)));
+            pillarPosition.x =(float) (lastPillarPosition.x + (width + Math.random()* (width/2)));
         }
 
         if (MathUtils.randomBoolean()){
@@ -55,20 +55,20 @@ public class RockPillar {
     public static void updatePillar(){
 
 
-
-
                 for (Vector2 vec: pillars){
 
                     vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+                    System.out.println("vec.x = " + vec.x);
+                    System.out.println("pillars = " + pillars.size);
 
-                   /*if (vec.x + pillarUp.getRegionWidth() < -10);
+                   if (vec.x + pillarUp.getRegionWidth() < -10)
                     {
-                        System.out.println("NE UDALIAU MENYA");
+                        System.out.println("UDALIAU VECTOR");
                         pillars.removeValue(vec,false); // удаляем скалу, если она вылезла за пределы экрана слева
-                    }*/
+                    }
 
                 }
-                if (lastPillarPosition.x < Gdx.graphics.getWidth()/10){
+                if (lastPillarPosition.x < Gdx.graphics.getWidth()/3){
                     addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу если ближайшая скала достигла 1/3 экрана по x
                 }
 
