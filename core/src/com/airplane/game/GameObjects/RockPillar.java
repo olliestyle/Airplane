@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -17,6 +18,8 @@ public class RockPillar {
     private static Vector2 lastPillarPosition;
     private static TextureRegion pillarUp;
     private static TextureRegion pillarDown;
+    public static Rectangle pillarRect = new Rectangle();
+
 
     public static void initializePillar(){
 
@@ -55,20 +58,24 @@ public class RockPillar {
     public static void updatePillar(){
 
 
-                for (Vector2 vec: pillars){
+                for (Vector2 vec: pillars)
+                {
 
                     vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
                     System.out.println("vec.x = " + vec.x);
                     System.out.println("pillars = " + pillars.size);
 
-                   if (vec.x + pillarUp.getRegionWidth() < -10)
+
+                    if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
                     {
                         System.out.println("UDALIAU VECTOR");
                         pillars.removeValue(vec,false); // удаляем скалу, если она вылезла за пределы экрана слева
                     }
+                    break;
 
                 }
-                if (lastPillarPosition.x < Gdx.graphics.getWidth()/3){
+                if (lastPillarPosition.x < Gdx.graphics.getWidth()/1000){
+                    System.out.println("DOBAVLIAU VECTOR");
                     addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу если ближайшая скала достигла 1/3 экрана по x
                 }
 
@@ -81,7 +88,7 @@ public class RockPillar {
 
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
-                        batch.draw(pillarUp, vec.x,0);
+                        batch.draw(pillarUp, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3));
                     }
                     else{
                         batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());
