@@ -87,6 +87,8 @@ public class Plane {
                 planePosition.mulAdd(planeVelocity, deltaTime);
                 tapDrawTime -= deltaTime;
 
+                planeRect.set(planePosition.x + 16, planePosition.y, 50 , 73);
+
                 if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
                     if (gameState != GameManager.GameState.GAME_OVER)
                         gameState = GameManager.GameState.GAME_OVER;

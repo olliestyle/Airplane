@@ -2,6 +2,8 @@ package com.airplane.game.GameObjects;
 
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -13,11 +15,13 @@ import com.badlogic.gdx.utils.Array;
 
 public class RockPillar {
 
+
     private static Array<Vector2> pillars;
     private static Vector2 pillarPosition;
     private static Vector2 lastPillarPosition;
     private static TextureRegion pillarUp;
     private static TextureRegion pillarDown;
+    private static Texture testOverlaps;
     public static Rectangle pillarRect = new Rectangle();
 
 
@@ -26,6 +30,7 @@ public class RockPillar {
         pillars = new Array<Vector2>();
         pillarUp = GameManager.atlas.findRegion("rockSnow");
         pillarDown = GameManager.atlas.findRegion("rockSnowDown");
+        testOverlaps = new Texture(Gdx.files.internal("testoverlaps.png"));
 
         pillarPosition = new Vector2();
         lastPillarPosition = new Vector2();
@@ -71,6 +76,18 @@ public class RockPillar {
                         System.out.println("UDALIAU VECTOR");
                         pillars.removeValue(vec,false); // удаляем скалу, если она вылезла за пределы экрана слева
                     }
+
+                    if (vec.y == 1){
+                        pillarRect.set(vec.x + 10, 0, pillarUp.getRegionWidth()-20, (float) (Gdx.graphics.getHeight()/2.3));
+                    }
+                    else{
+                        pillarRect.set(vec.x + 10, Gdx.graphics.getHeight() - pillarDown.getRegionHeight()+10, pillarDown.getRegionWidth()-20, pillarDown.getRegionHeight());
+                    }
+                    if (Plane.planeRect.overlaps(pillarRect)){
+                        if (GameManager.gameState != GameManager.GameState.GAME_OVER){
+                            GameManager.gameState = GameManager.GameState.GAME_OVER;
+                        }
+                    }
                     break;
 
                 }
@@ -89,6 +106,7 @@ public class RockPillar {
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
                         batch.draw(pillarUp, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3));
+                        batch.draw(testOverlaps, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3));
                     }
                     else{
                         batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());
