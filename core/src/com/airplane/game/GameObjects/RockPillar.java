@@ -3,7 +3,6 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 public class RockPillar {
 
 
+    // Объявляем переменные класса
     private static Array<Vector2> pillars;
     private static Vector2 pillarPosition;
     private static Vector2 lastPillarPosition;
@@ -25,31 +25,35 @@ public class RockPillar {
     public static Rectangle pillarRect = new Rectangle();
 
 
+    // Инициализируем переменные класса тут
     public static void initializePillar(){
 
-        pillars = new Array<Vector2>();
-        pillarUp = GameManager.atlas.findRegion("rockSnow");
-        pillarDown = GameManager.atlas.findRegion("rockSnowDown");
-        testOverlaps = new Texture(Gdx.files.internal("testoverlaps.png"));
+        pillars = new Array<Vector2>(); // Массив значений векторов, по которым будут обновляться скалы
+        pillarUp = GameManager.atlas.findRegion("rockSnow"); // Инициализация текстуры
+        pillarDown = GameManager.atlas.findRegion("rockSnowDown"); // Инициализация текстуры
+        testOverlaps = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
 
-        pillarPosition = new Vector2();
-        lastPillarPosition = new Vector2();
+        pillarPosition = new Vector2(); // вектор позиции скалы
+        lastPillarPosition = new Vector2(); // последний вектор позиции скалы - нужен для отрисовки !1 элемента массива
 
         System.out.println("initializePillar here");
 
     }
 
+    // метод добавления новой скалы на экран
     private static void addPillar(float width, float height){
 
         System.out.println("addPillar here");
 
+        // если массив пуст, то добавить скалу относительно ширины экрана
         if(pillars.size == 0) {
             pillarPosition.x =(float) (width + Math.random()* (width/2));
         }
+        // если массив не пуст, то добавить скалу относительно ширины экрана + позиция последней скалы
         else {
             pillarPosition.x =(float) (lastPillarPosition.x + (width + Math.random()* (width/2)));
         }
-
+        // здесь определяем, снизу(1) или сверху(else) отрисовывать скалу
         if (MathUtils.randomBoolean()){
             pillarPosition.y = 1;
         }
@@ -66,11 +70,11 @@ public class RockPillar {
                 for (Vector2 vec: pillars)
                 {
 
-                    vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+                    vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // метод для "движения" скалы относительно самолета
                     System.out.println("vec.x = " + vec.x);
                     System.out.println("pillars = " + pillars.size);
 
-
+                    // если скала
                     if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
                     {
                         System.out.println("UDALIAU VECTOR");
@@ -105,11 +109,11 @@ public class RockPillar {
 
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
-                        batch.draw(pillarUp, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3));
-                        batch.draw(testOverlaps, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3));
+                        batch.draw(pillarUp, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка скалы внизу экрана
+                        batch.draw(testOverlaps, vec.x,0, Gdx.graphics.getWidth()/11, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
                     }
                     else{
-                        batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());
+                        batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
                     }
                 }
 
