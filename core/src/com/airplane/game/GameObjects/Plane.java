@@ -63,6 +63,7 @@ public class Plane {
 
         batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
 
+
         if(tapDrawTime > 0)
             batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f); //29.5 половина ширины/высоты нашего изображения
 
