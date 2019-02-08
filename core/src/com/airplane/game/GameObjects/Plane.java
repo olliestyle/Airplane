@@ -67,6 +67,7 @@ public class Plane {
         if(tapDrawTime > 0)
             batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f); //29.5 половина ширины/высоты нашего изображения
 
+
     }
 
     /*метод update служит для обновления позиций объектов и времени*/
@@ -97,6 +98,7 @@ public class Plane {
                 break;
 
             case GAME_OVER:
+
 
                 break;
 

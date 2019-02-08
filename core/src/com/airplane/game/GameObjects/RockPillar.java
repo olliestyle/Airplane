@@ -77,7 +77,7 @@ public class RockPillar {
                     System.out.println("vec.x = " + vec.x);
                     System.out.println("pillars = " + pillars.size);
 
-                    // если скала
+
                     if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
                     {
                         System.out.println("UDALIAU VECTOR");
@@ -89,8 +89,8 @@ public class RockPillar {
                         pillarRect2.set(vec.x + 50, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/30, (float) (Gdx.graphics.getHeight()/5.5));
                     }
                     else{
-                        pillarRect1.set(vec.x + 10, Gdx.graphics.getHeight() - pillarDown.getRegionHeight()+10, pillarDown.getRegionWidth()-20, pillarDown.getRegionHeight());
-                        pillarRect2.set(vec.x + 20, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/8, Gdx.graphics.getWidth()/13, (float) (Gdx.graphics.getHeight()/4));
+                        pillarRect1.set(vec.x + 50, Gdx.graphics.getHeight() - pillarDown.getRegionHeight()+10, Gdx.graphics.getWidth()/30, (float) (Gdx.graphics.getHeight()/6));
+                        pillarRect2.set( vec.x + 20, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/8, Gdx.graphics.getWidth()/13, (float) (Gdx.graphics.getHeight()/4));
                     }
                     if (isCollisionWithPillar()){
                         if (GameManager.gameState != GameManager.GameState.GAME_OVER){
