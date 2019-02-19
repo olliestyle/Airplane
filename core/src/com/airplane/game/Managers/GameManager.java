@@ -1,6 +1,7 @@
 package com.airplane.game.Managers;
 
 import com.airplane.game.AirplaneGame;
+import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Game;
@@ -42,6 +43,7 @@ public class GameManager {
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
     RockPillar.initializePillar();
+    Meteor.initializeMeteor();
 
     }
 
@@ -52,6 +54,7 @@ public class GameManager {
         batch.draw(backGroundRegion, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // отрисовываем задний фон
         batch.enableBlending(); // blending - смешивание
         RockPillar.renderPillar(batch);
+        Meteor.renderMeteor(batch);
         batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт по ширине экрана
         batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
@@ -80,6 +83,7 @@ public class GameManager {
                 terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
                 System.out.println("terrainOffset = " + terrainOffset);
                 RockPillar.updatePillar();
+                Meteor.updateMeteor();
                 Plane.planePosition.x = Plane.planeDefaultPosition.x;
 
                 if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
