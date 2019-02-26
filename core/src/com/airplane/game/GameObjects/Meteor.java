@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import static com.airplane.game.GameObjects.Plane.deltaTime;
 import static com.airplane.game.GameObjects.Plane.planeRect;
 
@@ -20,7 +22,7 @@ public class Meteor {
     private static boolean meteorInScene; // для определения отображается ли в данный момент метеор?
     private static final int METEOR_SPEED = 100; // скорость метеора
     public static Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
-    private static Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
+    public static Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
     public static float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
     private static Rectangle meteorRect; // для коллизий
     public static Vector2 destination = new Vector2();
@@ -86,20 +88,41 @@ public class Meteor {
 
     private static void launchMeteor(){
 
-        nextMeteorIn=1.5f+(float)Math.random()*5;
-        if(meteorInScene)
+        /* Math.random выдаёт от 0 до 0.999... */
+
+        nextMeteorIn=1.5f+(float)Math.random()*5; // счетчик запуска следующего метеора
+        if(meteorInScene) //создаем новый метеор, только если в данный момент на экране нет метеора
         {
             return;
         }
-        meteorInScene=true;
-        int id= (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
+        meteorInScene = true; // метеора отображается на экране
+        int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
         selectedMeteorTexture = meteorTextures.get(id); // устанавливаем выбранную текстуру, относительно выбранного метеора
-        meteorPosition.x = Gdx.graphics.getWidth() + 20;
-        meteorPosition.y =(float) (20+Math.random()*(Gdx.graphics.getHeight()-20));
-        destination.x = -10;
-        destination.y = (float) (20+Math.random()*(Gdx.graphics.getHeight()-20));
-        destination.sub(meteorPosition).nor();
+
+        //meteorPosition.x = Gdx.graphics.getWidth() + 20; // начальная позиция по x - ширина экрана + 20 пикселей
+
+        //meteorPosition.x = (float) (Math.random()*Gdx.graphics.getWidth()); // начальная позиция по x - ширина экрана + 20 пикселей
+        meteorPosition.x = ThreadLocalRandom.current().nextInt(Gdx.graphics.getWidth(), Gdx.graphics.getWidth()+20); // начальная позиция по x - ширина экрана + 20 пикселей
+        meteorPosition.y =(float) (Math.random()*Gdx.graphics.getHeight()); // начальная позиция по y
+
+        System.out.println("meteorPosition.x = " + meteorPosition.x);
+        System.out.println("meteorPosition.y = " + meteorPosition.y);
+
+        //destination.x = (float) (Math.random()*Gdx.graphics.getWidth()); // вектор направления куда будет стремиться наш метеор
+        destination.x = ThreadLocalRandom.current().nextInt(-20, 0); // вектор направления куда будет стремиться наш метеор
+        destination.y = (float) (Math.random()*Gdx.graphics.getHeight()); // вектор направления куда будет стремиться наш метеор
+
+        System.out.println("destination.x = " + destination.x);
+        System.out.println("destination.y = " + destination.y);
+
+        destination.sub(meteorPosition).nor(); // nor - нормализация чтобы вектор направления имел длину 1
+
+        /*System.out.println("destination.x after sub.nor = " + destination.x);
+        System.out.println("destination.y after sub.nor = " + destination.y);*/
+
         meteorVelocity.mulAdd(destination, METEOR_SPEED);
+
+
     }
 
 }
