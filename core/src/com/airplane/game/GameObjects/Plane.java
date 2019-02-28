@@ -105,7 +105,7 @@ public class Plane {
 
         //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
         batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-        batch.draw(testOverlapsPlane, planePosition.x+10, planePosition.y+10, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-17, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-17); //хорошо подходит для всех экранов
+        batch.draw(testOverlapsPlane, planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
 
         if(tapDrawTime > 0)
 
@@ -140,9 +140,17 @@ public class Plane {
                 planePosition.mulAdd(planeVelocity, deltaTime);
                 tapDrawTime -= deltaTime;
 
-                //planeRect.set(planePosition.x + 16, planePosition.y, 50 , 73);
+                if (Gdx.graphics.getWidth() <= 800){
 
-                planeRect.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                }
+                else if (Gdx.graphics.getWidth() > 1280){
+
+                }
+                else{
+                    planeRect.set(planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
+                }
+
+
 
                 if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
                     if (gameState != GameManager.GameState.GAME_OVER)
