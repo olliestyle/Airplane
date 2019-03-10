@@ -1,5 +1,6 @@
 package com.airplane.game;
 
+import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.Managers.GameManager;
 
@@ -24,7 +25,7 @@ public class AirplaneGame implements Screen {
 	private static OrthographicCamera camera = new OrthographicCamera(); // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	MainGame game;
 
-	//private static Viewport viewport;
+	private static Viewport viewport;
 
 
 	public AirplaneGame (MainGame game){
@@ -37,7 +38,7 @@ public class AirplaneGame implements Screen {
 		//camera = new OrthographicCamera();
 		camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
 
-		//viewport = new FillViewport(3000,1200,camera);
+		viewport = new FillViewport(5000,1800,camera);
 		batch = new SpriteBatch();
 
 		GameManager.initialize(width,height);
@@ -58,6 +59,9 @@ public class AirplaneGame implements Screen {
 		System.out.println("HEIGHT HERE " + camera.viewportHeight);
 		System.out.println("WIDTH HERE " + camera.viewportWidth);
 		System.out.println("Current State = " + gameState);
+		System.out.println("MeteorPosition.x, MeteorPosition.y = " + Meteor.meteorPosition.x + " " + Meteor.meteorPosition.y);
+		System.out.println("nextMeteorIn = " + Meteor.nextMeteorIn);
+
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -69,6 +73,8 @@ public class AirplaneGame implements Screen {
         GameManager.updateScene();
         Plane.renderPlane(batch);
         Plane.update();
+		Meteor.renderMeteor(batch);
+		Meteor.updateMeteor();
         batch.end();
 
 	}
@@ -80,7 +86,7 @@ public class AirplaneGame implements Screen {
 		System.out.println("width = " + width);
 		System.out.println("height = " + height);
 
-	    //viewport.update(width,height);
+	    viewport.update(width,height);
 
 	}
 

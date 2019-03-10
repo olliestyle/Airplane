@@ -1,6 +1,7 @@
 package com.airplane.game.Managers;
 
 import com.airplane.game.AirplaneGame;
+import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Game;
@@ -42,6 +43,7 @@ public class GameManager {
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
     RockPillar.initializePillar();
+    Meteor.initializeMeteor();
 
     }
 
