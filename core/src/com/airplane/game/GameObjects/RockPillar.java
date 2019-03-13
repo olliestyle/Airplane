@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Array;
 
 public class RockPillar {
 
-
     // Объявляем переменные класса
     private static Array<Vector2> pillars;
     private static Vector2 pillarPosition;
@@ -26,7 +25,6 @@ public class RockPillar {
     public static Texture testOverlapsPillar2;
     public static Rectangle pillarRect1 = new Rectangle();
     public static Rectangle pillarRect2 = new Rectangle();
-
 
     // Инициализируем переменные класса тут
     public static void initializePillar(){
@@ -93,7 +91,8 @@ public class RockPillar {
                         }
                         else{
                             pillarRect1.set(vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
-                            pillarRect2.set(vec.x + 60, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+                            pillarRect2.set( vec.x + 60, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+
                         }
                     }
                     else{
@@ -104,44 +103,56 @@ public class RockPillar {
 
                         }
                         else{
-                            pillarRect1.set(vec.x + 50, Gdx.graphics.getHeight() - pillarDown.getRegionHeight()+10, Gdx.graphics.getWidth()/30, (float) (Gdx.graphics.getHeight()/6));
-                            pillarRect2.set( vec.x + 20, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/8, Gdx.graphics.getWidth()/13, (float) (Gdx.graphics.getHeight()/4));
+                            pillarRect1.set(vec.x + 43, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
+                            pillarRect2.set(vec.x + 25, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
                         }
 
                     }
-
                     if (isPlaneCollisionWithPillar()){
                         if (GameManager.gameState != GameManager.GameState.GAME_OVER){
                             GameManager.gameState = GameManager.GameState.GAME_OVER;
                         }
                     }
                     break;
-
                 }
                 if (lastPillarPosition.x < Gdx.graphics.getWidth()/1000){
                     System.out.println("DOBAVLIAU VECTOR");
                     addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу если ближайшая скала достигла 1/3 экрана по x
                 }
-
         }
 
     public static void renderPillar(SpriteBatch batch){
 
         System.out.println("renderPillar here");
-
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
-                        batch.draw(pillarUp, vec.x,0, Gdx.graphics.getWidth()/10, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка скалы внизу экрана
-                        batch.draw(testOverlapsPillar1, vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
-                        batch.draw(testOverlapsPillar2, vec.x + 60, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
+                        if (Gdx.graphics.getWidth() <= 800){
+
+                        }
+                        else if (Gdx.graphics.getWidth() > 1280){
+
+                        }
+                        else {
+                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 60, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
+                        }
                     }
                     else{
-                        batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
-                        //batch.draw(testOverlapsPillar1, vec.x + 50, Gdx.graphics.getHeight() - pillarDown.getRegionHeight()+10, Gdx.graphics.getWidth()/30, (float) (Gdx.graphics.getHeight()/6)); //Отрисовка черной области для проверки коллизий между объектами
-                        //batch.draw(testOverlapsPillar2, vec.x + 20, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/8, Gdx.graphics.getWidth()/13, (float) (Gdx.graphics.getHeight()/4)); //Отрисовка черной области для проверки коллизий между объектами
+                        if (Gdx.graphics.getWidth() <= 800){
+
+                        }
+                        else if (Gdx.graphics.getWidth() > 1280){
+
+                        }
+                        else {
+                            //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
+                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 43, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 25, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
+                        }
                     }
                 }
-
     }
 
     private static boolean isPlaneCollisionWithPillar(){

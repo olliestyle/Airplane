@@ -41,7 +41,6 @@ public class Plane {
     private static float TAP_INDICATOR_RESIZE_HEIGHT_FACTOR;
     private static Texture testOverlapsPlane;
 
-
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public static void initialize(float width, float height){
 
