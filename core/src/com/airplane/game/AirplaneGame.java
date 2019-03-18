@@ -24,8 +24,7 @@ public class AirplaneGame implements Screen {
 	private static OrthographicCamera camera = new OrthographicCamera(); // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	MainGame game;
 
-
-	private static Viewport viewport;
+	//private static Viewport viewport;
 
 
 	public AirplaneGame (MainGame game){
@@ -38,12 +37,11 @@ public class AirplaneGame implements Screen {
 		//camera = new OrthographicCamera();
 		camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
 
-		viewport = new FillViewport(3000,1200,camera);
+		//viewport = new FillViewport(3000,1200,camera);
 		batch = new SpriteBatch();
 
 		GameManager.initialize(width,height);
 		Gdx.input.setInputProcessor(new InputManager(camera));// доступ класса InputManager для получения касаний/нажатий
-
 	}
 
 
@@ -82,7 +80,7 @@ public class AirplaneGame implements Screen {
 		System.out.println("width = " + width);
 		System.out.println("height = " + height);
 
-	    viewport.update(width,height);
+	    //viewport.update(width,height);
 
 	}
 

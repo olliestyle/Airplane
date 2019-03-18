@@ -39,6 +39,7 @@ public class GameManager {
     terrainAbove.flip(true,true);
     gameState = GameState.INIT;
 
+
     Plane.initialize(width, height);
     TextManager.initialize(width,height);
     RockPillar.initializePillar();
@@ -54,12 +55,11 @@ public class GameManager {
         batch.enableBlending(); // blending - смешивание
         RockPillar.renderPillar(batch);
         Meteor.renderMeteor(batch);
-
         batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт  по ширине экрана
         batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
-        //batch.draw(terrainAbove, terrainOffset, Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем первый ландшафт по ширине экрана
-        //batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - terrainAbove.getRegionHeight(), Gdx.graphics.getWidth(), terrainAbove.getRegionHeight()); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
+        batch.draw(terrainAbove, terrainOffset, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 9, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт по ширине экрана
+        batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 9, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
         TextManager.displayMessage(batch);
 

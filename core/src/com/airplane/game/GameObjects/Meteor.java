@@ -51,9 +51,9 @@ public class Meteor {
 
     public static void renderMeteor(SpriteBatch batch){
 
-        if (meteorInScene) {
-            batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y);
-        }
+            if (meteorInScene) {
+                batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y);
+            }
     }
 
 
@@ -83,7 +83,7 @@ public class Meteor {
         }
 
         /*Вызываем метод launchMeteor только если nextMeteorIn становится меньше 0.
-         * Но если метеор будет находится еще на экране то новый метеор не запускаем, а заново генерируем nextMeteorIn*/
+        * Но если метеор будет находится еще на экране то новый метеор не запускаем, а заново генерируем nextMeteorIn*/
         nextMeteorIn -= deltaTime;
         if(nextMeteorIn <= 0)
         {
