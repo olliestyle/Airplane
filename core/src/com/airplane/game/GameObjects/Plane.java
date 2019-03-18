@@ -61,6 +61,7 @@ public class Plane {
         setPlaneResizeWidthFactor();
         setPlaneResizeHeightFactor();
 
+
     }
 
 
@@ -103,9 +104,10 @@ public class Plane {
             batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
 
 
-        //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-        batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-        batch.draw(testOverlapsPlane, planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
+            //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            batch.draw(testOverlapsPlane, planePosition.x + 20, planePosition.y + 20, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 40, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 40);
+
 
         if(tapDrawTime > 0)
 

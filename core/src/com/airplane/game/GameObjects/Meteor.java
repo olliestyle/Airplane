@@ -1,11 +1,14 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Managers.GameManager;
+
 import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -14,6 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static com.airplane.game.GameObjects.Plane.deltaTime;
 import static com.airplane.game.GameObjects.Plane.planeRect;
+
 
 public class Meteor {
 
@@ -30,6 +34,7 @@ public class Meteor {
     public static void initializeMeteor(){
 
         /* добавляем в массив компоненты (все метеоры) нашего атласа текстур*/
+
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med1"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med2"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_small1"));
@@ -37,25 +42,26 @@ public class Meteor {
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny1"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny2"));
 
-        nextMeteorIn = (float) (Math.random()*5); // высчитываем время до появления следующего метеора
+        meteorInScene = false;
+        nextMeteorIn = (float) (Math.random()*5);
         meteorRect = new Rectangle(); // инициализируем прямоугольник
+        launchMeteor();
+
     }
 
     public static void renderMeteor(SpriteBatch batch){
 
-        /*отрисовываем метеор если он находится/отображается на экране*/
-        if(meteorInScene)
-        {
-            batch.draw(selectedMeteorTexture,meteorPosition.x, meteorPosition.y);
+        if (meteorInScene) {
+            batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y);
         }
     }
+
 
     public static void updateMeteor(){
         /*если метеор находится на экране*/
         if(meteorInScene)
         {
-
-            meteorPosition.mulAdd(meteorVelocity, (float) (deltaTime*1.5)); // меняем позицию метеора на экране по этому вектору
+            meteorPosition.mulAdd(meteorVelocity, (float) (Gdx.graphics.getDeltaTime()*1.5)); // меняем позицию метеора на экране по этому вектору
             //meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
 
             /*Устанавливаем область столкновения метеора в зависимости от его нынешней позиции на экране*/
@@ -77,7 +83,7 @@ public class Meteor {
         }
 
         /*Вызываем метод launchMeteor только если nextMeteorIn становится меньше 0.
-        * Но если метеор будет находится еще на экране то новый метеор не запускаем, а заново генерируем nextMeteorIn*/
+         * Но если метеор будет находится еще на экране то новый метеор не запускаем, а заново генерируем nextMeteorIn*/
         nextMeteorIn -= deltaTime;
         if(nextMeteorIn <= 0)
         {
