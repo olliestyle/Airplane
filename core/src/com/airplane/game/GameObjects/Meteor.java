@@ -5,6 +5,7 @@ import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -30,6 +31,9 @@ public class Meteor {
     public static float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
     private static Rectangle meteorRect; // для коллизий
     public static Vector2 destination = new Vector2();
+    private static float METEOR_RESIZE_WIDTH_FACTOR;
+    private static float METEOR_RESIZE_HEIGHT_FACTOR;
+    private static Texture testOverlapsMeteor;
 
     public static void initializeMeteor(){
 
@@ -41,32 +45,67 @@ public class Meteor {
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_small2"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny1"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny2"));
+        testOverlapsMeteor = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
 
         meteorInScene = false;
         nextMeteorIn = (float) (Math.random()*5);
         meteorRect = new Rectangle(); // инициализируем прямоугольник
+        setMeteorResizeHeightFactor();
+        setMeteorResizeWidthFactor();
         launchMeteor();
 
     }
 
-    public static void renderMeteor(SpriteBatch batch){
-
-            if (meteorInScene) {
-                batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y);
-            }
+    private static void setMeteorResizeWidthFactor(){
+        if (Gdx.graphics.getWidth() <= 800){
+            METEOR_RESIZE_WIDTH_FACTOR = 1f;
+        }
+        else if (Gdx.graphics.getWidth() > 1280){
+            METEOR_RESIZE_WIDTH_FACTOR = 2.4f;
+        }
+        else{
+            METEOR_RESIZE_WIDTH_FACTOR = 1f;
+        }
     }
 
+    private static void setMeteorResizeHeightFactor(){
+        if (Gdx.graphics.getHeight() <= 480){
+            METEOR_RESIZE_HEIGHT_FACTOR = 1f;
+        }
+        else if (Gdx.graphics.getHeight() > 768){
+            METEOR_RESIZE_HEIGHT_FACTOR = 2.4f;
+        }
+        else{
+            METEOR_RESIZE_HEIGHT_FACTOR = 1f;
+        }
+    }
+
+    public static void renderMeteor(SpriteBatch batch) {
+
+        if (meteorInScene) {
+            batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y, selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR, selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR);
+            //batch.draw(testOverlapsMeteor, meteorPosition.x + selectedMeteorTexture.getRegionWidth()/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()/4,selectedMeteorTexture.getRegionWidth()*2, selectedMeteorTexture.getRegionHeight()*2);
+        }
+    }
 
     public static void updateMeteor(){
         /*если метеор находится на экране*/
         if(meteorInScene)
         {
             meteorPosition.mulAdd(meteorVelocity, (float) (Gdx.graphics.getDeltaTime()*1.5)); // меняем позицию метеора на экране по этому вектору
-            //meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+            meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
 
             /*Устанавливаем область столкновения метеора в зависимости от его нынешней позиции на экране*/
-            meteorRect.set(meteorPosition.x, meteorPosition.y,selectedMeteorTexture.getRegionWidth()-4, selectedMeteorTexture.getRegionHeight()-4);
 
+            if (Gdx.graphics.getWidth() <= 800){
+                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()/4,selectedMeteorTexture.getRegionWidth()/2, selectedMeteorTexture.getRegionHeight()/2);
+            }
+            else if (Gdx.graphics.getWidth() > 1280){
+                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()/4,selectedMeteorTexture.getRegionWidth()/2, selectedMeteorTexture.getRegionHeight()/2);
+            }
+            else{
+                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()/4, (float) (selectedMeteorTexture.getRegionWidth()*1.5), (float) (selectedMeteorTexture.getRegionHeight()*1.5));
+            }
             /*переходим в GAME_OVER при наложении области столкновения самолета и области столкновения метеора*/
             if (planeRect.overlaps(meteorRect))
             {
@@ -95,28 +134,30 @@ public class Meteor {
     private static void launchMeteor(){
 
         /* Math.random выдаёт от 0 до 0.999... */
-
         nextMeteorIn=1.5f+(float)Math.random()*5; // счетчик запуска следующего метеора
         if(meteorInScene) //создаем новый метеор, только если в данный момент на экране нет метеора
         {
             return;
         }
+        meteorVelocity.set(0,0);
         meteorInScene = true; // метеора отображается на экране
         int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
         selectedMeteorTexture = meteorTextures.get(id); // устанавливаем выбранную текстуру, относительно выбранного метеора
-
+        System.out.println("SelectedMeteorTexture " + meteorTextures.get(id));
         //meteorPosition.x = Gdx.graphics.getWidth() + 20; // начальная позиция по x - ширина экрана + 20 пикселей
 
         //meteorPosition.x = (float) (Math.random()*Gdx.graphics.getWidth()); // начальная позиция по x - ширина экрана + 20 пикселей
         meteorPosition.x = ThreadLocalRandom.current().nextInt(Gdx.graphics.getWidth(), Gdx.graphics.getWidth()+20); // начальная позиция по x - ширина экрана + 20 пикселей
-        meteorPosition.y =(float) (Math.random()*Gdx.graphics.getHeight()); // начальная позиция по y
+        meteorPosition.y = ThreadLocalRandom.current().nextInt(Gdx.graphics.getHeight()-20, Gdx.graphics.getHeight()); // начальная позиция по y
+        //meteorPosition.y =(float) (Math.random()*Gdx.graphics.getHeight()); // начальная позиция по y
 
         System.out.println("meteorPosition.x = " + meteorPosition.x);
         System.out.println("meteorPosition.y = " + meteorPosition.y);
 
         //destination.x = (float) (Math.random()*Gdx.graphics.getWidth()); // вектор направления куда будет стремиться наш метеор
         destination.x = ThreadLocalRandom.current().nextInt(-20, 0); // вектор направления куда будет стремиться наш метеор
-        destination.y = (float) (Math.random()*Gdx.graphics.getHeight()); // вектор направления куда будет стремиться наш метеор
+        destination.y = ThreadLocalRandom.current().nextInt(0, 20); // вектор направления куда будет стремиться наш метеор
+        //destination.y = (float) (Math.random()*Gdx.graphics.getHeight()); // вектор направления куда будет стремиться наш метеор
 
         System.out.println("destination.x = " + destination.x);
         System.out.println("destination.y = " + destination.y);
@@ -127,7 +168,9 @@ public class Meteor {
         System.out.println("destination.y after sub.nor = " + destination.y);*/
 
         meteorVelocity.mulAdd(destination, METEOR_SPEED);
-
+//        int xMeteorVelosity = ThreadLocalRandom.current().nextInt(200, 300);
+//        int yMeteorVelosity = ThreadLocalRandom.current().nextInt(100, 200);
+//        meteorVelocity.set(xMeteorVelosity, yMeteorVelosity);
 
     }
 

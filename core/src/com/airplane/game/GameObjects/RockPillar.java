@@ -38,6 +38,7 @@ public class RockPillar {
         lastPillarPosition = new Vector2(); // последний вектор позиции скалы - нужен для отрисовки !1 элемента массива
 
         System.out.println("initializePillar here");
+        System.out.println("lastpillarposition = " + lastPillarPosition);
 
     }
 
@@ -67,7 +68,6 @@ public class RockPillar {
 
     public static void updatePillar(){
 
-
                 for (Vector2 vec: pillars)
                 {
 
@@ -84,10 +84,12 @@ public class RockPillar {
 
                     if (vec.y == 1){
                         if (Gdx.graphics.getWidth() <= 800){
-
+                            pillarRect1.set(vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
+                            pillarRect2.set(vec.x + 47, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
-
+                            pillarRect1.set( vec.x + 85,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
+                            pillarRect1.set( vec.x + 135, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
                         }
                         else{
                             pillarRect1.set(vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
@@ -97,10 +99,12 @@ public class RockPillar {
                     }
                     else{
                         if (Gdx.graphics.getWidth() <= 800){
-
+                            pillarRect1.set(vec.x + 30, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
+                            pillarRect2.set(vec.x + 15, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
-
+                            pillarRect1.set(vec.x + 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
+                            pillarRect2.set(vec.x + 50, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
                         }
                         else{
                             pillarRect1.set(vec.x + 43, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
@@ -115,9 +119,9 @@ public class RockPillar {
                     }
                     break;
                 }
-                if (lastPillarPosition.x < Gdx.graphics.getWidth()/1000){
+                if (lastPillarPosition.x <= Gdx.graphics.getWidth()/1000){ // <= потому что на экранах <1000 будет 0.9, 0.8... что = 0
                     System.out.println("DOBAVLIAU VECTOR");
-                    addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу если ближайшая скала достигла 1/3 экрана по x
+                    addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу
                 }
         }
 
@@ -127,10 +131,14 @@ public class RockPillar {
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
                         if (Gdx.graphics.getWidth() <= 800){
-
+                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 47, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
-
+                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 85,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 135, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else {
                             batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
@@ -140,10 +148,14 @@ public class RockPillar {
                     }
                     else{
                         if (Gdx.graphics.getWidth() <= 800){
-
+                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 30, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 15, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
-
+                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + 50, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else {
                             //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана

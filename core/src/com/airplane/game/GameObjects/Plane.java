@@ -17,7 +17,7 @@ import static com.airplane.game.Managers.GameManager.gameState;
 import static com.airplane.game.Managers.GameManager.terrainAbove;
 import static com.airplane.game.Managers.GameManager.terrainBelow;
 
-public class Plane {
+public class Plane{
 
     /* объявление объектов классов*/
     private static Animation plane;
@@ -63,7 +63,6 @@ public class Plane {
 
     }
 
-
     // Устанавливаем значения ресайз факторов для разных экранов устройств
     public static void setPlaneResizeWidthFactor(){
 
@@ -105,7 +104,7 @@ public class Plane {
 
             //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            batch.draw(testOverlapsPlane, planePosition.x + 20, planePosition.y + 20, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 40, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 40);
+            batch.draw(testOverlapsPlane, planePosition.x + 10, planePosition.y + 10, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 20, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 20);
 
 
         if(tapDrawTime > 0)
@@ -121,6 +120,7 @@ public class Plane {
             }
 
     }
+
 
     /*метод update служит для обновления позиций объектов и времени*/
     public static void update(){
@@ -142,16 +142,14 @@ public class Plane {
                 tapDrawTime -= deltaTime;
 
                 if (Gdx.graphics.getWidth() <= 800){
-
+                    planeRect.set(planePosition.x + 10, planePosition.y + 10, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 20, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 20);
                 }
                 else if (Gdx.graphics.getWidth() > 1280){
-
+                    planeRect.set(planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
                 }
                 else{
                     planeRect.set(planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
                 }
-
-
 
                 if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
                     if (gameState != GameManager.GameState.GAME_OVER)
@@ -160,8 +158,6 @@ public class Plane {
                 break;
 
             case GAME_OVER:
-
-
                 break;
 
             default:

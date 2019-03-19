@@ -47,7 +47,6 @@ public class GameManager {
 
     }
 
-
     public static void renderGame(SpriteBatch batch) {
 
         batch.disableBlending(); // blending - смешивание
@@ -62,7 +61,6 @@ public class GameManager {
         batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 9, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
         TextManager.displayMessage(batch);
-
 
     }
 
