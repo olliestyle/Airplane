@@ -25,7 +25,7 @@ public class Meteor {
     private static Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>(); //массив для хранения текстур метеоров
     private static TextureRegion selectedMeteorTexture; // объект метеора, с которым будут проводиться взаимодействия
     private static boolean meteorInScene; // для определения отображается ли в данный момент метеор?
-    private static final int METEOR_SPEED = 100; // скорость метеора
+    private static final int METEOR_SPEED = 200; // скорость метеора
     public static Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
     public static Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
     public static float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
@@ -38,7 +38,6 @@ public class Meteor {
     public static void initializeMeteor(){
 
         /* добавляем в массив компоненты (все метеоры) нашего атласа текстур*/
-
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med1"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med2"));
         meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_small1"));
@@ -93,7 +92,7 @@ public class Meteor {
         if(meteorInScene)
         {
             meteorPosition.mulAdd(meteorVelocity, (float) (Gdx.graphics.getDeltaTime()*1.5)); // меняем позицию метеора на экране по этому вектору
-            meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+            //meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
 
             /*Устанавливаем область столкновения метеора в зависимости от его нынешней позиции на экране*/
 
@@ -156,7 +155,7 @@ public class Meteor {
 
         //destination.x = (float) (Math.random()*Gdx.graphics.getWidth()); // вектор направления куда будет стремиться наш метеор
         destination.x = ThreadLocalRandom.current().nextInt(-20, 0); // вектор направления куда будет стремиться наш метеор
-        destination.y = ThreadLocalRandom.current().nextInt(0, 20); // вектор направления куда будет стремиться наш метеор
+        destination.y = ThreadLocalRandom.current().nextInt(0, Gdx.graphics.getHeight()/2); // вектор направления куда будет стремиться наш метеор
         //destination.y = (float) (Math.random()*Gdx.graphics.getHeight()); // вектор направления куда будет стремиться наш метеор
 
         System.out.println("destination.x = " + destination.x);
@@ -168,9 +167,9 @@ public class Meteor {
         System.out.println("destination.y after sub.nor = " + destination.y);*/
 
         meteorVelocity.mulAdd(destination, METEOR_SPEED);
-//        int xMeteorVelosity = ThreadLocalRandom.current().nextInt(200, 300);
-//        int yMeteorVelosity = ThreadLocalRandom.current().nextInt(100, 200);
-//        meteorVelocity.set(xMeteorVelosity, yMeteorVelosity);
+//      int xMeteorVelosity = ThreadLocalRandom.current().nextInt(200, 300);
+//      int yMeteorVelosity = ThreadLocalRandom.current().nextInt(100, 200);
+//      meteorVelocity.set(xMeteorVelosity, yMeteorVelosity);
 
     }
 
