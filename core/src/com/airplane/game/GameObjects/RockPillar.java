@@ -94,7 +94,6 @@ public class RockPillar {
                         else{
                             pillarRect1.set(vec.x + 35,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
                             pillarRect2.set( vec.x + 60, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
-
                         }
                     }
                     else{

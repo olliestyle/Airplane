@@ -19,7 +19,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import static com.airplane.game.GameObjects.Plane.deltaTime;
 import static com.airplane.game.GameObjects.Plane.planeRect;
 
-
 public class Meteor {
 
     private static Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>(); //массив для хранения текстур метеоров
@@ -28,6 +27,7 @@ public class Meteor {
     private static final int METEOR_SPEED = 200; // скорость метеора
     public static Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
     public static Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
+    private static final Vector2 dampingMeteor = new Vector2(1.01f,1.01f);
     public static float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
     private static Rectangle meteorRect; // для коллизий
     public static Vector2 destination = new Vector2();
@@ -91,6 +91,7 @@ public class Meteor {
         /*если метеор находится на экране*/
         if(meteorInScene)
         {
+            meteorVelocity.scl(dampingMeteor);
             meteorPosition.mulAdd(meteorVelocity, (float) (Gdx.graphics.getDeltaTime()*1.5)); // меняем позицию метеора на экране по этому вектору
             //meteorPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
 

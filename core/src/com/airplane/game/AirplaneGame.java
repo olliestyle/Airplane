@@ -14,8 +14,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.airplane.game.Managers.GameManager.gameState;
-import static com.airplane.game.Managers.GameManager.startPointTerrainAboveY;
-import static com.airplane.game.Managers.GameManager.terrainAbove;
+
 
 
 public class AirplaneGame implements Screen {

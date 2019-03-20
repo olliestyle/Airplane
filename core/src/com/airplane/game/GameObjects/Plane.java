@@ -13,9 +13,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import static com.airplane.game.GameObjects.Terrain.terrainAbove;
+import static com.airplane.game.GameObjects.Terrain.terrainBelow;
 import static com.airplane.game.Managers.GameManager.gameState;
-import static com.airplane.game.Managers.GameManager.terrainAbove;
-import static com.airplane.game.Managers.GameManager.terrainBelow;
+
 
 public class Plane{
 
@@ -154,9 +155,9 @@ public class Plane{
                     planeRect.set( planePosition.x+15, planePosition.y+15, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-30, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-30);
                 }
 
-                if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
+                /*if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
                     if (gameState != GameManager.GameState.GAME_OVER)
-                        gameState = GameManager.GameState.GAME_OVER;
+                        gameState = GameManager.GameState.GAME_OVER;*/
 
                 break;
 
