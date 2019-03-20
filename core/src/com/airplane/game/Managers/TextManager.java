@@ -3,6 +3,7 @@ package com.airplane.game.Managers;
 import com.airplane.game.AirplaneGame;
 import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
+import com.airplane.game.GameObjects.Terrain;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -41,8 +42,8 @@ public class TextManager {
 
         GlyphLayout glyphLayoutHeight = new GlyphLayout();
         GlyphLayout glyphLayoutWidth = new GlyphLayout();
-        /*GlyphLayout glyphLayoutTerrainOffset = new GlyphLayout();
-        */
+        GlyphLayout glyphLayoutTerrainOffset = new GlyphLayout();
+
         GlyphLayout glyphLayoutDeltaTime = new GlyphLayout();
 
         //GlyphLayout glyphLayoutPlaneAnimTime = new GlyphLayout();
@@ -66,8 +67,8 @@ public class TextManager {
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
-        /*glyphLayoutTerrainOffset.setText(font, "terrainOffset = " + GameManager.terrainOffset);
-        */
+        glyphLayoutTerrainOffset.setText(font, "terrainOffset = " + Terrain.terrainOffset);
+
         glyphLayoutDeltaTime.setText(font, "deltaTime = " + Plane.deltaTime);
 
         //glyphLayoutPlaneAnimTime.setText(font, "planeAnimTime = " + Plane.planeAnimTime);
@@ -94,8 +95,8 @@ public class TextManager {
 
         font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height*0.76));
         font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.73));
-        /*font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.94));
-        */
+        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.64));
+
         font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height));
 
         //font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));

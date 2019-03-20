@@ -11,27 +11,27 @@ import static com.airplane.game.Managers.GameManager.atlas;
 
 public class Terrain {
 
-    public static TextureRegion terrainBelow;
-    public static TextureRegion terrainAbove;
+    protected static TextureRegion terrainBelow;
+    protected static TextureRegion terrainAbove;
     public static float terrainOffset;
-    public static Rectangle terrainAboveRectangle1;
-    public static Rectangle terrainAboveRectangle2;
-    public static Rectangle terrainAboveRectangle3;
-    public static Rectangle terrainAboveRectangle4;
-    public static Rectangle terrainAboveRectangle5;
-    public static Rectangle terrainAboveRectangle6;
-    public static Rectangle terrainAboveRectangle7;
-    public static Rectangle terrainAboveRectangle8;
-    public static Rectangle terrainAboveRectangle9;
-    public static Rectangle terrainBelowRectangle1;
-    public static Rectangle terrainBelowRectangle2;
-    public static Rectangle terrainBelowRectangle3;
-    public static Rectangle terrainBelowRectangle4;
-    public static Rectangle terrainBelowRectangle5;
-    public static Rectangle terrainBelowRectangle6;
-    public static Rectangle terrainBelowRectangle7;
-    public static Rectangle terrainBelowRectangle8;
-    public static Rectangle terrainBelowRectangle9;
+    private static Rectangle terrainAboveRectangle1;
+    private static Rectangle terrainAboveRectangle2;
+    private static Rectangle terrainAboveRectangle3;
+    private static Rectangle terrainAboveRectangle4;
+    private static Rectangle terrainAboveRectangle5;
+    private static Rectangle terrainAboveRectangle6;
+    private static Rectangle terrainAboveRectangle7;
+    private static Rectangle terrainAboveRectangle8;
+    private static Rectangle terrainAboveRectangle9;
+    private static Rectangle terrainBelowRectangle1;
+    private static Rectangle terrainBelowRectangle2;
+    private static Rectangle terrainBelowRectangle3;
+    private static Rectangle terrainBelowRectangle4;
+    private static Rectangle terrainBelowRectangle5;
+    private static Rectangle terrainBelowRectangle6;
+    private static Rectangle terrainBelowRectangle7;
+    private static Rectangle terrainBelowRectangle8;
+    private static Rectangle terrainBelowRectangle9;
     private static Texture testOverlapsTerrain1;
     private static Texture testOverlapsTerrain2;
 
@@ -70,9 +70,8 @@ public class Terrain {
         batch.draw(terrainAbove, terrainOffset, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 9, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт по ширине экрана
         batch.draw(terrainAbove, terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 9, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
 
-        batch.draw(testOverlapsTerrain1, terrainOffset+ (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5),
-                0, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
-        batch.draw(testOverlapsTerrain2, terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8), 0, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+        //batch.draw(testOverlapsTerrain1,terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/8), Gdx.graphics.getHeight()/18);
+        //batch.draw(testOverlapsTerrain2, terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/20, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
 
     }
 
@@ -89,16 +88,67 @@ public class Terrain {
         }
 
         if (Gdx.graphics.getWidth() <= 800){
+            terrainBelowRectangle1.set(terrainOffset, 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+            terrainBelowRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2), 0, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
+            terrainBelowRectangle3.set(terrainOffset+ (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5), 0, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
+            terrainBelowRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8), 0, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainBelowRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5), 0, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainBelowRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3), 0, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainBelowRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13), 0, (float) (Gdx.graphics.getWidth()/10), Gdx.graphics.getHeight()/10);
+            terrainBelowRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/10), 0, (float) (Gdx.graphics.getWidth()/11.8), Gdx.graphics.getHeight()/18);
+            terrainBelowRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
 
+            terrainAboveRectangle1.set(terrainOffset, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight()/18);
+            terrainAboveRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight()/10);
+            terrainAboveRectangle3.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/17, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainAboveRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/40, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainAboveRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/13, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainAboveRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
+            terrainAboveRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/11, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
+            terrainAboveRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/20, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+            terrainAboveRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/8), Gdx.graphics.getHeight()/18);
         }
         else if (Gdx.graphics.getWidth() > 1280){
+            terrainBelowRectangle1.set(terrainOffset, 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+            terrainBelowRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2), 0, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
+            terrainBelowRectangle3.set(terrainOffset+ (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5), 0, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
+            terrainBelowRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8), 0, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainBelowRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5), 0, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainBelowRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3), 0, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainBelowRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13), 0, (float) (Gdx.graphics.getWidth()/10), Gdx.graphics.getHeight()/10);
+            terrainBelowRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/10), 0, (float) (Gdx.graphics.getWidth()/11.8), Gdx.graphics.getHeight()/18);
+            terrainBelowRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
 
+            terrainAboveRectangle1.set(terrainOffset, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight()/18);
+            terrainAboveRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight()/10);
+            terrainAboveRectangle3.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/17, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainAboveRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/40, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainAboveRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/13, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainAboveRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
+            terrainAboveRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/11, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
+            terrainAboveRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/20, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+            terrainAboveRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/8), Gdx.graphics.getHeight()/18);
         }
         else{
             terrainBelowRectangle1.set(terrainOffset, 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
             terrainBelowRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2), 0, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
             terrainBelowRectangle3.set(terrainOffset+ (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5), 0, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
             terrainBelowRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8), 0, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainBelowRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5), 0, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainBelowRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3), 0, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainBelowRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13), 0, (float) (Gdx.graphics.getWidth()/10), Gdx.graphics.getHeight()/10);
+            terrainBelowRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/5.2) + (float) (Gdx.graphics.getWidth()/8.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/10), 0, (float) (Gdx.graphics.getWidth()/11.8), Gdx.graphics.getHeight()/18);
+            terrainBelowRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), 0, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+
+            terrainAboveRectangle1.set(terrainOffset, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight()/18);
+            terrainAboveRectangle2.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight()/10);
+            terrainAboveRectangle3.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/17, (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight()/17);
+            terrainAboveRectangle4.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/40, (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight()/40);
+            terrainAboveRectangle5.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/13, (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight()/13);
+            terrainAboveRectangle6.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16, (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight()/16);
+            terrainAboveRectangle7.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/11, (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight()/11);
+            terrainAboveRectangle8.set(terrainOffset + (float) (Gdx.graphics.getWidth()/12.2) + (float) (Gdx.graphics.getWidth()/9.5) + (float) (Gdx.graphics.getWidth()/13) + (float) (Gdx.graphics.getWidth()/5.3) + (float) (Gdx.graphics.getWidth()/10.5) + (float) (Gdx.graphics.getWidth()/6.8) + (float) (Gdx.graphics.getWidth()/8.5), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/20, (float) (Gdx.graphics.getWidth()/5.2), Gdx.graphics.getHeight()/20);
+            terrainAboveRectangle9.set(terrainOffset + Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/18, (float) (Gdx.graphics.getWidth()/8), Gdx.graphics.getHeight()/18);
 
         }
 
