@@ -21,6 +21,7 @@ public class Plane{
 
     /* объявление объектов классов*/
     private static Animation plane;
+    private static TextureRegion planeTexture;
     public static Vector2 planeDefaultPosition;
     public static Vector2 planePosition;
     private static Vector2 planeVelocity;
@@ -44,6 +45,7 @@ public class Plane{
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public static void initialize(float width, float height){
 
+        planeTexture = GameManager.atlas.findRegion("planeGreen1");
         plane = new Animation(0.05f, GameManager.atlas.findRegion("planeGreen1"), GameManager.atlas.findRegion("planeGreen2"), GameManager.atlas.findRegion("planeGreen3")); // инициализация анимации объекта plane
         plane.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
         planeDefaultPosition = new Vector2(); // инициализация начальной позиции самолета
@@ -59,39 +61,37 @@ public class Plane{
         tapIndicator = GameManager.atlas.findRegion("tap2");
         setPlaneResizeWidthFactor();
         setPlaneResizeHeightFactor();
-
-
     }
 
     // Устанавливаем значения ресайз факторов для разных экранов устройств
     public static void setPlaneResizeWidthFactor(){
 
         if (Gdx.graphics.getWidth() <= 800){
-            PLANE_RESIZE_WIDTH_FACTOR = 15f;
-            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 22f;
+            PLANE_RESIZE_WIDTH_FACTOR = 0.6f;
+            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 0.6f;
         }
         else if (Gdx.graphics.getWidth() > 1280){
-            PLANE_RESIZE_WIDTH_FACTOR = 17f;
-            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 20f;
+            PLANE_RESIZE_WIDTH_FACTOR = 1.5f;
+            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 1.5f;
         }
         else{
-            PLANE_RESIZE_WIDTH_FACTOR = 15.6f;
-            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 18.6f;
+            PLANE_RESIZE_WIDTH_FACTOR = 0.8f;
+            TAP_INDICATOR_RESIZE_WIDTH_FACTOR = 0.9f;
         }
     }
 
     public static void setPlaneResizeHeightFactor(){
         if (Gdx.graphics.getHeight() <= 480){
-            PLANE_RESIZE_HEIGHT_FACTOR = 10f;
-            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 11f;
+            PLANE_RESIZE_HEIGHT_FACTOR = 0.6f;
+            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 0.6f;
         }
         else if (Gdx.graphics.getHeight() > 768){
-            PLANE_RESIZE_HEIGHT_FACTOR = 12f;
-            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 12f;
+            PLANE_RESIZE_HEIGHT_FACTOR = 1.5f;
+            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 1.5f;
         }
         else{
-            PLANE_RESIZE_HEIGHT_FACTOR = 13f;
-            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 13f;
+            PLANE_RESIZE_HEIGHT_FACTOR = 0.8f;
+            TAP_INDICATOR_RESIZE_HEIGHT_FACTOR = 0.9f;
         }
     }
 
@@ -99,24 +99,27 @@ public class Plane{
     public static void renderPlane(SpriteBatch batch){
 
         if (gameState == GameManager.GameState.INIT)
-            batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
-
+            //batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+            batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
 
             //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            batch.draw(testOverlapsPlane, planePosition.x + 10, planePosition.y + 10, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 20, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 20);
+            //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            //batch.draw(testOverlapsPlane, planePosition.x + 25, planePosition.y + 25, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-50, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-50);
 
 
         if(tapDrawTime > 0)
 
             if (Gdx.graphics.getWidth() <= 800){
-                batch.draw(tapIndicator, InputManager.touchPosition.x - 20f, InputManager.touchPosition.y - 20, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR); //29.5 половина ширины/высоты нашего изображения
+                //batch.draw(tapIndicator, InputManager.touchPosition.x - 20f, InputManager.touchPosition.y - 20, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw(tapIndicator, InputManager.touchPosition.x - 20f, InputManager.touchPosition.y - 20, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
             }
             else if (Gdx.graphics.getWidth() > 1280){
-                batch.draw(tapIndicator, InputManager.touchPosition.x - 55f, InputManager.touchPosition.y - 55f, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR); //29.5 половина ширины/высоты нашего изображения
+                batch.draw(tapIndicator, InputManager.touchPosition.x - 55f, InputManager.touchPosition.y - 55f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
             }
             else{
-                batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR); //29.5 половина ширины/высоты нашего изображения
+                //batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
             }
 
     }
@@ -142,13 +145,13 @@ public class Plane{
                 tapDrawTime -= deltaTime;
 
                 if (Gdx.graphics.getWidth() <= 800){
-                    planeRect.set(planePosition.x + 10, planePosition.y + 10, (Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR) - 20, (Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR) - 20);
+                    planeRect.set(planePosition.x + 10, planePosition.y + 10, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-20, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-20);
                 }
                 else if (Gdx.graphics.getWidth() > 1280){
-                    planeRect.set(planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
+                    planeRect.set(planePosition.x + 25, planePosition.y + 25, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-50, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-50);
                 }
                 else{
-                    planeRect.set(planePosition.x+20, planePosition.y+20, (Gdx.graphics.getWidth()/PLANE_RESIZE_WIDTH_FACTOR)-40, (Gdx.graphics.getHeight()/PLANE_RESIZE_HEIGHT_FACTOR)-40);
+                    planeRect.set( planePosition.x+15, planePosition.y+15, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-30, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-30);
                 }
 
                 if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
@@ -163,7 +166,6 @@ public class Plane{
             default:
                 break;
         }
-
     }
 
 
@@ -176,7 +178,16 @@ public class Plane{
         System.out.println("touchPosition.y = " + y);
         tempVector.sub(x, y).nor();
         System.out.println("tempVector after subtract = " + tempVector);
-        planeVelocity.mulAdd(tempVector, TOUCH_IMPULSE-MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE));
+        if (Gdx.graphics.getWidth() <= 800){
+            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*0.7 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+        }
+        else if (Gdx.graphics.getWidth() > 1280){
+            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+        }
+        else{
+            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+        }
+
         tapDrawTime = TAP_DRAW_TIME_MAX;
 
     }
