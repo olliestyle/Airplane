@@ -106,8 +106,7 @@ public class Plane{
             //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            //batch.draw(testOverlapsPlane, planePosition.x + 25, planePosition.y + 25, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-50, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-50);
-
+            //batch.draw(testOverlapsPlane, planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
 
         if(tapDrawTime > 0)
 
@@ -122,7 +121,6 @@ public class Plane{
                 //batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
                 batch.draw(tapIndicator, InputManager.touchPosition.x - 29.5f, InputManager.touchPosition.y - 29.5f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
             }
-
     }
 
 
@@ -137,6 +135,7 @@ public class Plane{
 
             case ACTION:
 
+
                 deltaTime = Gdx.graphics.getDeltaTime();
                 planeAnimTime += deltaTime;
                 planeVelocity.scl(damping);
@@ -146,18 +145,14 @@ public class Plane{
                 tapDrawTime -= deltaTime;
 
                 if (Gdx.graphics.getWidth() <= 800){
-                    planeRect.set(planePosition.x + 10, planePosition.y + 10, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-20, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-20);
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
                 }
                 else if (Gdx.graphics.getWidth() > 1280){
-                    planeRect.set(planePosition.x + 25, planePosition.y + 25, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-50, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-50);
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
                 }
                 else{
-                    planeRect.set( planePosition.x+15, planePosition.y+15, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR-30, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR-30);
+                    planeRect.set( planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
                 }
-
-                /*if (planePosition.y < terrainBelow.getRegionHeight() - 25 || planePosition.y + GameManager.atlas.findRegion("planeGreen1").originalHeight > Gdx.graphics.getHeight() -  terrainAbove.getRegionHeight() + 25)
-                    if (gameState != GameManager.GameState.GAME_OVER)
-                        gameState = GameManager.GameState.GAME_OVER;*/
 
                 break;
 

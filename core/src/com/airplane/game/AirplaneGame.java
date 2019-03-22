@@ -35,7 +35,6 @@ public class AirplaneGame implements Screen {
 		float width = Gdx.graphics.getWidth();
 		//camera = new OrthographicCamera();
 		camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
-
 		//viewport = new FillViewport(3000,1200,camera);
 		batch = new SpriteBatch();
 
@@ -62,11 +61,11 @@ public class AirplaneGame implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        batch.setProjectionMatrix(camera.combined); // устанавливаем в экземпляр spritebatch вид с камеры (области просмотра)
+		batch.setProjectionMatrix(camera.combined); // устанавливаем в экземпляр spritebatch вид с камеры (области просмотра)
         batch.begin();
         GameManager.renderGame(batch);
         GameManager.updateScene();
-        Plane.renderPlane(batch);
+		Plane.renderPlane(batch);
         Plane.update();
         batch.end();
 

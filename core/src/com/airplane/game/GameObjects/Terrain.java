@@ -77,7 +77,7 @@ public class Terrain {
 
     public static void updateTerrain(){
 
-        terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+        terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // движение рельефа относительно самолета влево
         System.out.println("terrainOffset = " + terrainOffset);
 
         if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
@@ -167,6 +167,7 @@ public class Terrain {
                 || Plane.planeRect.overlaps(terrainBelowRectangle1) || Plane.planeRect.overlaps(terrainBelowRectangle2) || Plane.planeRect.overlaps(terrainBelowRectangle3)
                 || Plane.planeRect.overlaps(terrainBelowRectangle4) || Plane.planeRect.overlaps(terrainBelowRectangle5) || Plane.planeRect.overlaps(terrainBelowRectangle6)
                 || Plane.planeRect.overlaps(terrainBelowRectangle7) || Plane.planeRect.overlaps(terrainBelowRectangle8) || Plane.planeRect.overlaps(terrainBelowRectangle9)){
+            Gdx.input.vibrate(100);
             return true;
         }
         return false;

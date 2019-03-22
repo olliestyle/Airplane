@@ -6,6 +6,7 @@ import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,6 +27,7 @@ public class GameManager {
 
         atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
         backGroundRegion = atlas.findRegion("background");
+
         gameState = GameState.INIT;
 
         Terrain.initializeTerrain();
@@ -44,13 +46,10 @@ public class GameManager {
         RockPillar.renderPillar(batch);
         Meteor.renderMeteor(batch);
         Terrain.renderTerrain(batch);
-
         TextManager.displayMessage(batch);
-
     }
 
     public static void updateScene(){
-
 
         switch (gameState){
 
@@ -66,7 +65,7 @@ public class GameManager {
                 Terrain.updateTerrain();
                 RockPillar.updatePillar();
                 Meteor.updateMeteor();
-                Plane.planePosition.x = Plane.planeDefaultPosition.x;
+                Plane.planePosition.x = Plane.planeDefaultPosition.x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
 
                 break;
 
