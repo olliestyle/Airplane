@@ -112,7 +112,6 @@ public class RockPillar {
 
                     }
                     if (isPlaneCollisionWithPillar()){
-                        Gdx.input.vibrate(100);
                         if (GameManager.gameState != GameManager.GameState.GAME_OVER){
                             GameManager.gameState = GameManager.GameState.GAME_OVER;
                         }
@@ -170,6 +169,8 @@ public class RockPillar {
     private static boolean isPlaneCollisionWithPillar(){
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
+            Gdx.input.vibrate(100);
+            GameManager.crashSound.play();
             return true;
         }
         return false;

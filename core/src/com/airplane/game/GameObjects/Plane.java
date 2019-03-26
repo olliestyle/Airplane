@@ -128,40 +128,28 @@ public class Plane{
     public static void update(){
 
 
-        switch (gameState){
-            case INIT:
+        if (gameState == GameManager.GameState.ACTION) {
+            deltaTime = Gdx.graphics.getDeltaTime();
+            planeAnimTime += deltaTime;
+            planeVelocity.scl(damping);
+            planeVelocity.add(gravity);
+            planeVelocity.add(scrollVelocity);
+            planePosition.mulAdd(planeVelocity, deltaTime);
+            tapDrawTime -= deltaTime;
 
-                break;
-
-            case ACTION:
-
-
-                deltaTime = Gdx.graphics.getDeltaTime();
-                planeAnimTime += deltaTime;
-                planeVelocity.scl(damping);
-                planeVelocity.add(gravity);
-                planeVelocity.add(scrollVelocity);
-                planePosition.mulAdd(planeVelocity, deltaTime);
-                tapDrawTime -= deltaTime;
-
-                if (Gdx.graphics.getWidth() <= 800){
-                    planeRect.set(planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
-                }
-                else if (Gdx.graphics.getWidth() > 1280){
-                    planeRect.set(planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
-                }
-                else{
-                    planeRect.set( planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
-                }
-
-                break;
-
-            case GAME_OVER:
-                break;
-
-            default:
-                break;
+            if (Gdx.graphics.getWidth() <= 800) {
+                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+            } else if (Gdx.graphics.getWidth() > 1280) {
+                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+            } else {
+                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+            }
         }
+
+        if (gameState == GameManager.GameState.GAME_OVER){
+
+        }
+
     }
 
 

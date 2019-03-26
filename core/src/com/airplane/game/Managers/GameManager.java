@@ -6,6 +6,8 @@ import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +20,8 @@ public class GameManager {
     public static TextureAtlas atlas;
     private static TextureRegion backGroundRegion;
     public static GameState gameState;
+    private static Music mainMusic;
+    public static Sound tapSound, crashSound, meteorSpawnSound;
 
     public enum GameState{
         INIT, ACTION, GAME_OVER
@@ -27,6 +31,14 @@ public class GameManager {
 
         atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
         backGroundRegion = atlas.findRegion("background");
+
+        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
+        mainMusic.setLooping(true);
+        mainMusic.play();
+
+        tapSound = Gdx.audio.newSound(Gdx.files.internal("pop.ogg"));
+        crashSound = Gdx.audio.newSound(Gdx.files.internal("crash.ogg"));
+        meteorSpawnSound = Gdx.audio.newSound(Gdx.files.internal("alarm.ogg"));
 
         gameState = GameState.INIT;
 
@@ -81,6 +93,10 @@ public class GameManager {
     public static void dispose(){
 
         atlas.dispose();
+        mainMusic.dispose();
+        tapSound.dispose();
+        meteorSpawnSound.dispose();
+        crashSound.dispose();
 
     }
 

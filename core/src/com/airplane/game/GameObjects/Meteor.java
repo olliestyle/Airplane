@@ -114,8 +114,8 @@ public class Meteor {
                 meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
             }
             /*переходим в GAME_OVER при наложении области столкновения самолета и области столкновения метеора*/
-            if (planeRect.overlaps(meteorRect))
-            { Gdx.input.vibrate(100);
+            if (isPlaneCollideWithMeteor())
+            {
                 if (GameManager.gameState != GameManager.GameState.GAME_OVER){
                     GameManager.gameState = GameManager.GameState.GAME_OVER;
                 }
@@ -146,6 +146,7 @@ public class Meteor {
         {
             return;
         }
+        GameManager.meteorSpawnSound.play();
         meteorVelocity.set(0,0);
         meteorInScene = true; // метеора отображается на экране
         int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
@@ -180,6 +181,17 @@ public class Meteor {
 //      int xMeteorVelosity = ThreadLocalRandom.current().nextInt(200, 300);
 //      int yMeteorVelosity = ThreadLocalRandom.current().nextInt(100, 200);
 //      meteorVelocity.set(xMeteorVelosity, yMeteorVelosity);
+
+    }
+
+    private static boolean isPlaneCollideWithMeteor(){
+        if (planeRect.overlaps(meteorRect)){
+            GameManager.crashSound.play();
+            Gdx.input.vibrate(100);
+            return true;
+        }
+        return false;
+
 
     }
 

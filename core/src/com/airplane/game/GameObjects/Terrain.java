@@ -167,6 +167,7 @@ public class Terrain {
                 || Plane.planeRect.overlaps(terrainBelowRectangle1) || Plane.planeRect.overlaps(terrainBelowRectangle2) || Plane.planeRect.overlaps(terrainBelowRectangle3)
                 || Plane.planeRect.overlaps(terrainBelowRectangle4) || Plane.planeRect.overlaps(terrainBelowRectangle5) || Plane.planeRect.overlaps(terrainBelowRectangle6)
                 || Plane.planeRect.overlaps(terrainBelowRectangle7) || Plane.planeRect.overlaps(terrainBelowRectangle8) || Plane.planeRect.overlaps(terrainBelowRectangle9)){
+            GameManager.crashSound.play();
             Gdx.input.vibrate(100);
             return true;
         }
