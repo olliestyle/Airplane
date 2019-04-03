@@ -1,5 +1,6 @@
 package com.airplane.game.GameObjects;
 
+import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 
 import com.badlogic.gdx.Game;
@@ -17,36 +18,45 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.airplane.game.GameObjects.Plane.deltaTime;
 import static com.airplane.game.GameObjects.Plane.planeRect;
 
 public class Meteor {
 
-    private static Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>(); //массив для хранения текстур метеоров
-    private static TextureRegion selectedMeteorTexture; // объект метеора, с которым будут проводиться взаимодействия
-    private static Sprite selectedMeteorSprite;
-    private static boolean meteorInScene; // для определения отображается ли в данный момент метеор?
-    private static final int METEOR_SPEED = 200; // скорость метеора
-    public static Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
-    public static Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
-    private static final Vector2 dampingMeteor = new Vector2(1.01f,1.01f);
-    public static float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
-    private static Rectangle meteorRect; // для коллизий
-    public static Vector2 destination = new Vector2();
-    private static float METEOR_RESIZE_WIDTH_FACTOR;
-    private static float METEOR_RESIZE_HEIGHT_FACTOR;
-    private static Texture testOverlapsMeteor;
+    private Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>(); //массив для хранения текстур метеоров
+    private TextureRegion selectedMeteorTexture; // объект метеора, с которым будут проводиться взаимодействия
+    private Sprite selectedMeteorSprite;
+    private boolean meteorInScene; // для определения отображается ли в данный момент метеор?
+    private final int METEOR_SPEED = 200; // скорость метеора
+    public Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
+    public Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
+    private final Vector2 dampingMeteor = new Vector2(1.01f,1.01f);
+    public float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
+    private Rectangle meteorRect; // для коллизий
+    public Vector2 destination = new Vector2();
+    private float METEOR_RESIZE_WIDTH_FACTOR;
+    private float METEOR_RESIZE_HEIGHT_FACTOR;
+    private Texture testOverlapsMeteor;
+    Airplane game;
+    TextureAtlas atlas;
+
+    public Meteor(Airplane airplane) {
+
+        game = airplane;
+        atlas = game.atlas;
+    }
 
 
-    public static void initializeMeteor(){
+
+    public void initializeMeteor(){
+
 
         /* добавляем в массив компоненты (все метеоры) нашего атласа текстур*/
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med1"));
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_med2"));
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_small1"));
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_small2"));
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny1"));
-        meteorTextures.add(GameManager.atlas.findRegion("meteorBrown_tiny2"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_med1"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_med2"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_small1"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_small2"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_tiny1"));
+        meteorTextures.add(atlas.findRegion("meteorBrown_tiny2"));
         testOverlapsMeteor = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
 
         meteorInScene = false;
@@ -58,7 +68,7 @@ public class Meteor {
 
     }
 
-    private static void setMeteorResizeWidthFactor(){
+    private void setMeteorResizeWidthFactor(){
         if (Gdx.graphics.getWidth() <= 800){
             METEOR_RESIZE_WIDTH_FACTOR = 1f;
         }
@@ -70,7 +80,7 @@ public class Meteor {
         }
     }
 
-    private static void setMeteorResizeHeightFactor(){
+    private void setMeteorResizeHeightFactor(){
         if (Gdx.graphics.getHeight() <= 480){
             METEOR_RESIZE_HEIGHT_FACTOR = 1f;
         }
@@ -82,7 +92,7 @@ public class Meteor {
         }
     }
 
-    public static void renderMeteor(SpriteBatch batch) {
+    public void renderMeteor(SpriteBatch batch) {
 
         if (meteorInScene) {
             //batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y, selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR, selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR);
@@ -93,7 +103,7 @@ public class Meteor {
         }
     }
 
-    public static void updateMeteor(){
+    public void updateMeteor(){
         /*если метеор находится на экране*/
         if(meteorInScene)
         {
@@ -130,7 +140,7 @@ public class Meteor {
 
         /*Вызываем метод launchMeteor только если nextMeteorIn становится меньше 0.
         * Но если метеор будет находится еще на экране то новый метеор не запускаем, а заново генерируем nextMeteorIn*/
-        nextMeteorIn -= deltaTime;
+        nextMeteorIn -= Gdx.graphics.getDeltaTime();
         if(nextMeteorIn <= 0)
         {
             launchMeteor();
@@ -138,7 +148,7 @@ public class Meteor {
 
     }
 
-    private static void launchMeteor(){
+    private void launchMeteor(){
 
         /* Math.random выдаёт от 0 до 0.999... */
         nextMeteorIn=1.5f+(float)Math.random()*5; // счетчик запуска следующего метеора
@@ -184,7 +194,7 @@ public class Meteor {
 
     }
 
-    private static boolean isPlaneCollideWithMeteor(){
+    private boolean isPlaneCollideWithMeteor(){
         if (planeRect.overlaps(meteorRect)){
             GameManager.crashSound.play();
             Gdx.input.vibrate(100);

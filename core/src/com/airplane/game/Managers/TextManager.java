@@ -1,6 +1,6 @@
 package com.airplane.game.Managers;
 
-import com.airplane.game.AirplaneGame;
+import com.airplane.game.AirplaneScene1;
 import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.Terrain;
@@ -17,18 +17,18 @@ import static com.airplane.game.Managers.GameManager.gameState;
 
 public class TextManager {
 
-    private static BitmapFont font; // отображаем текст на экране через эту переменную
-    private static BitmapFont fontGameOver;
-    private static float width;
-    private static float height;
+    private BitmapFont font; // отображаем текст на экране через эту переменную
+    private BitmapFont fontGameOver;
+    private float widthTextManager;
+    private float heightTextManager;
 
 
-    public static void initialize (float width, float height){
+    public void initialize (float width, float height){
 
         font = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
         fontGameOver = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
-        TextManager.width = width;
-        TextManager.height = height;
+        widthTextManager = width;
+        heightTextManager = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
         font.getData().setScale(width/1500); // масштабируем размер шрифта
         fontGameOver.setColor(Color.RED);
@@ -36,7 +36,7 @@ public class TextManager {
 
     }
 
-    public static void displayMessage(SpriteBatch batch){
+    public void displayMessage(SpriteBatch batch){
 
         // объект класса GlyphLayout хранит в себе информацию о шрифте и содержании текста
 
@@ -67,9 +67,7 @@ public class TextManager {
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
-        glyphLayoutTerrainOffset.setText(font, "terrainOffset = " + Terrain.terrainOffset);
 
-        glyphLayoutDeltaTime.setText(font, "deltaTime = " + Plane.deltaTime);
 
         //glyphLayoutPlaneAnimTime.setText(font, "planeAnimTime = " + Plane.planeAnimTime);
         glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
@@ -82,48 +80,38 @@ public class TextManager {
         glyphLayoutINIT.setText(font, "Tap next to the airplane to make it move ");
         //glyphLayoutGAMEOVER.setText(font, "Tap next to the airplane to make it move ");
         glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over");
-        glyphLayoutNextMeteorIn.setText(font, "nextMeteorIn = " + Meteor.nextMeteorIn);
-        glyphLayoutMeteorPositionY.setText(font, "MeteorPosition.y = " + Meteor.meteorPosition.y);
-        glyphLayoutMeteorPositionX.setText(font, "MeteorPosition.x = " + Meteor.meteorPosition.x);
-        glyphLayoutDestinationX.setText(font, "Destination.x = " + Meteor.destination.x);
-        glyphLayoutDestinationY.setText(font, "Destination.y = " + Meteor.destination.y);
-        glyphLayoutMeteorVelocityX.setText(font, "MeteorVelocity.x = " + Meteor.meteorVelocity.x);
-        glyphLayoutMeteorVelocityY.setText(font, "MeteorVelocity.y = " + Meteor.meteorVelocity.y);
 
 
 
 
-        font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height*0.76));
-        font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.73));
-        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.64));
 
-        font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height));
-
-        //font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));
-        font.draw(batch, glyphLayoutTouchPositionX, (float) (width*0.01), (float) (height*0.70));
-        font.draw(batch, glyphLayoutTouchPositionY, (float) (width*0.01), (float) (height*0.67));
-        /*
-        font.draw(batch, glyphLayoutTapDrawTime, (float) (width*0.01), (float) (height*0.79));
-        font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
-        font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
-        */
-        font.draw(batch, glyphLayoutNextMeteorIn, (float) (width*0.01), (float) (height*0.97));
-        font.draw(batch, glyphLayoutMeteorPositionX, (float) (width*0.01), (float) (height*0.94));
-        font.draw(batch, glyphLayoutMeteorPositionY, (float) (width*0.01), (float) (height*0.91));
-        font.draw(batch, glyphLayoutDestinationX, (float) (width*0.01), (float) (height*0.88));
-        font.draw(batch, glyphLayoutDestinationY, (float) (width*0.01), (float) (height*0.85));
-        font.draw(batch, glyphLayoutMeteorVelocityX, (float) (width*0.01), (float) (height*0.82));
-        font.draw(batch, glyphLayoutMeteorVelocityY, (float) (width*0.01), (float) (height*0.79));
-
-
-
-
+//        font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height*0.76));
+//        font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.73));
+//        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.64));
+//
+//        font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height));
+//
+//        //font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));
+//        font.draw(batch, glyphLayoutTouchPositionX, (float) (width*0.01), (float) (height*0.70));
+//        font.draw(batch, glyphLayoutTouchPositionY, (float) (width*0.01), (float) (height*0.67));
+//        /*
+//        font.draw(batch, glyphLayoutTapDrawTime, (float) (width*0.01), (float) (height*0.79));
+//        font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
+//        font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
+//        */
+//        font.draw(batch, glyphLayoutNextMeteorIn, (float) (width*0.01), (float) (height*0.97));
+//        font.draw(batch, glyphLayoutMeteorPositionX, (float) (width*0.01), (float) (height*0.94));
+//        font.draw(batch, glyphLayoutMeteorPositionY, (float) (width*0.01), (float) (height*0.91));
+//        font.draw(batch, glyphLayoutDestinationX, (float) (width*0.01), (float) (height*0.88));
+//        font.draw(batch, glyphLayoutDestinationY, (float) (width*0.01), (float) (height*0.85));
+//        font.draw(batch, glyphLayoutMeteorVelocityX, (float) (width*0.01), (float) (height*0.82));
+//        font.draw(batch, glyphLayoutMeteorVelocityY, (float) (width*0.01), (float) (height*0.79));
 
         if (gameState == GameManager.GameState.INIT)
-            font.draw(batch, glyphLayoutINIT, (float) (width/3.4), (float) (height/2.1));
+            font.draw(batch, glyphLayoutINIT, (float) (widthTextManager/3.4), (float) (heightTextManager/2.1));
 
         if (gameState == GameManager.GameState.GAME_OVER)
-            fontGameOver.draw(batch, glyphLayoutGAMEOVER, width/2 - 100, height/2 );
+            fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
 
 
     }

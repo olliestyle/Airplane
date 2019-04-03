@@ -1,6 +1,7 @@
 package com.airplane.game.Managers;
 
 
+import com.airplane.game.Airplane;
 import com.airplane.game.GameObjects.Plane;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,10 +13,13 @@ public class InputManager extends InputAdapter {
 
     public static Vector3 touchPosition = new Vector3(); // объект, хранящий в себе информацию о касании пользователя экрана
     OrthographicCamera camera;
+    Plane plane;
 
-    //конструктор
-    public InputManager(OrthographicCamera camera) {
+
+    public InputManager(OrthographicCamera camera, Plane inputPlane) {
+
         this.camera = camera;
+        plane = inputPlane;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class InputManager extends InputAdapter {
         float touchX = touchPosition.x;
         float touchY = touchPosition.y;
 
-        Plane.handleTouch(touchX, touchY);
+        plane.handleTouch(touchX, touchY);
 
         return false;
     }

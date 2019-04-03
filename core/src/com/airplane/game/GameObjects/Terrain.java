@@ -1,41 +1,53 @@
 package com.airplane.game.GameObjects;
 
+import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-import static com.airplane.game.Managers.GameManager.atlas;
 
 public class Terrain {
 
-    protected static TextureRegion terrainBelow;
-    protected static TextureRegion terrainAbove;
-    public static float terrainOffset;
-    private static Rectangle terrainAboveRectangle1;
-    private static Rectangle terrainAboveRectangle2;
-    private static Rectangle terrainAboveRectangle3;
-    private static Rectangle terrainAboveRectangle4;
-    private static Rectangle terrainAboveRectangle5;
-    private static Rectangle terrainAboveRectangle6;
-    private static Rectangle terrainAboveRectangle7;
-    private static Rectangle terrainAboveRectangle8;
-    private static Rectangle terrainAboveRectangle9;
-    private static Rectangle terrainBelowRectangle1;
-    private static Rectangle terrainBelowRectangle2;
-    private static Rectangle terrainBelowRectangle3;
-    private static Rectangle terrainBelowRectangle4;
-    private static Rectangle terrainBelowRectangle5;
-    private static Rectangle terrainBelowRectangle6;
-    private static Rectangle terrainBelowRectangle7;
-    private static Rectangle terrainBelowRectangle8;
-    private static Rectangle terrainBelowRectangle9;
-    private static Texture testOverlapsTerrain1;
-    private static Texture testOverlapsTerrain2;
+    protected TextureRegion terrainBelow;
+    protected TextureRegion terrainAbove;
+    public float terrainOffset;
+    private Rectangle terrainAboveRectangle1;
+    private Rectangle terrainAboveRectangle2;
+    private Rectangle terrainAboveRectangle3;
+    private Rectangle terrainAboveRectangle4;
+    private Rectangle terrainAboveRectangle5;
+    private Rectangle terrainAboveRectangle6;
+    private Rectangle terrainAboveRectangle7;
+    private Rectangle terrainAboveRectangle8;
+    private Rectangle terrainAboveRectangle9;
+    private Rectangle terrainBelowRectangle1;
+    private Rectangle terrainBelowRectangle2;
+    private Rectangle terrainBelowRectangle3;
+    private Rectangle terrainBelowRectangle4;
+    private Rectangle terrainBelowRectangle5;
+    private Rectangle terrainBelowRectangle6;
+    private Rectangle terrainBelowRectangle7;
+    private Rectangle terrainBelowRectangle8;
+    private Rectangle terrainBelowRectangle9;
+    private Texture testOverlapsTerrain1;
+    private Texture testOverlapsTerrain2;
+    Airplane game;
+    TextureAtlas atlas;
 
-    public static void initializeTerrain(){
+    public Terrain(Airplane airplane) {
+
+        game = airplane;
+        atlas = game.atlas;
+    }
+
+
+
+    public void initializeTerrain(){
+
 
         terrainBelow = atlas.findRegion("groundSnow");
         terrainAbove = new TextureRegion(terrainBelow);
@@ -62,7 +74,7 @@ public class Terrain {
         testOverlapsTerrain2 = new Texture(Gdx.files.internal("testoverlaps.png"));
     }
 
-    public static void renderTerrain(SpriteBatch batch){
+    public void renderTerrain(SpriteBatch batch){
 
         batch.draw(terrainBelow, terrainOffset, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем первый ландшафт  по ширине экрана
         batch.draw(terrainBelow, terrainOffset + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 9); // отрисовываем второй ландшафт, "пркрепляя его ко второму"
@@ -75,10 +87,13 @@ public class Terrain {
 
     }
 
-    public static void updateTerrain(){
+    public void updateTerrain(){
 
         terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // движение рельефа относительно самолета влево
+
         System.out.println("terrainOffset = " + terrainOffset);
+        System.out.println("planePosition.x = " + Plane.planePosition.x);
+        System.out.println("planeDefaultPosition.x = " + Plane.planeDefaultPosition.x);
 
         if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
             terrainOffset = 0;
@@ -160,7 +175,7 @@ public class Terrain {
 
     }
 
-    private static boolean isPlaneCollisionWithTerrain(){
+    private boolean isPlaneCollisionWithTerrain(){
         if(Plane.planeRect.overlaps(terrainAboveRectangle1) || Plane.planeRect.overlaps(terrainAboveRectangle2) || Plane.planeRect.overlaps(terrainAboveRectangle3)
                 || Plane.planeRect.overlaps(terrainAboveRectangle4) || Plane.planeRect.overlaps(terrainAboveRectangle5) || Plane.planeRect.overlaps(terrainAboveRectangle6)
                 || Plane.planeRect.overlaps(terrainAboveRectangle7) || Plane.planeRect.overlaps(terrainAboveRectangle8) || Plane.planeRect.overlaps(terrainAboveRectangle9)

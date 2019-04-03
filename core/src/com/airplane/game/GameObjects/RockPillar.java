@@ -1,9 +1,12 @@
 package com.airplane.game.GameObjects;
 
+import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,27 +14,34 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
-
-
 public class RockPillar {
 
     // Объявляем переменные класса
-    private static Array<Vector2> pillars;
-    private static Vector2 pillarPosition;
-    private static Vector2 lastPillarPosition;
-    private static TextureRegion pillarUp;
-    private static TextureRegion pillarDown;
-    public static Texture testOverlapsPillar1;
-    public static Texture testOverlapsPillar2;
-    public static Rectangle pillarRect1 = new Rectangle();
-    public static Rectangle pillarRect2 = new Rectangle();
+    private Array<Vector2> pillars;
+    private Vector2 pillarPosition;
+    private Vector2 lastPillarPosition;
+    private TextureRegion pillarUp;
+    private TextureRegion pillarDown;
+    public Texture testOverlapsPillar1;
+    public Texture testOverlapsPillar2;
+    public Rectangle pillarRect1 = new Rectangle();
+    public Rectangle pillarRect2 = new Rectangle();
+    Airplane game;
+    TextureAtlas atlas;
+
+    public RockPillar(Airplane airplane) {
+
+        game = airplane;
+        atlas = game.atlas;
+    }
 
     // Инициализируем переменные класса тут
-    public static void initializePillar(){
+    public void initializePillar(){
+
 
         pillars = new Array<Vector2>(); // Массив значений векторов, по которым будут обновляться скалы
-        pillarUp = GameManager.atlas.findRegion("rockSnow"); // Инициализация текстуры
-        pillarDown = GameManager.atlas.findRegion("rockSnowDown"); // Инициализация текстуры
+        pillarUp = atlas.findRegion("rockSnow"); // Инициализация текстуры
+        pillarDown = atlas.findRegion("rockSnowDown"); // Инициализация текстуры
         testOverlapsPillar1 = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
         testOverlapsPillar2 = new Texture(Gdx.files.internal("testoverlaps.png"));
         pillarPosition = new Vector2(); // вектор позиции скалы
@@ -43,7 +53,7 @@ public class RockPillar {
     }
 
     // метод добавления новой скалы на экран
-    private static void addPillar(float width, float height){
+    private void addPillar(float width, float height){
 
         System.out.println("addPillar here");
 
@@ -66,7 +76,7 @@ public class RockPillar {
         pillars.add(pillarPosition);
     }
 
-    public static void updatePillar(){
+    public void updatePillar(){
 
                 for (Vector2 vec: pillars)
                 {
@@ -124,9 +134,9 @@ public class RockPillar {
                 }
         }
 
-    public static void renderPillar(SpriteBatch batch){
+    public void renderPillar(SpriteBatch batch){
 
-        System.out.println("renderPillar here");
+        //System.out.println("renderPillar here");
                 for (Vector2 vec: pillars){
                     if (vec.y == 1){
                         if (Gdx.graphics.getWidth() <= 800){
@@ -166,7 +176,7 @@ public class RockPillar {
                 }
     }
 
-    private static boolean isPlaneCollisionWithPillar(){
+    private boolean isPlaneCollisionWithPillar(){
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
             Gdx.input.vibrate(100);
