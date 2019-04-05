@@ -7,6 +7,7 @@ import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,15 +23,15 @@ import static com.airplane.game.GameObjects.Plane.planeRect;
 
 public class Meteor {
 
-    private Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>(); //массив для хранения текстур метеоров
-    private TextureRegion selectedMeteorTexture; // объект метеора, с которым будут проводиться взаимодействия
+    private Array<TextureAtlas.AtlasRegion> meteorTextures = new Array<TextureAtlas.AtlasRegion>();
+    private TextureRegion selectedMeteorTexture;
     private Sprite selectedMeteorSprite;
-    private boolean meteorInScene; // для определения отображается ли в данный момент метеор?
-    private final int METEOR_SPEED = 200; // скорость метеора
-    public Vector2 meteorPosition= new Vector2(); // вектор позиции метеора
-    public Vector2 meteorVelocity= new Vector2(); // вектор скорости метеора
+    private boolean meteorInScene;
+    private final int METEOR_SPEED = 200;
+    public Vector2 meteorPosition= new Vector2();
+    public Vector2 meteorVelocity= new Vector2();
     private final Vector2 dampingMeteor = new Vector2(1.01f,1.01f);
-    public float nextMeteorIn; // переменная, по которой определяем время поялвления следующего метеора
+    public float nextMeteorIn;
     private Rectangle meteorRect; // для коллизий
     public Vector2 destination = new Vector2();
     private float METEOR_RESIZE_WIDTH_FACTOR;
@@ -38,6 +39,7 @@ public class Meteor {
     private Texture testOverlapsMeteor;
     Airplane game;
     TextureAtlas atlas;
+
 
     public Meteor(Airplane airplane) {
 
@@ -48,7 +50,6 @@ public class Meteor {
 
 
     public void initializeMeteor(){
-
 
         /* добавляем в массив компоненты (все метеоры) нашего атласа текстур*/
         meteorTextures.add(atlas.findRegion("meteorBrown_med1"));
@@ -61,10 +62,11 @@ public class Meteor {
 
         meteorInScene = false;
         nextMeteorIn = (float) (Math.random()*5);
-        meteorRect = new Rectangle(); // инициализируем прямоугольник
+        meteorRect = new Rectangle();
         setMeteorResizeHeightFactor();
         setMeteorResizeWidthFactor();
         launchMeteor();
+
 
     }
 

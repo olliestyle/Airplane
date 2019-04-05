@@ -37,7 +37,6 @@ public class GameManager {
         game = airplane;
         camera = game.camera;
         atlas = game.atlas;
-        System.out.println("LOAD ATLAS FOR GAMEMANAGER");
         terrain = new Terrain(game);
         meteor = new Meteor(game);
         rockPillar = new RockPillar(game);

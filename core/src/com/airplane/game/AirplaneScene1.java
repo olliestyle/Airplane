@@ -33,20 +33,18 @@ public class AirplaneScene1 extends ScreenAdapter {
 		camera = game.camera;
 		atlas = game.atlas;
 		plane = new Plane(game);
-
 		gameManager = new GameManager(game);
 
-		float height = Gdx.graphics.getHeight();
-		float width = Gdx.graphics.getWidth();
+		//float height = Gdx.graphics.getHeight();
+		//float width = Gdx.graphics.getWidth();
 		//camera = new OrthographicCamera();
 		//camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
 		//viewport = new FillViewport(width, height,camera);
 		//batch = new SpriteBatch();
 
-        plane.initialize(width, height);
-		gameManager.initialize(width,height);
-        Gdx.input.setInputProcessor(new InputManager(camera,plane));// доступ класса InputManager для получения касаний/нажатий
-
+        plane.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		gameManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.input.setInputProcessor(new InputManager(camera, plane));// доступ класса InputManager для получения касаний/нажатий
 	}
 
 	@Override

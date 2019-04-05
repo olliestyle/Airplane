@@ -32,6 +32,9 @@ public class Airplane extends Game {
         manager.load("pop.ogg", Sound.class);
         manager.load("alarm.ogg", Sound.class);
         manager.load("crash.ogg", Sound.class);
+        manager.load("star.ogg", Sound.class);
+        manager.load("shield.ogg", Sound.class);
+        manager.load("fuel.ogg", Sound.class);
         manager.load("Airplane.pack", TextureAtlas.class);
         manager.finishLoading();
 

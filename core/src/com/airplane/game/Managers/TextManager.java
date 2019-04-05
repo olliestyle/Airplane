@@ -22,7 +22,6 @@ public class TextManager {
     private float widthTextManager;
     private float heightTextManager;
 
-
     public void initialize (float width, float height){
 
         font = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
@@ -99,7 +98,7 @@ public class TextManager {
 //        font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
 //        font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
 //        */
-//        font.draw(batch, glyphLayoutNextMeteorIn, (float) (width*0.01), (float) (height*0.97));
+//        font.draw(batch, glyphLayoutNextMeteorIn, (float) (widthTextManager*0.01), (float) (heightTextManager*0.97));
 //        font.draw(batch, glyphLayoutMeteorPositionX, (float) (width*0.01), (float) (height*0.94));
 //        font.draw(batch, glyphLayoutMeteorPositionY, (float) (width*0.01), (float) (height*0.91));
 //        font.draw(batch, glyphLayoutDestinationX, (float) (width*0.01), (float) (height*0.88));
