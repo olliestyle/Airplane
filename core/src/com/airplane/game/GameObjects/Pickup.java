@@ -1,5 +1,7 @@
 package com.airplane.game.GameObjects;
 
+import com.airplane.game.Airplane;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,16 +9,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.lang.reflect.Array;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Pickup {
 
     private static final int STAR = 1;
     private static final int SHIELD = 2;
     private static final int FUEL = 3;
-    private Vector3 pickUpTiming;
+
     TextureRegion pickUpTexture;
-    Vector2 pickUpPosition;
     int pickUpType, pickUpValue;
     Sound pickUpSound;
+    public Vector2 pickUpPosition = new Vector2();
 
     public Pickup(int pickUpType, AssetManager manager){
 
@@ -42,11 +47,15 @@ public class Pickup {
         }
     }
 
-    private void checkAndCreatePickUp(float delta){
+    public static int getSTAR() {
+        return STAR;
+    }
 
-        pickUpTiming.sub(delta);
-        if(pickUpTiming.x <= 0){
+    public static int getSHIELD() {
+        return SHIELD;
+    }
 
-        }
+    public static int getFUEL() {
+        return FUEL;
     }
 }

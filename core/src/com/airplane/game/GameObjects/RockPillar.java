@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class RockPillar {
 
-    // Объявляем переменные класса
+
     private Array<Vector2> pillars;
     private Vector2 pillarPosition;
     private Vector2 lastPillarPosition;
@@ -24,27 +24,28 @@ public class RockPillar {
     private TextureRegion pillarDown;
     public Texture testOverlapsPillar1;
     public Texture testOverlapsPillar2;
-    public Rectangle pillarRect1 = new Rectangle();
-    public Rectangle pillarRect2 = new Rectangle();
+    private Rectangle pillarRect1 = new Rectangle();
+
+    private Rectangle pillarRect2 = new Rectangle();
     Airplane game;
     TextureAtlas atlas;
 
     public RockPillar(Airplane airplane) {
 
         game = airplane;
+        System.out.println("game in rockpillar = " + game);
         atlas = game.atlas;
     }
 
-    // Инициализируем переменные класса тут
+
     public void initializePillar(){
 
-
-        pillars = new Array<Vector2>(); // Массив значений векторов, по которым будут обновляться скалы
-        pillarUp = atlas.findRegion("rockSnow"); // Инициализация текстуры
-        pillarDown = atlas.findRegion("rockSnowDown"); // Инициализация текстуры
+        pillars = new Array<Vector2>();
+        pillarUp = atlas.findRegion("rockSnow");
+        pillarDown = atlas.findRegion("rockSnowDown");
         testOverlapsPillar1 = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
         testOverlapsPillar2 = new Texture(Gdx.files.internal("testoverlaps.png"));
-        pillarPosition = new Vector2(); // вектор позиции скалы
+        pillarPosition = new Vector2();
         lastPillarPosition = new Vector2(); // последний вектор позиции скалы - нужен для отрисовки !1 элемента массива
 
         System.out.println("initializePillar here");
@@ -52,7 +53,7 @@ public class RockPillar {
 
     }
 
-    // метод добавления новой скалы на экран
+
     private void addPillar(float width, float height){
 
         System.out.println("addPillar here");
@@ -84,7 +85,6 @@ public class RockPillar {
                     vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // перемещение скал относительно "движения" самолета
                     System.out.println("vec.x = " + vec.x);
                     System.out.println("pillars = " + pillars.size);
-
 
                     if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
                     {
@@ -184,6 +184,18 @@ public class RockPillar {
             return true;
         }
         return false;
+    }
+
+    public Array<Vector2> getPillars() {
+        return pillars;
+    }
+
+    public Rectangle getPillarRect1() {
+        return pillarRect1;
+    }
+
+    public Rectangle getPillarRect2() {
+        return pillarRect2;
     }
 }
 

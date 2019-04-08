@@ -44,6 +44,7 @@ public class Meteor {
     public Meteor(Airplane airplane) {
 
         game = airplane;
+        System.out.println("game in meteor = " + game);
         atlas = game.atlas;
     }
 

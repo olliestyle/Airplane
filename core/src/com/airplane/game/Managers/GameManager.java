@@ -3,6 +3,7 @@ package com.airplane.game.Managers;
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.GameObjects.Meteor;
+import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
@@ -15,11 +16,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.lang.reflect.Array;
 
 
 public class GameManager {
 
-    //public static TextureAtlas atlas;
     private TextureRegion backGroundRegion;
     public static GameState gameState;
     private Music mainMusic;
@@ -31,6 +32,7 @@ public class GameManager {
     Airplane game;
     TextureAtlas atlas;
     OrthographicCamera camera;
+    PickUpSpawnManager pickUpSpawnManager;
 
     public GameManager(Airplane airplane) {
 
@@ -41,7 +43,12 @@ public class GameManager {
         meteor = new Meteor(game);
         rockPillar = new RockPillar(game);
         textManager = new TextManager();
+        pickUpSpawnManager = new PickUpSpawnManager(game);
 
+    }
+
+    public RockPillar getRockPillar() {
+        return rockPillar;
     }
 
     public enum GameState{
@@ -100,6 +107,7 @@ public class GameManager {
                 terrain.updateTerrain();
                 Plane.planePosition.x = Plane.planeDefaultPosition.x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
                 meteor.updateMeteor();
+                pickUpSpawnManager.checkAndCreatePickUp(Gdx.graphics.getDeltaTime());
 
                 break;
 

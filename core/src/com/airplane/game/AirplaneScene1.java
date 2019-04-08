@@ -18,7 +18,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 	//OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	//private static Viewport viewport;
 
-	Airplane game;
+	private Airplane game;
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	TextureAtlas atlas;
@@ -114,4 +114,5 @@ public class AirplaneScene1 extends ScreenAdapter {
 		gameManager.dispose();
 
 	}
+
 }
