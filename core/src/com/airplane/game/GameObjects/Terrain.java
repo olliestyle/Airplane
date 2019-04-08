@@ -3,6 +3,8 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -35,20 +37,20 @@ public class Terrain {
     private Rectangle terrainBelowRectangle9;
     private Texture testOverlapsTerrain1;
     private Texture testOverlapsTerrain2;
-    Airplane game;
-    TextureAtlas atlas;
+    private TextureAtlas atlas;
+    private Sound crashSound;
+    private AssetManager manager;
 
     public Terrain(Airplane airplane) {
 
-        game = airplane;
-        atlas = game.atlas;
+        System.out.println("game in terrain = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
     }
-
-
 
     public void initializeTerrain(){
 
-
+        crashSound = manager.get("crash.ogg");
         terrainBelow = atlas.findRegion("groundSnow");
         terrainAbove = new TextureRegion(terrainBelow);
         terrainAbove.flip(true,true);
@@ -91,9 +93,9 @@ public class Terrain {
 
         terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // движение рельефа относительно самолета влево
 
-        System.out.println("terrainOffset = " + terrainOffset);
-        System.out.println("planePosition.x = " + Plane.planePosition.x);
-        System.out.println("planeDefaultPosition.x = " + Plane.planeDefaultPosition.x);
+        //System.out.println("terrainOffset = " + terrainOffset);
+        //System.out.println("planePosition.x = " + Plane.planePosition.x);
+        //System.out.println("planeDefaultPosition.x = " + Plane.planeDefaultPosition.x);
 
         if (terrainOffset * -1 > Gdx.graphics.getWidth()) {
             terrainOffset = 0;
@@ -182,7 +184,7 @@ public class Terrain {
                 || Plane.planeRect.overlaps(terrainBelowRectangle1) || Plane.planeRect.overlaps(terrainBelowRectangle2) || Plane.planeRect.overlaps(terrainBelowRectangle3)
                 || Plane.planeRect.overlaps(terrainBelowRectangle4) || Plane.planeRect.overlaps(terrainBelowRectangle5) || Plane.planeRect.overlaps(terrainBelowRectangle6)
                 || Plane.planeRect.overlaps(terrainBelowRectangle7) || Plane.planeRect.overlaps(terrainBelowRectangle8) || Plane.planeRect.overlaps(terrainBelowRectangle9)){
-            GameManager.crashSound.play();
+            crashSound.play();
             Gdx.input.vibrate(100);
             return true;
         }

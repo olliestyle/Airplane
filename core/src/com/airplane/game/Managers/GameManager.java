@@ -24,31 +24,22 @@ public class GameManager {
     private TextureRegion backGroundRegion;
     public static GameState gameState;
     private Music mainMusic;
-    public static Sound tapSound, crashSound, meteorSpawnSound;
-    public Terrain terrain;
-    public TextManager textManager;
-    public Meteor meteor;
-    public RockPillar rockPillar;
-    Airplane game;
-    TextureAtlas atlas;
-    OrthographicCamera camera;
-    PickUpSpawnManager pickUpSpawnManager;
+    private Terrain terrain;
+    private TextManager textManager;
+    private Meteor meteor;
+    private RockPillar rockPillar;
+    private TextureAtlas atlas;
+    private PickUpSpawnManager pickUpSpawnManager;
 
     public GameManager(Airplane airplane) {
 
-        game = airplane;
-        camera = game.camera;
-        atlas = game.atlas;
-        terrain = new Terrain(game);
-        meteor = new Meteor(game);
-        rockPillar = new RockPillar(game);
+        atlas = airplane.atlas;
+        terrain = new Terrain(airplane);
+        meteor = new Meteor(airplane);
+        rockPillar = new RockPillar(airplane);
         textManager = new TextManager();
-        pickUpSpawnManager = new PickUpSpawnManager(game);
+        pickUpSpawnManager = new PickUpSpawnManager(airplane);
 
-    }
-
-    public RockPillar getRockPillar() {
-        return rockPillar;
     }
 
     public enum GameState{
@@ -65,10 +56,6 @@ public class GameManager {
         mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
         mainMusic.setLooping(true);
         mainMusic.play();
-
-        tapSound = Gdx.audio.newSound(Gdx.files.internal("pop.ogg"));
-        crashSound = Gdx.audio.newSound(Gdx.files.internal("crash.ogg"));
-        meteorSpawnSound = Gdx.audio.newSound(Gdx.files.internal("alarm.ogg"));
 
         gameState = GameState.INIT;
 
@@ -88,6 +75,7 @@ public class GameManager {
         meteor.renderMeteor(batch);
         terrain.renderTerrain(batch);
         textManager.displayMessage(batch);
+        pickUpSpawnManager.drawPickUp(batch);
     }
 
     public void updateScene(){
@@ -103,11 +91,14 @@ public class GameManager {
 
             case ACTION:
 
+                // объекты, движущиеся относительно самолета должны обновляться перед присваиванием дефолтной позиции самолета по x
                 rockPillar.updatePillar();
                 terrain.updateTerrain();
+                pickUpSpawnManager.updatePickUp();
                 Plane.planePosition.x = Plane.planeDefaultPosition.x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
                 meteor.updateMeteor();
                 pickUpSpawnManager.checkAndCreatePickUp(Gdx.graphics.getDeltaTime());
+
 
                 break;
 
@@ -116,6 +107,7 @@ public class GameManager {
                 break;
 
             default:
+
                 break;
         }
     }
@@ -124,10 +116,6 @@ public class GameManager {
 
         //atlas.dispose();
         mainMusic.dispose();
-        tapSound.dispose();
-        meteorSpawnSound.dispose();
-        crashSound.dispose();
-
     }
 
 }

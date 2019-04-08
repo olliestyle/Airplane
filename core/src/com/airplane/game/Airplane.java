@@ -26,7 +26,6 @@ public class Airplane extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
         batch = new SpriteBatch();
-        //atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
 
         manager.load("journey.mp3", Music.class);
         manager.load("pop.ogg", Sound.class);
@@ -38,7 +37,7 @@ public class Airplane extends Game {
         manager.load("Airplane.pack", TextureAtlas.class);
         manager.finishLoading();
 
-        atlas=manager.get("Airplane.pack", TextureAtlas.class);
+        atlas = manager.get("Airplane.pack", TextureAtlas.class);
         setScreen(new AirplaneScene1(this)); //this - экземпляр класса Airplane, которым мы создаем и для которого вызывается этот конструктор
     }
 
@@ -57,5 +56,6 @@ public class Airplane extends Game {
     public void dispose() {
         batch.dispose();
         atlas.dispose();
+        manager.dispose();
     }
 }

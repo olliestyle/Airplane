@@ -16,7 +16,6 @@ public class InputManager extends InputAdapter {
     private OrthographicCamera camera;
     private Plane plane;
 
-
     public InputManager(OrthographicCamera camera, Plane plane) {
 
         this.camera = camera;
@@ -27,9 +26,7 @@ public class InputManager extends InputAdapter {
     @Override
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
 
-        GameManager.tapSound.play();
         touchPosition.set(screenX,screenY,0);// получаем координаты касания относительно области просмотра нашей камеры
-
 
         camera.unproject(touchPosition);
 

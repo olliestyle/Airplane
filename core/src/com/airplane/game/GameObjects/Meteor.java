@@ -6,6 +6,8 @@ import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -37,15 +39,16 @@ public class Meteor {
     private float METEOR_RESIZE_WIDTH_FACTOR;
     private float METEOR_RESIZE_HEIGHT_FACTOR;
     private Texture testOverlapsMeteor;
-    Airplane game;
-    TextureAtlas atlas;
+    private TextureAtlas atlas;
+    private Sound crashSound, meteorSpawnSound;
+    private AssetManager manager;
 
 
     public Meteor(Airplane airplane) {
 
-        game = airplane;
-        System.out.println("game in meteor = " + game);
-        atlas = game.atlas;
+        System.out.println("game in meteor = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
     }
 
 
@@ -64,11 +67,11 @@ public class Meteor {
         meteorInScene = false;
         nextMeteorIn = (float) (Math.random()*5);
         meteorRect = new Rectangle();
+        crashSound = manager.get("crash.ogg");
+        meteorSpawnSound = manager.get("alarm.ogg");
         setMeteorResizeHeightFactor();
         setMeteorResizeWidthFactor();
         launchMeteor();
-
-
     }
 
     private void setMeteorResizeWidthFactor(){
@@ -159,14 +162,14 @@ public class Meteor {
         {
             return;
         }
-        GameManager.meteorSpawnSound.play();
+        meteorSpawnSound.play();
         meteorVelocity.set(0,0);
         meteorInScene = true; // метеора отображается на экране
         int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
         selectedMeteorTexture = meteorTextures.get(id); // устанавливаем выбранную текстуру, относительно выбранного метеора
         selectedMeteorSprite = new Sprite(selectedMeteorTexture);
 
-        System.out.println("SelectedMeteorTexture " + meteorTextures.get(id));
+        //System.out.println("SelectedMeteorTexture " + meteorTextures.get(id));
         //meteorPosition.x = Gdx.graphics.getWidth() + 20; // начальная позиция по x - ширина экрана + 20 пикселей
 
         //meteorPosition.x = (float) (Math.random()*Gdx.graphics.getWidth()); // начальная позиция по x - ширина экрана + 20 пикселей
@@ -174,16 +177,16 @@ public class Meteor {
         meteorPosition.y = ThreadLocalRandom.current().nextInt(Gdx.graphics.getHeight()-20, Gdx.graphics.getHeight()); // начальная позиция по y
         //meteorPosition.y =(float) (Math.random()*Gdx.graphics.getHeight()); // начальная позиция по y
 
-        System.out.println("meteorPosition.x = " + meteorPosition.x);
-        System.out.println("meteorPosition.y = " + meteorPosition.y);
+        //System.out.println("meteorPosition.x = " + meteorPosition.x);
+        //System.out.println("meteorPosition.y = " + meteorPosition.y);
 
         //destination.x = (float) (Math.random()*Gdx.graphics.getWidth()); // вектор направления куда будет стремиться наш метеор
         destination.x = ThreadLocalRandom.current().nextInt(-20, 0); // вектор направления куда будет стремиться наш метеор
         destination.y = ThreadLocalRandom.current().nextInt(0, Gdx.graphics.getHeight()/2); // вектор направления куда будет стремиться наш метеор
         //destination.y = (float) (Math.random()*Gdx.graphics.getHeight()); // вектор направления куда будет стремиться наш метеор
 
-        System.out.println("destination.x = " + destination.x);
-        System.out.println("destination.y = " + destination.y);
+        //System.out.println("destination.x = " + destination.x);
+        //System.out.println("destination.y = " + destination.y);
 
         destination.sub(meteorPosition).nor(); // nor - нормализация чтобы вектор направления имел длину 1
 
@@ -199,7 +202,7 @@ public class Meteor {
 
     private boolean isPlaneCollideWithMeteor(){
         if (planeRect.overlaps(meteorRect)){
-            GameManager.crashSound.play();
+            crashSound.play();
             Gdx.input.vibrate(100);
             return true;
         }

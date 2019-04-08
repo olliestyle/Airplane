@@ -4,23 +4,21 @@ import com.airplane.game.Airplane;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
-import java.lang.reflect.Array;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Pickup {
 
-    private static final int STAR = 1;
-    private static final int SHIELD = 2;
-    private static final int FUEL = 3;
+    public static final int STAR = 1;
+    public static final int SHIELD = 2;
+    public static final int FUEL = 3;
 
-    TextureRegion pickUpTexture;
-    int pickUpType, pickUpValue;
-    Sound pickUpSound;
+    public TextureRegion pickUpTexture;
+    public int pickUpType, pickUpValue;
+    public Sound pickUpSound;
     public Vector2 pickUpPosition = new Vector2();
 
     public Pickup(int pickUpType, AssetManager manager){
@@ -47,15 +45,4 @@ public class Pickup {
         }
     }
 
-    public static int getSTAR() {
-        return STAR;
-    }
-
-    public static int getSHIELD() {
-        return SHIELD;
-    }
-
-    public static int getFUEL() {
-        return FUEL;
-    }
 }

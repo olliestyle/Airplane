@@ -4,6 +4,8 @@ import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 import com.airplane.game.Managers.InputManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,21 +40,24 @@ public class Plane{
     private float PLANE_RESIZE_HEIGHT_FACTOR;
     private float TAP_INDICATOR_RESIZE_WIDTH_FACTOR;
     private float TAP_INDICATOR_RESIZE_HEIGHT_FACTOR;
-    private Texture testOverlapsPlane;
-    Airplane game;
-    TextureAtlas atlas;
+    private Texture testOverlapsPlane; // для проверки коллизий
+    private TextureAtlas atlas;
+    private Sound tapSound;
+    private AssetManager manager;
+
 
     public Plane(Airplane airplane) {
 
-        game = airplane;
-        atlas = game.atlas;
+        System.out.println("game in plane = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
     }
 
 
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public void initialize(float width, float height){
 
-        System.out.println("PLANE INITIALIZE");
+        //System.out.println("PLANE INITIALIZE");
         planeTexture = atlas.findRegion("planeGreen1");
         plane = new Animation(0.05f, atlas.findRegion("planeGreen1"), atlas.findRegion("planeGreen2"), atlas.findRegion("planeGreen3")); // инициализация анимации объекта plane
         plane.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
@@ -67,6 +72,7 @@ public class Plane{
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
         testOverlapsPlane = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
         tapIndicator = atlas.findRegion("tap2");
+        tapSound = manager.get("pop.ogg");
         setPlaneResizeWidthFactor();
         setPlaneResizeHeightFactor();
     }
@@ -160,9 +166,10 @@ public class Plane{
     }
 
 
-    // метод handleTouch служит для обработки касаний относительно самолета
+
     public void handleTouch(float x, float y){
 
+        tapSound.play();
         tempVector.set(planePosition.x, planePosition.y);
         //System.out.println("tempVector before subtract = " + tempVector);
         //System.out.println("touchPosition.x = " + x);
@@ -176,7 +183,7 @@ public class Plane{
             planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
         }
         else{
-            System.out.println("planeVelocity = " + planeVelocity);
+            //System.out.println("planeVelocity = " + planeVelocity);
             planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
         }
 

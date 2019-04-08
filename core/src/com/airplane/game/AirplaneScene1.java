@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class AirplaneScene1 extends ScreenAdapter {
@@ -18,28 +20,23 @@ public class AirplaneScene1 extends ScreenAdapter {
 	//OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
 	//private static Viewport viewport;
 
-	private Airplane game;
-	SpriteBatch batch;
-	OrthographicCamera camera;
-	TextureAtlas atlas;
-	GameManager gameManager;
-	Plane plane;
+	private SpriteBatch batch;
+	private OrthographicCamera camera;
+	private GameManager gameManager;
+	private Plane plane;
 
 	public AirplaneScene1 (Airplane airplane){
 
-		System.out.println("I'm in the GAME");
-		game = airplane;
-		batch = game.batch;
-		camera = game.camera;
-		atlas = game.atlas;
-		plane = new Plane(game);
-		gameManager = new GameManager(game);
+		batch = airplane.batch;
+		camera = airplane.camera;
+		plane = new Plane(airplane);
+		gameManager = new GameManager(airplane);
 
 		//float height = Gdx.graphics.getHeight();
 		//float width = Gdx.graphics.getWidth();
 		//camera = new OrthographicCamera();
 		//camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
-		//viewport = new FillViewport(width, height,camera);
+		//viewport = new FillViewport(3000, 1200, camera);
 		//batch = new SpriteBatch();
 
         plane.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -50,7 +47,6 @@ public class AirplaneScene1 extends ScreenAdapter {
 	@Override
 	public void show() {
 
-		System.out.println("SHOW HERE");
 	}
 
 	@Override

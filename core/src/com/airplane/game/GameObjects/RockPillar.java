@@ -4,6 +4,7 @@ import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.utils.Array;
 
 public class RockPillar {
 
-
     private Array<Vector2> pillars;
     private Vector2 pillarPosition;
     private Vector2 lastPillarPosition;
@@ -25,16 +25,16 @@ public class RockPillar {
     public Texture testOverlapsPillar1;
     public Texture testOverlapsPillar2;
     private Rectangle pillarRect1 = new Rectangle();
-
     private Rectangle pillarRect2 = new Rectangle();
-    Airplane game;
-    TextureAtlas atlas;
+    private TextureAtlas atlas;
+    private Sound crashSound;
+    private AssetManager manager;
 
     public RockPillar(Airplane airplane) {
 
-        game = airplane;
-        System.out.println("game in rockpillar = " + game);
-        atlas = game.atlas;
+        System.out.println("game in rockpillar = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
     }
 
 
@@ -47,16 +47,17 @@ public class RockPillar {
         testOverlapsPillar2 = new Texture(Gdx.files.internal("testoverlaps.png"));
         pillarPosition = new Vector2();
         lastPillarPosition = new Vector2(); // последний вектор позиции скалы - нужен для отрисовки !1 элемента массива
+        crashSound = manager.get("crash.ogg");
 
-        System.out.println("initializePillar here");
-        System.out.println("lastpillarposition = " + lastPillarPosition);
+        //System.out.println("initializePillar here");
+        //System.out.println("lastpillarposition = " + lastPillarPosition);
 
     }
 
 
     private void addPillar(float width, float height){
 
-        System.out.println("addPillar here");
+        //System.out.println("addPillar here");
 
         // если массив пуст, то добавить скалу относительно ширины экрана
         if(pillars.size == 0) {
@@ -83,12 +84,12 @@ public class RockPillar {
                 {
 
                     vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // перемещение скал относительно "движения" самолета
-                    System.out.println("vec.x = " + vec.x);
-                    System.out.println("pillars = " + pillars.size);
+                    //System.out.println("vec.x = " + vec.x);
+                    //System.out.println("pillars = " + pillars.size);
 
                     if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
                     {
-                        System.out.println("UDALIAU VECTOR");
+                        //System.out.println("UDALIAU VECTOR");
                         pillars.removeValue(vec,false); // удаляем скалу, если она вылезла за пределы экрана слева
                     }
 
@@ -129,7 +130,7 @@ public class RockPillar {
                     break;
                 }
                 if (lastPillarPosition.x <= Gdx.graphics.getWidth()/1000){ // <= потому что на экранах <1000 будет 0.9, 0.8... что = 0
-                    System.out.println("DOBAVLIAU VECTOR");
+                    //System.out.println("DOBAVLIAU VECTOR");
                     addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу
                 }
         }
@@ -180,7 +181,7 @@ public class RockPillar {
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
             Gdx.input.vibrate(100);
-            GameManager.crashSound.play();
+            crashSound.play();
             return true;
         }
         return false;
