@@ -38,7 +38,7 @@ public class GameManager {
         meteor = new Meteor(airplane);
         rockPillar = new RockPillar(airplane);
         textManager = new TextManager();
-        pickUpSpawnManager = new PickUpSpawnManager(airplane);
+        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar);
 
     }
 
@@ -47,7 +47,6 @@ public class GameManager {
     }
 
     public void initialize(float width, float height){
-
 
         System.out.println("atlas = " + atlas);
         //atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
@@ -62,6 +61,7 @@ public class GameManager {
         terrain.initializeTerrain();
         textManager.initialize(width,height);
         rockPillar.initializePillar();
+        System.out.println("rockPillar in GM" + rockPillar);
         meteor.initializeMeteor();
 
     }
@@ -110,6 +110,10 @@ public class GameManager {
 
                 break;
         }
+    }
+
+    public RockPillar getRockPillar(){
+        return rockPillar;
     }
 
     public void dispose(){

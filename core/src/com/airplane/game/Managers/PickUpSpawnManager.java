@@ -24,11 +24,14 @@ public class PickUpSpawnManager{
     private Pickup tempPickUp;
     private AssetManager manager;
     private Rectangle pickUpRect = new Rectangle();
-    private int starCount, shieldCount , fuelCount;
+    private int starCount, shieldCount, fuelCount;
+    private RockPillar rockPillar;
 
-    PickUpSpawnManager (Airplane airplane){
+    // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
+    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar){
 
         manager = airplane.manager;
+        this.rockPillar = rockPillar;
     }
 
 
@@ -61,11 +64,12 @@ public class PickUpSpawnManager{
         Vector2 randomPosition = new Vector2();
         randomPosition.x = ThreadLocalRandom.current().nextInt(Gdx.graphics.getWidth() - 100, Gdx.graphics.getWidth());
         randomPosition.y = ThreadLocalRandom.current().nextInt(50,Gdx.graphics.getHeight()- 50);
-        //System.out.println("rockPillar in gameManager = " + gameManager.getRockPillar());
-        /*
-        for (Vector2 vec: gameManager.getRockPillar().getPillars()){
+        System.out.println("rockPillar = " + rockPillar);
 
-            if (gameManager.getRockPillar().getPillarRect1().contains(randomPosition) || gameManager.getRockPillar().getPillarRect2().contains(randomPosition)){
+        //Если пикап создается внутри скалы вернем false
+        /*for (Vector2 vec: rockPillar.getPillars()){
+
+            if (vec.y .getPillarRect1().contains(randomPosition) || gameManager.getRockPillar().getPillarRect2().contains(randomPosition)){
                 return false;
             }
         }*/
@@ -78,7 +82,7 @@ public class PickUpSpawnManager{
     public void drawPickUp(SpriteBatch batch){
 
         for(Pickup pickup: pickupsInScene) {
-            System.out.println("array pickup size = " + pickupsInScene.size);
+            //System.out.println("array pickup size = " + pickupsInScene.size);
 
             batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y);
         }
