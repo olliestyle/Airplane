@@ -38,8 +38,7 @@ public class GameManager {
         meteor = new Meteor(airplane);
         rockPillar = new RockPillar(airplane);
         textManager = new TextManager();
-        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar);
-
+        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar); // нам нужно получить именно ту скалу, которая отрисована на данный момент
     }
 
     public enum GameState{

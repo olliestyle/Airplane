@@ -7,6 +7,7 @@ import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -26,6 +27,7 @@ public class PickUpSpawnManager{
     private Rectangle pickUpRect = new Rectangle();
     private int starCount, shieldCount, fuelCount;
     private RockPillar rockPillar;
+    public Texture testOverlapsPickup;
 
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
     PickUpSpawnManager (Airplane airplane, RockPillar rockPillar){
@@ -34,8 +36,9 @@ public class PickUpSpawnManager{
         this.rockPillar = rockPillar;
     }
 
-
     public void checkAndCreatePickUp(float delta){
+
+        testOverlapsPickup = new Texture(Gdx.files.internal("testoverlaps.png"));
 
         pickUpTiming.sub(delta);
         if(pickUpTiming.x <= 0){
@@ -66,13 +69,10 @@ public class PickUpSpawnManager{
         randomPosition.y = ThreadLocalRandom.current().nextInt(50,Gdx.graphics.getHeight()- 50);
         System.out.println("rockPillar = " + rockPillar);
 
-        //Если пикап создается внутри скалы вернем false
-        /*for (Vector2 vec: rockPillar.getPillars()){
+        if (rockPillar.getPillarRect1().contains(randomPosition) || rockPillar.getPillarRect2().contains(randomPosition)){
+            return false;
+        }
 
-            if (vec.y .getPillarRect1().contains(randomPosition) || gameManager.getRockPillar().getPillarRect2().contains(randomPosition)){
-                return false;
-            }
-        }*/
         tempPickUp = new Pickup(pickUpType, manager);
         tempPickUp.pickUpPosition.set(randomPosition);
         pickupsInScene.add(tempPickUp);
@@ -84,7 +84,16 @@ public class PickUpSpawnManager{
         for(Pickup pickup: pickupsInScene) {
             //System.out.println("array pickup size = " + pickupsInScene.size);
 
-            batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y);
+            if (Gdx.graphics.getWidth() <= 800){
+                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                //batch.draw(testOverlapsPickup, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+            }
+            else if (Gdx.graphics.getWidth() > 1280){
+                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/32, Gdx.graphics.getHeight()/25);
+            }
+            else{
+                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+            }
         }
     }
 
@@ -94,7 +103,16 @@ public class PickUpSpawnManager{
             if(pickup.pickUpPosition.x + pickup.pickUpTexture.getRegionWidth() < -10){
                 pickupsInScene.removeValue(pickup, false);
             }
-            pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, pickup.pickUpTexture.getRegionWidth(), pickup.pickUpTexture.getRegionHeight());
+            if (Gdx.graphics.getWidth() <= 800){
+                pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+            }
+            else if (Gdx.graphics.getWidth() > 1280){
+                pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/32, Gdx.graphics.getHeight()/25);
+            }
+            else{
+                pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+            }
+
             if(planeRect.overlaps(pickUpRect)) {
                 pickIt(pickup);
             }
@@ -116,5 +134,4 @@ public class PickUpSpawnManager{
         }
         pickupsInScene.removeValue(pickup, false);
     }
-
 }

@@ -131,7 +131,7 @@ public class RockPillar {
                 }
                 if (lastPillarPosition.x <= Gdx.graphics.getWidth()/1000){ // <= потому что на экранах <1000 будет 0.9, 0.8... что = 0
                     //System.out.println("DOBAVLIAU VECTOR");
-                    addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // добавляем скалу
+                    addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                 }
         }
 
