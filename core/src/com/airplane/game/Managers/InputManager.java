@@ -27,8 +27,11 @@ public class InputManager extends InputAdapter {
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
 
         touchPosition.set(screenX,screenY,0);// получаем координаты касания относительно области просмотра нашей камеры
-
+        //System.out.println("Before unproject x + " + touchPosition.x);
+        //System.out.println("Before unproject y + " + touchPosition.y);
         camera.unproject(touchPosition);
+        //System.out.println("After unproject x + " + touchPosition.x);
+        //System.out.println("After unproject y + " + touchPosition.y);
 
         float touchX = touchPosition.x;
         float touchY = touchPosition.y;

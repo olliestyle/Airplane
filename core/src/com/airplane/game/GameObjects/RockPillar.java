@@ -26,6 +26,7 @@ public class RockPillar {
     public Texture testOverlapsPillar2;
     private Rectangle pillarRect1 = new Rectangle();
     private Rectangle pillarRect2 = new Rectangle();
+    private Rectangle pillarRect3 = new Rectangle(); // Нужен для того, чтобы пикапы не создавались внутри скал
     private TextureAtlas atlas;
     private Sound crashSound;
     private AssetManager manager;
@@ -97,6 +98,7 @@ public class RockPillar {
                         if (Gdx.graphics.getWidth() <= 800){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
@@ -105,6 +107,7 @@ public class RockPillar {
                         else{
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
                         }
                     }
                     else{
@@ -119,6 +122,7 @@ public class RockPillar {
                         else{
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
                         }
 
                     }
@@ -142,36 +146,40 @@ public class RockPillar {
                     if (vec.y == 1){
                         if (Gdx.graphics.getWidth() <= 800){
                             batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
                             batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else {
                             batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                     }
                     else{
                         if (Gdx.graphics.getWidth() <= 800){
                             batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
                             batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
                             //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                         else {
                             //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
                             batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/3.5)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                     }
                 }
@@ -198,5 +206,7 @@ public class RockPillar {
     public Rectangle getPillarRect2() {
         return pillarRect2;
     }
+
+    public Rectangle getPillarRect3() { return pillarRect3; }
 }
 

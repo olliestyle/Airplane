@@ -8,6 +8,7 @@ import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -25,7 +26,7 @@ public class PickUpSpawnManager{
     private Pickup tempPickUp;
     private AssetManager manager;
     private Rectangle pickUpRect = new Rectangle();
-    private int starCount, shieldCount, fuelCount;
+    private int starCount, shieldCount, fuelCount, fuelPercentage;
     private RockPillar rockPillar;
     public Texture testOverlapsPickup;
 
@@ -66,10 +67,15 @@ public class PickUpSpawnManager{
 
         Vector2 randomPosition = new Vector2();
         randomPosition.x = ThreadLocalRandom.current().nextInt(Gdx.graphics.getWidth() - 100, Gdx.graphics.getWidth());
-        randomPosition.y = ThreadLocalRandom.current().nextInt(50,Gdx.graphics.getHeight()- 50);
-        System.out.println("rockPillar = " + rockPillar);
+        randomPosition.y = ThreadLocalRandom.current().nextInt(Gdx.graphics.getHeight()/8 ,Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/8);
+        /*System.out.println("rockPillar = " + rockPillar);
+        System.out.println("rockPillar.getPillarRect1 = " + rockPillar.getPillarRect1());
+        System.out.println("rockPillar.getPillarRect2 = " + rockPillar.getPillarRect2());
+        System.out.println("randomPosition = " + randomPosition);*/
 
-        if (rockPillar.getPillarRect1().contains(randomPosition) || rockPillar.getPillarRect2().contains(randomPosition)){
+
+        if (rockPillar.getPillarRect3().contains(randomPosition)){
+            //System.out.println("I'm here ");
             return false;
         }
 
@@ -85,19 +91,30 @@ public class PickUpSpawnManager{
             //System.out.println("array pickup size = " + pickupsInScene.size);
 
             if (Gdx.graphics.getWidth() <= 800){
-                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                //batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
                 //batch.draw(testOverlapsPickup, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.setPosition(pickup.pickUpPosition.x, pickup.pickUpPosition.y);
+                pickup.pickUpSprite.setSize(Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.draw(batch);
             }
             else if (Gdx.graphics.getWidth() > 1280){
-                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/32, Gdx.graphics.getHeight()/25);
+                //batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/32, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.setPosition(pickup.pickUpPosition.x, pickup.pickUpPosition.y);
+                pickup.pickUpSprite.setSize(Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.draw(batch);
             }
             else{
-                batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                //batch.draw(pickup.pickUpTexture, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                //batch.draw(testOverlapsPickup, pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.setPosition(pickup.pickUpPosition.x, pickup.pickUpPosition.y);
+                pickup.pickUpSprite.setSize(Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.draw(batch);
             }
         }
     }
 
     public void updatePickUp(){
+
         for(Pickup pickup: pickupsInScene) {
             pickup.pickUpPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
             if(pickup.pickUpPosition.x + pickup.pickUpTexture.getRegionWidth() < -10){
@@ -105,12 +122,16 @@ public class PickUpSpawnManager{
             }
             if (Gdx.graphics.getWidth() <= 800){
                 pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.rotate((float) (Math.random()*15));
             }
             else if (Gdx.graphics.getWidth() > 1280){
                 pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/32, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.rotate((float) (Math.random()*15));
             }
             else{
                 pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
+                pickup.pickUpSprite.rotate((float) (Math.random()*15));
+
             }
 
             if(planeRect.overlaps(pickUpRect)) {

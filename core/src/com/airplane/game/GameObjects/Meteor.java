@@ -43,15 +43,12 @@ public class Meteor {
     private Sound crashSound, meteorSpawnSound;
     private AssetManager manager;
 
-
     public Meteor(Airplane airplane) {
 
         System.out.println("game in meteor = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
     }
-
-
 
     public void initializeMeteor(){
 

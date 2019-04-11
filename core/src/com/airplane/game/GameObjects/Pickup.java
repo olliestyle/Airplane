@@ -4,6 +4,7 @@ import com.airplane.game.Airplane;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +18,7 @@ public class Pickup {
     public static final int FUEL = 3;
 
     public TextureRegion pickUpTexture;
+    public Sprite pickUpSprite;
     public int pickUpType, pickUpValue;
     public Sound pickUpSound;
     public Vector2 pickUpPosition = new Vector2();
@@ -29,16 +31,19 @@ public class Pickup {
         switch (pickUpType){
             case STAR:
                 pickUpTexture = atlas.findRegion("star_pickup");
+                pickUpSprite = new Sprite(pickUpTexture);
                 pickUpValue = 5;
                 pickUpSound = manager.get("star.ogg", Sound.class);
                 break;
             case SHIELD:
                 pickUpTexture = atlas.findRegion("shield_pickup");
+                pickUpSprite = new Sprite(pickUpTexture);
                 pickUpValue = 15;
                 pickUpSound = manager.get("shield.ogg");
                 break;
             case FUEL:
                 pickUpTexture = atlas.findRegion("fuel_pickup");
+                pickUpSprite = new Sprite(pickUpTexture);
                 pickUpValue = 100;
                 pickUpSound = manager.get("fuel.ogg");
                 break;
