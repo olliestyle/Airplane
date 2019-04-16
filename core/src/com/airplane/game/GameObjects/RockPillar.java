@@ -98,11 +98,13 @@ public class RockPillar {
                         if (Gdx.graphics.getWidth() <= 800){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
 
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
                         }
                         else{
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4));
@@ -114,10 +116,12 @@ public class RockPillar {
                         if (Gdx.graphics.getWidth() <= 800){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
                         }
                         else if (Gdx.graphics.getWidth() > 1280){
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));
                             pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2));
+                            pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3));
                         }
                         else{
                             pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4));

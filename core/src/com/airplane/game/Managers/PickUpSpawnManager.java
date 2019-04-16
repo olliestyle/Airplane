@@ -7,9 +7,12 @@ import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -26,15 +29,22 @@ public class PickUpSpawnManager{
     private Pickup tempPickUp;
     private AssetManager manager;
     private Rectangle pickUpRect = new Rectangle();
-    private int starCount, shieldCount, fuelCount, fuelPercentage;
+    private int starCount, shieldCount, fuelPercentage;
+    private float fuelCount = 100;
     private RockPillar rockPillar;
     public Texture testOverlapsPickup;
+    private TextureAtlas atlas;
+    private TextureRegion fuelIndicator1;
+    private Texture fuelIndicator;
 
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
     PickUpSpawnManager (Airplane airplane, RockPillar rockPillar){
 
+        atlas = airplane.atlas;
         manager = airplane.manager;
         this.rockPillar = rockPillar;
+        fuelIndicator = new Texture(Gdx.files.internal("medalGold.png"));
+        fuelIndicator1 = atlas.findRegion("life");
     }
 
     public void checkAndCreatePickUp(float delta){
@@ -111,12 +121,27 @@ public class PickUpSpawnManager{
                 pickup.pickUpSprite.draw(batch);
             }
         }
+        if (Gdx.graphics.getWidth() <= 800){
+            //batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,Gdx.graphics.getWidth()/15, Gdx.graphics.getHeight()/8 ,0,0,fuelPercentage,119, false,false);
+            batch.draw(fuelIndicator1, Gdx.graphics.getWidth()/30, Gdx.graphics.getHeight()/15, fuelPercentage, fuelPercentage, Gdx.graphics.getWidth()/15, Gdx.graphics.getHeight()/8, 1, 1, 0);
+
+        }
+        else if (Gdx.graphics.getWidth() > 1280){
+            batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,0,0,fuelPercentage,119);
+        }
+        else{
+            batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,0,0,fuelPercentage,119);
+        }
     }
 
     public void updatePickUp(){
 
+        fuelCount -= 6*Gdx.graphics.getDeltaTime();
+        fuelPercentage = (int) (114*fuelCount/100);
+
         for(Pickup pickup: pickupsInScene) {
             pickup.pickUpPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+
             if(pickup.pickUpPosition.x + pickup.pickUpTexture.getRegionWidth() < -10){
                 pickupsInScene.removeValue(pickup, false);
             }
