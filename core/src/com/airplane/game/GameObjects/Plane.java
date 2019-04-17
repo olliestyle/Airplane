@@ -22,8 +22,8 @@ public class Plane{
     /* объявление объектов классов*/
     private Animation plane;
     private TextureRegion planeTexture;
-    public static Vector2 planeDefaultPosition;
-    public static Vector2 planePosition;
+    private Vector2 planeDefaultPosition;
+    private Vector2 planePosition;
     private Vector2 planeVelocity;
     private Vector2 scrollVelocity;
     public Vector2 tempVector = new Vector2(); // временный вектор для хранения координат касания
@@ -44,7 +44,6 @@ public class Plane{
     private TextureAtlas atlas;
     private Sound tapSound;
     private AssetManager manager;
-
 
     public Plane(Airplane airplane) {
 
@@ -165,8 +164,6 @@ public class Plane{
 
     }
 
-
-
     public void handleTouch(float x, float y){
 
         tapSound.play();
@@ -188,7 +185,13 @@ public class Plane{
         }
 
         tapDrawTime = TAP_DRAW_TIME_MAX;
-
     }
 
+    public Vector2 getPlanePosition() {
+        return planePosition;
+    }
+
+    public Vector2 getPlaneDefaultPosition() {
+        return planeDefaultPosition;
+    }
 }

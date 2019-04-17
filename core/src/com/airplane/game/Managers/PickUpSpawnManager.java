@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,22 +31,24 @@ public class PickUpSpawnManager{
     private Pickup tempPickUp;
     private AssetManager manager;
     private Rectangle pickUpRect = new Rectangle();
-    private int starCount, shieldCount, fuelPercentage;
+    private int starCount = 0, fuelPercentage;
+    private float shieldCount = 0;
     private float fuelCount = 100;
     private RockPillar rockPillar;
     public Texture testOverlapsPickup;
     private TextureAtlas atlas;
-    private TextureRegion fuelIndicator1;
     private Texture fuelIndicator;
+    private Plane plane;
+
 
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
-    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar){
+    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane){
 
         atlas = airplane.atlas;
         manager = airplane.manager;
+        this.plane = plane;
         this.rockPillar = rockPillar;
-        fuelIndicator = new Texture(Gdx.files.internal("medalGold.png"));
-        fuelIndicator1 = atlas.findRegion("life");
+        fuelIndicator = manager.get("fuelBar.png");
     }
 
     public void checkAndCreatePickUp(float delta){
@@ -122,15 +126,13 @@ public class PickUpSpawnManager{
             }
         }
         if (Gdx.graphics.getWidth() <= 800){
-            //batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,Gdx.graphics.getWidth()/15, Gdx.graphics.getHeight()/8 ,0,0,fuelPercentage,119, false,false);
-            batch.draw(fuelIndicator1, Gdx.graphics.getWidth()/30, Gdx.graphics.getHeight()/15, fuelPercentage, fuelPercentage, Gdx.graphics.getWidth()/15, Gdx.graphics.getHeight()/8, 1, 1, 0);
-
+            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight()/50, fuelPercentage, Gdx.graphics.getHeight()/40);
         }
         else if (Gdx.graphics.getWidth() > 1280){
-            batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,0,0,fuelPercentage,119);
+            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight()/50, fuelPercentage, Gdx.graphics.getHeight()/40);
         }
         else{
-            batch.draw(fuelIndicator,Gdx.graphics.getWidth()/30,Gdx.graphics.getHeight()/15,0,0,fuelPercentage,119);
+            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
         }
     }
 
@@ -138,9 +140,16 @@ public class PickUpSpawnManager{
 
         fuelCount -= 6*Gdx.graphics.getDeltaTime();
         fuelPercentage = (int) (114*fuelCount/100);
+        shieldCount -= Gdx.graphics.getDeltaTime();
+
+        if(fuelCount < 0){
+            if (GameManager.gameState != GameManager.GameState.GAME_OVER){
+                GameManager.gameState = GameManager.GameState.GAME_OVER;
+            }
+        }
 
         for(Pickup pickup: pickupsInScene) {
-            pickup.pickUpPosition.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x;
+            pickup.pickUpPosition.x -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x;
 
             if(pickup.pickUpPosition.x + pickup.pickUpTexture.getRegionWidth() < -10){
                 pickupsInScene.removeValue(pickup, false);
@@ -156,7 +165,6 @@ public class PickUpSpawnManager{
             else{
                 pickUpRect.set(pickup.pickUpPosition.x, pickup.pickUpPosition.y, Gdx.graphics.getWidth()/35, Gdx.graphics.getHeight()/25);
                 pickup.pickUpSprite.rotate((float) (Math.random()*15));
-
             }
 
             if(planeRect.overlaps(pickUpRect)) {
@@ -179,5 +187,13 @@ public class PickUpSpawnManager{
                 break;
         }
         pickupsInScene.removeValue(pickup, false);
+    }
+
+    public float getShieldCount() {
+        return shieldCount;
+    }
+
+    public int getStarCount() {
+        return starCount;
     }
 }

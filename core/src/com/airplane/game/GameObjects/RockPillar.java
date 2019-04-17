@@ -1,6 +1,7 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
 import com.airplane.game.Managers.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -30,12 +31,14 @@ public class RockPillar {
     private TextureAtlas atlas;
     private Sound crashSound;
     private AssetManager manager;
+    private Plane plane;
 
-    public RockPillar(Airplane airplane) {
+    public RockPillar(Airplane airplane, Plane plane) {
 
         System.out.println("game in rockpillar = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
+        this.plane = plane;
     }
 
 
@@ -84,7 +87,7 @@ public class RockPillar {
                 for (Vector2 vec: pillars)
                 {
 
-                    vec.x -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // перемещение скал относительно "движения" самолета
+                    vec.x -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // перемещение скал относительно "движения" самолета
                     //System.out.println("vec.x = " + vec.x);
                     //System.out.println("pillars = " + pillars.size);
 

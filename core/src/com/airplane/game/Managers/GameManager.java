@@ -30,15 +30,17 @@ public class GameManager {
     private RockPillar rockPillar;
     private TextureAtlas atlas;
     private PickUpSpawnManager pickUpSpawnManager;
+    private Plane plane;
 
-    public GameManager(Airplane airplane) {
+    public GameManager(Airplane airplane, Plane plane) {
 
         atlas = airplane.atlas;
-        terrain = new Terrain(airplane);
+        this.plane = plane;
+        terrain = new Terrain(airplane, plane);
         meteor = new Meteor(airplane);
-        rockPillar = new RockPillar(airplane);
-        textManager = new TextManager();
-        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar); // нам нужно получить именно ту скалу, которая отрисована на данный момент
+        rockPillar = new RockPillar(airplane, plane);
+        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane); // нам нужно получить именно ту скалу, которая отрисована на данный момент
+        textManager = new TextManager(pickUpSpawnManager);
     }
 
     public enum GameState{
@@ -94,10 +96,9 @@ public class GameManager {
                 rockPillar.updatePillar();
                 terrain.updateTerrain();
                 pickUpSpawnManager.updatePickUp();
-                Plane.planePosition.x = Plane.planeDefaultPosition.x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
+                plane.getPlanePosition().x = plane.getPlaneDefaultPosition().x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
                 meteor.updateMeteor();
                 pickUpSpawnManager.checkAndCreatePickUp(Gdx.graphics.getDeltaTime());
-
 
                 break;
 

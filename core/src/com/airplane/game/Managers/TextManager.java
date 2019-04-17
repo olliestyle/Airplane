@@ -1,5 +1,6 @@
 package com.airplane.game.Managers;
 
+import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
@@ -21,6 +22,13 @@ public class TextManager {
     private BitmapFont fontGameOver;
     private float widthTextManager;
     private float heightTextManager;
+    private PickUpSpawnManager pickUpSpawnManager;
+
+    public TextManager(PickUpSpawnManager pickUpSpawnManager) {
+
+        this.pickUpSpawnManager = pickUpSpawnManager;
+
+    }
 
     public void initialize (float width, float height){
 
@@ -37,74 +45,23 @@ public class TextManager {
 
     public void displayMessage(SpriteBatch batch){
 
-        // объект класса GlyphLayout хранит в себе информацию о шрифте и содержании текста
-
         GlyphLayout glyphLayoutHeight = new GlyphLayout();
         GlyphLayout glyphLayoutWidth = new GlyphLayout();
-        GlyphLayout glyphLayoutTerrainOffset = new GlyphLayout();
-
-        GlyphLayout glyphLayoutDeltaTime = new GlyphLayout();
-
-        //GlyphLayout glyphLayoutPlaneAnimTime = new GlyphLayout();
         GlyphLayout glyphLayoutTouchPositionX = new GlyphLayout();
         GlyphLayout glyphLayoutTouchPositionY = new GlyphLayout();
-        /*
-        GlyphLayout glyphLayoutTapDrawTime = new GlyphLayout();
-        GlyphLayout glyphLayoutPlanePostitionX = new GlyphLayout();
-        GlyphLayout glyphLayoutPlanePostitionY = new GlyphLayout();
-        */
         GlyphLayout glyphLayoutINIT = new GlyphLayout();
         GlyphLayout glyphLayoutGAMEOVER = new GlyphLayout();
-        GlyphLayout glyphLayoutNextMeteorIn = new GlyphLayout();
-        GlyphLayout glyphLayoutMeteorPositionY = new GlyphLayout();
-        GlyphLayout glyphLayoutMeteorPositionX = new GlyphLayout();
-        GlyphLayout glyphLayoutDestinationX = new GlyphLayout();
-        GlyphLayout glyphLayoutDestinationY = new GlyphLayout();
-        GlyphLayout glyphLayoutMeteorVelocityX = new GlyphLayout();
-        GlyphLayout glyphLayoutMeteorVelocityY = new GlyphLayout();
-
+        GlyphLayout glyphLayoutSHIELD = new GlyphLayout();
+        GlyphLayout glyphLayoutSTAR = new GlyphLayout();
 
         glyphLayoutWidth.setText(font, "width (x) = " + Gdx.graphics.getWidth());
         glyphLayoutHeight.setText(font, "height (y) = " + Gdx.graphics.getHeight());
-
-
-        //glyphLayoutPlaneAnimTime.setText(font, "planeAnimTime = " + Plane.planeAnimTime);
         glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
         glyphLayoutTouchPositionY.setText(font, "touchPosition Y = " + InputManager.touchPosition.y);
-        /*
-        glyphLayoutTapDrawTime.setText(font, "tapDrawTime = " + Plane.tapDrawTime);
-        glyphLayoutPlanePostitionX.setText(font, "planePositionX = " + Plane.planePosition.x);
-        glyphLayoutPlanePostitionY.setText(font, "planePositionY = " + Plane.planePosition.y);
-        */
         glyphLayoutINIT.setText(font, "Tap next to the airplane to make it move ");
-        //glyphLayoutGAMEOVER.setText(font, "Tap next to the airplane to make it move ");
         glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over");
-
-
-
-
-
-//        font.draw(batch, glyphLayoutWidth, (float) (width*0.01), (float) (height*0.76));
-//        font.draw(batch, glyphLayoutHeight, (float) (width*0.01), (float) (height*0.73));
-//        font.draw(batch, glyphLayoutTerrainOffset, (float) (width*0.01), (float) (height*0.64));
-//
-//        font.draw(batch, glyphLayoutDeltaTime, (float) (width*0.01), (float) (height));
-//
-//        //font.draw(batch, glyphLayoutPlaneAnimTime, (float) (width*0.01), (float) (height*0.88));
-//        font.draw(batch, glyphLayoutTouchPositionX, (float) (width*0.01), (float) (height*0.70));
-//        font.draw(batch, glyphLayoutTouchPositionY, (float) (width*0.01), (float) (height*0.67));
-//        /*
-//        font.draw(batch, glyphLayoutTapDrawTime, (float) (width*0.01), (float) (height*0.79));
-//        font.draw(batch, glyphLayoutPlanePostitionX, (float) (width*0.01), (float) (height*0.76));
-//        font.draw(batch, glyphLayoutPlanePostitionY, (float) (width*0.01), (float) (height*0.73));
-//        */
-//        font.draw(batch, glyphLayoutNextMeteorIn, (float) (widthTextManager*0.01), (float) (heightTextManager*0.97));
-//        font.draw(batch, glyphLayoutMeteorPositionX, (float) (width*0.01), (float) (height*0.94));
-//        font.draw(batch, glyphLayoutMeteorPositionY, (float) (width*0.01), (float) (height*0.91));
-//        font.draw(batch, glyphLayoutDestinationX, (float) (width*0.01), (float) (height*0.88));
-//        font.draw(batch, glyphLayoutDestinationY, (float) (width*0.01), (float) (height*0.85));
-//        font.draw(batch, glyphLayoutMeteorVelocityX, (float) (width*0.01), (float) (height*0.82));
-//        font.draw(batch, glyphLayoutMeteorVelocityY, (float) (width*0.01), (float) (height*0.79));
+        glyphLayoutSHIELD.setText(font, "Shield " + (int)pickUpSpawnManager.getShieldCount() + " sec.");
+        glyphLayoutSTAR.setText(font, "Stars collected " + pickUpSpawnManager.getStarCount());
 
         if (gameState == GameManager.GameState.INIT)
             font.draw(batch, glyphLayoutINIT, (float) (widthTextManager/3.4), (float) (heightTextManager/2.1));
@@ -112,6 +69,11 @@ public class TextManager {
         if (gameState == GameManager.GameState.GAME_OVER)
             fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
 
+        if (pickUpSpawnManager.getShieldCount() > 0){
+            font.draw(batch, glyphLayoutSHIELD,widthTextManager/100 , heightTextManager - heightTextManager/40);
+        }
+
+        font.draw(batch, glyphLayoutSTAR, widthTextManager/100 , heightTextManager - heightTextManager/9);
 
     }
 

@@ -40,12 +40,14 @@ public class Terrain {
     private TextureAtlas atlas;
     private Sound crashSound;
     private AssetManager manager;
+    private Plane plane;
 
-    public Terrain(Airplane airplane) {
+    public Terrain(Airplane airplane, Plane plane) {
 
         System.out.println("game in terrain = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
+        this.plane = plane;
     }
 
     public void initializeTerrain(){
@@ -91,7 +93,7 @@ public class Terrain {
 
     public void updateTerrain(){
 
-        terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // движение рельефа относительно самолета влево
+        terrainOffset -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // движение рельефа относительно самолета влево
 
         //System.out.println("terrainOffset = " + terrainOffset);
         //System.out.println("planePosition.x = " + Plane.planePosition.x);

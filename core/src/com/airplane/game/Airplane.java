@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -35,10 +36,11 @@ public class Airplane extends Game {
         manager.load("shield.ogg", Sound.class);
         manager.load("fuel.ogg", Sound.class);
         manager.load("Airplane.pack", TextureAtlas.class);
+        manager.load("fuelBar.png", Texture.class);
         manager.finishLoading();
 
         atlas = manager.get("Airplane.pack", TextureAtlas.class);
-        setScreen(new AirplaneScene1(this)); //this - экземпляр класса Airplane, которым мы создаем и для которого вызывается этот конструктор
+        setScreen(new AirplaneScene1(this)); //this - экземпляр класса Airplane, который мы создаем и для которого вызывается этот конструктор
     }
 
     @Override

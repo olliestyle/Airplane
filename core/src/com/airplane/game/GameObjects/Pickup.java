@@ -32,13 +32,13 @@ public class Pickup {
             case STAR:
                 pickUpTexture = atlas.findRegion("star_pickup");
                 pickUpSprite = new Sprite(pickUpTexture);
-                pickUpValue = 5;
+                pickUpValue = 1;
                 pickUpSound = manager.get("star.ogg", Sound.class);
                 break;
             case SHIELD:
                 pickUpTexture = atlas.findRegion("shield_pickup");
                 pickUpSprite = new Sprite(pickUpTexture);
-                pickUpValue = 15;
+                pickUpValue = 10;
                 pickUpSound = manager.get("shield.ogg");
                 break;
             case FUEL:

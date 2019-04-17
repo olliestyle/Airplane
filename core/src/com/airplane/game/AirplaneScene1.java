@@ -22,7 +22,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	public GameManager gameManager;
+	private GameManager gameManager;
 	private Plane plane;
 
 	public AirplaneScene1 (Airplane airplane){
@@ -30,7 +30,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 		batch = airplane.batch;
 		camera = airplane.camera;
 		plane = new Plane(airplane);
-		gameManager = new GameManager(airplane);
+		gameManager = new GameManager(airplane, plane);
 
 		//float height = Gdx.graphics.getHeight();
 		//float width = Gdx.graphics.getWidth();
@@ -43,10 +43,6 @@ public class AirplaneScene1 extends ScreenAdapter {
 		gameManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(new InputManager(camera, plane));// доступ класса InputManager для получения касаний/нажатий
 	}
-
-	/*public GameManager getGameManager() {
-		return gameManager;
-	}*/
 
 	@Override
 	public void show() {
