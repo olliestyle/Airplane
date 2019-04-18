@@ -5,133 +5,154 @@ filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 1, 435
+  xy: 1, 541
   size: 800, 480
   orig: 800, 480
   offset: 0, 0
   index: -1
 groundSnow
   rotate: false
-  xy: 1, 362
+  xy: 1, 468
   size: 808, 71
   orig: 808, 71
   offset: 0, 0
   index: -1
+textGameOver
+  rotate: false
+  xy: 1, 388
+  size: 412, 78
+  orig: 412, 78
+  offset: 0, 0
+  index: -1
+textGetReady
+  rotate: false
+  xy: 1, 313
+  size: 400, 73
+  orig: 400, 73
+  offset: 0, 0
+  index: -1
 rockSnow
   rotate: false
-  xy: 1, 121
+  xy: 803, 782
   size: 108, 239
   orig: 108, 239
   offset: 0, 0
   index: -1
 rockSnowDown
   rotate: false
-  xy: 803, 676
+  xy: 803, 541
   size: 108, 239
   orig: 108, 239
   offset: 0, 0
   index: -1
-life
+shield2green
   rotate: false
-  xy: 111, 241
-  size: 114, 119
-  orig: 114, 119
+  xy: 1, 192
+  size: 143, 119
+  orig: 143, 119
+  offset: 0, 0
+  index: -1
+shield1green
+  rotate: false
+  xy: 1, 82
+  size: 133, 108
+  orig: 133, 108
   offset: 0, 0
   index: -1
 planeGreen1
   rotate: false
-  xy: 1, 46
+  xy: 415, 393
   size: 88, 73
   orig: 88, 73
   offset: 0, 0
   index: -1
 planeGreen2
   rotate: false
-  xy: 803, 601
+  xy: 913, 948
   size: 88, 73
   orig: 88, 73
   offset: 0, 0
   index: -1
 planeGreen3
   rotate: false
-  xy: 913, 842
+  xy: 146, 238
   size: 88, 73
   orig: 88, 73
   offset: 0, 0
   index: -1
-tap1
+tap
   rotate: false
-  xy: 111, 180
+  xy: 811, 480
   size: 59, 59
   orig: 59, 59
   offset: 0, 0
   index: -1
 tap2
   rotate: false
-  xy: 227, 301
+  xy: 1, 21
   size: 59, 59
   orig: 59, 59
   offset: 0, 0
   index: -1
 meteorBrown_med1
   rotate: false
-  xy: 1, 1
+  xy: 505, 423
   size: 43, 43
   orig: 43, 43
   offset: 0, 0
   index: -1
 meteorBrown_med2
   rotate: false
-  xy: 803, 559
+  xy: 913, 906
   size: 45, 40
   orig: 45, 40
   offset: 0, 0
   index: -1
 star_pickup
   rotate: false
-  xy: 913, 802
+  xy: 146, 198
   size: 39, 38
   orig: 39, 38
   offset: 0, 0
   index: -1
 shield_pickup
   rotate: false
-  xy: 111, 148
+  xy: 236, 281
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 meteorBrown_small1
   rotate: false
-  xy: 172, 211
+  xy: 872, 511
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 meteorBrown_small2
   rotate: false
-  xy: 227, 273
+  xy: 62, 54
   size: 29, 26
   orig: 29, 26
   offset: 0, 0
   index: -1
 fuel_pickup
   rotate: false
-  xy: 1003, 885
+  xy: 1003, 991
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 meteorBrown_tiny1
   rotate: false
-  xy: 91, 101
+  xy: 1, 1
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 meteorBrown_tiny2
   rotate: false
-  xy: 893, 659
+  xy: 505, 406
   size: 16, 15
   orig: 16, 15
   offset: 0, 0

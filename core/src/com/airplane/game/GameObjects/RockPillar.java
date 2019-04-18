@@ -186,7 +186,7 @@ public class RockPillar {
                             //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
                             batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
                             //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/3.5)); //Отрисовка черной области для проверки коллизий между объектами
+                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                     }
                 }
