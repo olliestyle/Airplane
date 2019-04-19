@@ -65,8 +65,8 @@ public class AirplaneScene1 extends ScreenAdapter {
         batch.begin();
         gameManager.renderGame(batch);
         gameManager.updateScene();
-        plane.renderPlane(batch);
-        plane.update();
+		plane.renderPlane(batch);
+		plane.update();
         batch.end();
 
 	}

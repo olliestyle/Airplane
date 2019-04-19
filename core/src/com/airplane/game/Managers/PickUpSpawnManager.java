@@ -43,6 +43,33 @@ public class PickUpSpawnManager{
     private Plane plane;
     private Animation shield;
     private float shieldAnimTime;
+    private float SHIELD_RESIZE_WIDTH_FACTOR;
+    private float SHIELD_RESIZE_HEIGHT_FACTOR;
+
+    public void setPlaneResizeWidthFactor(){
+
+        if (Gdx.graphics.getWidth() <= 800){
+            SHIELD_RESIZE_WIDTH_FACTOR = 0.6f;
+        }
+        else if (Gdx.graphics.getWidth() > 1280){
+            SHIELD_RESIZE_WIDTH_FACTOR = 1.5f;
+        }
+        else{
+            SHIELD_RESIZE_WIDTH_FACTOR = 0.8f;
+        }
+    }
+
+    public void setPlaneResizeHeightFactor(){
+        if (Gdx.graphics.getHeight() <= 480){
+            SHIELD_RESIZE_HEIGHT_FACTOR = 0.6f;
+        }
+        else if (Gdx.graphics.getHeight() > 768){
+            SHIELD_RESIZE_HEIGHT_FACTOR = 1.5f;
+        }
+        else{
+            SHIELD_RESIZE_HEIGHT_FACTOR = 0.8f;
+        }
+    }
 
 
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
@@ -53,7 +80,9 @@ public class PickUpSpawnManager{
         this.plane = plane;
         this.rockPillar = rockPillar;
         fuelIndicator = manager.get("fuelBar.png");
-        shield = new Animation(0.05f, atlas.findRegion("shield1green"), atlas.findRegion("shield2green")); // инициализация анимации объекта plane
+        shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
+                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
         shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
     }
 
@@ -132,14 +161,23 @@ public class PickUpSpawnManager{
         }
         if (Gdx.graphics.getWidth() <= 800){
             batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
+            if (getShieldCount() > 0) {
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth() / 65, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 38,
+                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 7);
+            }
         }
         else if (Gdx.graphics.getWidth() > 1280){
             batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
+            if (getShieldCount() > 0) {
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth() / 55, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 30,
+                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 7);
+            }
         }
         else{
             batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
             if (getShieldCount() > 0){
-                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlanePosition().x, plane.getPlanePosition().y);
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth()/45, plane.getPlanePosition().y - Gdx.graphics.getHeight()/30,
+                    Gdx.graphics.getWidth()/10 , Gdx.graphics.  getHeight()/7 );
             }
         }
     }
@@ -149,7 +187,7 @@ public class PickUpSpawnManager{
         fuelCount -= 6*Gdx.graphics.getDeltaTime();
         fuelPercentage = (int) (114*fuelCount/100);
         shieldCount -= Gdx.graphics.getDeltaTime();
-        shieldAnimTime += Gdx.graphics.getDeltaTime()/3;
+        shieldAnimTime += Gdx.graphics.getDeltaTime();
 
         if(fuelCount < 0){
             if (GameManager.gameState != GameManager.GameState.GAME_OVER){
