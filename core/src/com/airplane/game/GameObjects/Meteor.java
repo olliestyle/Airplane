@@ -3,6 +3,7 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 
+import com.airplane.game.Managers.PickUpSpawnManager;
 import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Gdx;
@@ -106,7 +107,7 @@ public class Meteor {
         }
     }
 
-    public void updateMeteor(){
+    public void updateMeteor(PickUpSpawnManager pickUpSpawnManager){
         /*если метеор находится на экране*/
         if(meteorInScene)
         {
@@ -117,14 +118,14 @@ public class Meteor {
 
             /*Устанавливаем область столкновения метеора в зависимости от его нынешней позиции на экране*/
 
-            if (Gdx.graphics.getWidth() <= 800){
-                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
-            }
-            else if (Gdx.graphics.getWidth() > 1280){
-                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
-            }
-            else{
-                meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
+            if (pickUpSpawnManager.getShieldCount() < 0) {
+                if (Gdx.graphics.getWidth() <= 800) {
+                    meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR / 4, meteorPosition.y + selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR / 4, (float) (selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR) / 2, (float) (selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR) / 2);
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR / 4, meteorPosition.y + selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR / 4, (float) (selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR) / 2, (float) (selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR) / 2);
+                } else {
+                    meteorRect.set(meteorPosition.x + selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR / 4, meteorPosition.y + selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR / 4, (float) (selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR) / 2, (float) (selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR) / 2);
+                }
             }
             /*переходим в GAME_OVER при наложении области столкновения самолета и области столкновения метеора*/
             if (isPlaneCollideWithMeteor())

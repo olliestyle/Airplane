@@ -93,11 +93,11 @@ public class GameManager {
             case ACTION:
 
                 // объекты, движущиеся относительно самолета должны обновляться перед присваиванием дефолтной позиции самолета по x
-                rockPillar.updatePillar();
+                rockPillar.updatePillar(pickUpSpawnManager);
                 terrain.updateTerrain();
                 pickUpSpawnManager.updatePickUp();
                 plane.getPlanePosition().x = plane.getPlaneDefaultPosition().x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
-                meteor.updateMeteor();
+                meteor.updateMeteor(pickUpSpawnManager);
                 pickUpSpawnManager.checkAndCreatePickUp(Gdx.graphics.getDeltaTime());
 
                 break;
