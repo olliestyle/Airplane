@@ -3,10 +3,13 @@ package com.airplane.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -16,6 +19,7 @@ public class Airplane extends Game {
     public OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
     public SpriteBatch batch; // область для отрисовки спрайтов нашей игры
     public TextureAtlas atlas;
+    private ParticleEffectLoader.ParticleEffectParameter pep;
 
     public Airplane() {
         System.out.println("In Airplane constructor");
@@ -28,6 +32,9 @@ public class Airplane extends Game {
         camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
         batch = new SpriteBatch();
 
+        pep = new ParticleEffectLoader.ParticleEffectParameter();
+        pep.atlasFile = "Airplane.pack";
+
         manager.load("journey.mp3", Music.class);
         manager.load("pop.ogg", Sound.class);
         manager.load("alarm.ogg", Sound.class);
@@ -37,6 +44,8 @@ public class Airplane extends Game {
         manager.load("fuel.ogg", Sound.class);
         manager.load("Airplane.pack", TextureAtlas.class);
         manager.load("fuelBar.png", Texture.class);
+        manager.load("Smoke", ParticleEffect.class, pep);
+        manager.load("Explosion", ParticleEffect.class, pep);
         manager.finishLoading();
 
         atlas = manager.get("Airplane.pack", TextureAtlas.class);

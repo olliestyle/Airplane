@@ -8,6 +8,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -44,6 +45,8 @@ public class Plane{
     private TextureAtlas atlas;
     private Sound tapSound;
     private AssetManager manager;
+    private ParticleEffect smoke;
+    private ParticleEffect explosion;
 
     public Plane(Airplane airplane) {
 
@@ -72,6 +75,8 @@ public class Plane{
         testOverlapsPlane = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
         tapIndicator = atlas.findRegion("tap2");
         tapSound = manager.get("pop.ogg");
+        smoke = manager.get("Smoke", ParticleEffect.class);
+        explosion = manager.get("Explosion", ParticleEffect.class);
         setPlaneResizeWidthFactor();
         setPlaneResizeHeightFactor();
     }
@@ -111,17 +116,19 @@ public class Plane{
     /*метод render служит для отрисовки объектов и анимаций*/
     public void renderPlane(SpriteBatch batch){
 
-        if (GameManager.gameState == GameManager.GameState.INIT)
-            //batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight()/TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+        if (GameManager.gameState == GameManager.GameState.INIT){
             batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
-
-            //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            //batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, Gdx.graphics.getWidth() / PLANE_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            //batch.draw(testOverlapsPlane, planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
-
+        }
+        if (GameManager.gameState == GameManager.GameState.ACTION) {
+            smoke.draw(batch);
+            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+        }
+        if (GameManager.gameState == GameManager.GameState.GAME_OVER) {
+            explosion.draw(batch);
+        }
+        //batch.draw(testOverlapsPlane, planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
         if(tapDrawTime > 0)
-
             if (Gdx.graphics.getWidth() <= 800){
                 //batch.draw(tapIndicator, InputManager.touchPosition.x - 20f, InputManager.touchPosition.y - 20, Gdx.graphics.getWidth() / TAP_INDICATOR_RESIZE_WIDTH_FACTOR, Gdx.graphics.getHeight() / TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
                 batch.draw(tapIndicator, InputManager.touchPosition.x - 20f, InputManager.touchPosition.y - 20, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
@@ -135,10 +142,8 @@ public class Plane{
             }
     }
 
-
     /*метод update служит для обновления позиций объектов и времени*/
     public void update(){
-
 
         if (GameManager.gameState == GameManager.GameState.ACTION) {
             deltaTime = Gdx.graphics.getDeltaTime();
@@ -147,6 +152,9 @@ public class Plane{
             planeVelocity.add(gravity);
             planeVelocity.add(scrollVelocity);
             planePosition.mulAdd(planeVelocity, deltaTime);
+            smoke.setPosition(planePosition.x + (20*PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (30+PLANE_RESIZE_HEIGHT_FACTOR));
+            smoke.update(deltaTime);
+
             tapDrawTime -= deltaTime;
 
             if (Gdx.graphics.getWidth() <= 800) {
@@ -158,8 +166,13 @@ public class Plane{
             }
         }
 
-        if (GameManager.gameState == GameManager.GameState.GAME_OVER){
+        if (GameManager.gameState != GameManager.GameState.GAME_OVER){
+            explosion.reset();
+            explosion.setPosition(planePosition.x + (30*PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (40+PLANE_RESIZE_HEIGHT_FACTOR));
+        }
 
+        if (GameManager.gameState == GameManager.GameState.GAME_OVER){
+            explosion.update(deltaTime);
         }
 
     }

@@ -178,23 +178,30 @@ star_pickup
   orig: 39, 38
   offset: 0, 0
   index: -1
+particle
+  rotate: false
+  xy: 877, 508
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 shield_pickup
   rotate: false
-  xy: 877, 510
+  xy: 913, 724
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 meteorBrown_small1
   rotate: false
-  xy: 913, 726
+  xy: 748, 439
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
   index: -1
 meteorBrown_small2
   rotate: false
-  xy: 748, 441
+  xy: 331, 286
   size: 29, 26
   orig: 29, 26
   offset: 0, 0
