@@ -2,6 +2,7 @@ package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
+import com.airplane.game.Managers.GameManager2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -41,14 +42,27 @@ public class Terrain {
     private Sound crashSound;
     private AssetManager manager;
     private Plane plane;
+    private GameManager gameManager;
+    private GameManager2 gameManager2;
 
-    public Terrain(Airplane airplane, Plane plane) {
+    public Terrain(Airplane airplane, Plane plane, GameManager gameManager) {
 
         System.out.println("game in terrain = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.plane = plane;
+        this.gameManager = gameManager;
     }
+
+    public Terrain(Airplane airplane, Plane plane, GameManager2 gameManager2) {
+
+        System.out.println("game in terrain = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager2 = gameManager2;
+    }
+
 
     public void initializeTerrain(){
 
@@ -172,8 +186,11 @@ public class Terrain {
         }
 
         if (isPlaneCollisionWithTerrain()){
-            if (GameManager.gameState != GameManager.GameState.GAME_OVER){
-                GameManager.gameState = GameManager.GameState.GAME_OVER;
+            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                gameManager.setGameState(GameManager.GameState.GAME_OVER);
+            }
+            if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
             }
         }
 

@@ -10,7 +10,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 
@@ -24,6 +27,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 	private OrthographicCamera camera;
 	private GameManager gameManager;
 	private Plane plane;
+
 
 	public AirplaneScene1 (Airplane airplane){
 
@@ -46,14 +50,14 @@ public class AirplaneScene1 extends ScreenAdapter {
 
 	@Override
 	public void show() {
-
+		System.out.println("In AirplaneScene1 show method");
 	}
 
 	@Override
 	public void render(float delta) {
 
-		/*System.out.println("RENDER HERE");
-		System.out.println("HEIGHT HERE " + Airplane.camera.viewportHeight);
+		System.out.println("In AirplaneScene1 render method");
+		/*System.out.println("HEIGHT HERE " + Airplane.camera.viewportHeight);
 		System.out.println("WIDTH HERE " + Airplane.camera.viewportWidth);
 		System.out.println("Current State = " + gameState);*/
 
@@ -74,9 +78,12 @@ public class AirplaneScene1 extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 
+        System.out.println("In AirplaneScene1 resize method");
+		/*
 		System.out.println("RESIZE HERE");
 		System.out.println("width = " + width);
 		System.out.println("height = " + height);
+		*/
 
 	    //viewport.update(width,height);
 
@@ -84,29 +91,29 @@ public class AirplaneScene1 extends ScreenAdapter {
 
 	@Override
 	public void pause() {
-
-		System.out.println("PAUSE HERE");
+        System.out.println("In AirplaneScene1 pause method");
+		//System.out.println("PAUSE HERE");
 
 	}
 
 	@Override
 	public void resume() {
-
-		System.out.println("RESUME HERE");
+        System.out.println("In AirplaneScene1 resume method");
+		//System.out.println("RESUME HERE");
 
 	}
 
 	@Override
 	public void hide() {
-
-		System.out.println("HIDE HERE");
+        System.out.println("In AirplaneScene1 hide method");
+		//System.out.println("HIDE HERE");
 		dispose();
 	}
 
 	@Override
 	public void dispose () {
-
-		System.out.println("DISPOSE HERE");
+        System.out.println("In AirplaneScene1 dispose method");
+		//System.out.println("DISPOSE HERE");
 		gameManager.dispose();
 
 	}

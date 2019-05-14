@@ -3,6 +3,7 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.Managers.GameManager;
+import com.airplane.game.Managers.GameManager2;
 import com.airplane.game.Managers.PickUpSpawnManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -33,13 +34,15 @@ public class RockPillar {
     private Sound crashSound;
     private AssetManager manager;
     private Plane plane;
+    private GameManager gameManager;
 
-    public RockPillar(Airplane airplane, Plane plane) {
+    public RockPillar(Airplane airplane, Plane plane, GameManager gameManager) {
 
         System.out.println("game in rockpillar = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.plane = plane;
+        this.gameManager = gameManager;
     }
 
 
@@ -132,8 +135,11 @@ public class RockPillar {
                         }
                     }
                     if (isPlaneCollisionWithPillar()){
-                        if (GameManager.gameState != GameManager.GameState.GAME_OVER){
-                            GameManager.gameState = GameManager.GameState.GAME_OVER;
+                        if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                            gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                        }
+                        if (GameManager2.gameState != GameManager2.GameState.GAME_OVER){
+                            GameManager2.gameState = GameManager2.GameState.GAME_OVER;
                         }
                     }
                     break;

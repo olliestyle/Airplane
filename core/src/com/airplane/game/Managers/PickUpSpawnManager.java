@@ -45,6 +45,7 @@ public class PickUpSpawnManager{
     private float shieldAnimTime;
     private float SHIELD_RESIZE_WIDTH_FACTOR;
     private float SHIELD_RESIZE_HEIGHT_FACTOR;
+    private GameManager gameManager;
 
     public void setPlaneResizeWidthFactor(){
 
@@ -73,12 +74,13 @@ public class PickUpSpawnManager{
 
 
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
-    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane){
+    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager gameManager){
 
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.plane = plane;
         this.rockPillar = rockPillar;
+        this.gameManager = gameManager;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
                 , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
@@ -190,8 +192,8 @@ public class PickUpSpawnManager{
         shieldAnimTime += Gdx.graphics.getDeltaTime();
 
         if(fuelCount < 0){
-            if (GameManager.gameState != GameManager.GameState.GAME_OVER){
-                GameManager.gameState = GameManager.GameState.GAME_OVER;
+            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                gameManager.setGameState(GameManager.GameState.GAME_OVER);
             }
         }
 

@@ -12,9 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import javax.xml.soap.Text;
 
-import static com.airplane.game.Managers.GameManager.gameState;
 
 public class TextManager {
 
@@ -23,17 +21,19 @@ public class TextManager {
     private float widthTextManager;
     private float heightTextManager;
     private PickUpSpawnManager pickUpSpawnManager;
+    private GameManager gameManager;
 
-    public TextManager(PickUpSpawnManager pickUpSpawnManager) {
+    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager gameManager) {
 
         this.pickUpSpawnManager = pickUpSpawnManager;
+        this.gameManager = gameManager;
 
     }
 
     public void initialize (float width, float height){
 
-        font = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
-        fontGameOver = new BitmapFont(Gdx.files.internal("appetitenew2.fnt"));
+        font = new BitmapFont(Gdx.files.internal("impact-40.fnt"));
+        fontGameOver = new BitmapFont(Gdx.files.internal("impact-40.fnt"));
         widthTextManager = width;
         heightTextManager = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
@@ -63,10 +63,18 @@ public class TextManager {
         glyphLayoutSHIELD.setText(font, "Shield " + (int)pickUpSpawnManager.getShieldCount() + " sec.");
         glyphLayoutSTAR.setText(font, "Stars collected " + pickUpSpawnManager.getStarCount());
 
+        /*
         if (gameState == GameManager.GameState.INIT)
             font.draw(batch, glyphLayoutINIT, (float) (widthTextManager/3.4), (float) (heightTextManager/2.1));
 
         if (gameState == GameManager.GameState.GAME_OVER)
+            fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
+        */
+
+        if (gameManager.getGameState() == GameManager.GameState.INIT)
+            font.draw(batch, glyphLayoutINIT, (float) (widthTextManager/3.4), (float) (heightTextManager/2.1));
+
+        if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
             fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
 
         if (pickUpSpawnManager.getShieldCount() > 0){

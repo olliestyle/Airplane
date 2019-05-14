@@ -3,6 +3,7 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.Managers.GameManager;
 
+import com.airplane.game.Managers.GameManager2;
 import com.airplane.game.Managers.PickUpSpawnManager;
 import com.badlogic.gdx.Game;
 
@@ -43,12 +44,14 @@ public class Meteor {
     private TextureAtlas atlas;
     private Sound crashSound, meteorSpawnSound;
     private AssetManager manager;
+    private GameManager gameManager;
 
-    public Meteor(Airplane airplane) {
+    public Meteor(Airplane airplane, GameManager gameManager) {
 
         System.out.println("game in meteor = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
+        this.gameManager = gameManager;
     }
 
     public void initializeMeteor(){
@@ -130,8 +133,11 @@ public class Meteor {
             /*переходим в GAME_OVER при наложении области столкновения самолета и области столкновения метеора*/
             if (isPlaneCollideWithMeteor())
             {
-                if (GameManager.gameState != GameManager.GameState.GAME_OVER){
-                    GameManager.gameState = GameManager.GameState.GAME_OVER;
+                if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                    gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                }
+                if (GameManager2.gameState != GameManager2.GameState.GAME_OVER){
+                    GameManager2.gameState = GameManager2.GameState.GAME_OVER;
                 }
             }
 
