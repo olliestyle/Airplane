@@ -2,6 +2,7 @@ package com.airplane.game.Managers;
 
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
@@ -46,6 +47,7 @@ public class PickUpSpawnManager{
     private float SHIELD_RESIZE_WIDTH_FACTOR;
     private float SHIELD_RESIZE_HEIGHT_FACTOR;
     private GameManager gameManager;
+    private GameManager2 gameManager2;
 
     public void setPlaneResizeWidthFactor(){
 
@@ -72,7 +74,6 @@ public class PickUpSpawnManager{
         }
     }
 
-
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
     PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager gameManager){
 
@@ -81,6 +82,20 @@ public class PickUpSpawnManager{
         this.plane = plane;
         this.rockPillar = rockPillar;
         this.gameManager = gameManager;
+        fuelIndicator = manager.get("fuelBar.png");
+        shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
+                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
+        shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
+    }
+
+    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager2 gameManager2){
+
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.rockPillar = rockPillar;
+        this.gameManager2 = gameManager2;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
                 , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
@@ -192,8 +207,16 @@ public class PickUpSpawnManager{
         shieldAnimTime += Gdx.graphics.getDeltaTime();
 
         if(fuelCount < 0){
-            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
-                gameManager.setGameState(GameManager.GameState.GAME_OVER);
+            System.out.println("Fuel is over");
+            if(AirplaneScene1.isIsAirplaneScene1Initialized()){
+                if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                    gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                }
+            }
+            if(AirplaneScene2.isIsAirplaneScene2Initialized()){
+                if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                    gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                }
             }
         }
 

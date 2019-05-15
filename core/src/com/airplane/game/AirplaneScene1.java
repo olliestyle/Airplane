@@ -27,7 +27,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 	private OrthographicCamera camera;
 	private GameManager gameManager;
 	private Plane plane;
-
+	private static boolean isAirplaneScene1Initialized;
 
 	public AirplaneScene1 (Airplane airplane){
 
@@ -35,6 +35,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 		camera = airplane.camera;
 		plane = new Plane(airplane);
 		gameManager = new GameManager(airplane, plane);
+		plane.setGameManager(gameManager);
 
 		//float height = Gdx.graphics.getHeight();
 		//float width = Gdx.graphics.getWidth();
@@ -46,6 +47,16 @@ public class AirplaneScene1 extends ScreenAdapter {
         plane.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gameManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(new InputManager(camera, plane));// доступ класса InputManager для получения касаний/нажатий
+		AirplaneScene2.setIsAirplaneScene2Initialized(false);
+		isAirplaneScene1Initialized = true;
+	}
+
+	public static boolean isIsAirplaneScene1Initialized() {
+		return isAirplaneScene1Initialized;
+	}
+
+	public static void setIsAirplaneScene1Initialized(boolean isAirplaneScene1Initialized) {
+		AirplaneScene1.isAirplaneScene1Initialized = isAirplaneScene1Initialized;
 	}
 
 	@Override
@@ -56,7 +67,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 
-		System.out.println("In AirplaneScene1 render method");
+		//System.out.println("In AirplaneScene1 render method");
 		/*System.out.println("HEIGHT HERE " + Airplane.camera.viewportHeight);
 		System.out.println("WIDTH HERE " + Airplane.camera.viewportWidth);
 		System.out.println("Current State = " + gameState);*/
@@ -107,6 +118,7 @@ public class AirplaneScene1 extends ScreenAdapter {
 	public void hide() {
         System.out.println("In AirplaneScene1 hide method");
 		//System.out.println("HIDE HERE");
+		isAirplaneScene1Initialized = false;
 		dispose();
 	}
 

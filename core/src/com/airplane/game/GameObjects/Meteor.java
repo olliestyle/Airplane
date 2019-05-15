@@ -1,6 +1,8 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.Managers.GameManager;
 
 import com.airplane.game.Managers.GameManager2;
@@ -45,6 +47,7 @@ public class Meteor {
     private Sound crashSound, meteorSpawnSound;
     private AssetManager manager;
     private GameManager gameManager;
+    private GameManager2 gameManager2;
 
     public Meteor(Airplane airplane, GameManager gameManager) {
 
@@ -52,6 +55,14 @@ public class Meteor {
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.gameManager = gameManager;
+    }
+
+    public Meteor(Airplane airplane, GameManager2 gameManager2) {
+
+        System.out.println("game in meteor = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.gameManager2 = gameManager2;
     }
 
     public void initializeMeteor(){
@@ -103,10 +114,10 @@ public class Meteor {
 
         if (meteorInScene) {
             //batch.draw(selectedMeteorTexture, meteorPosition.x, meteorPosition.y, selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR, selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR);
-            //batch.draw(testOverlapsMeteor, meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
             selectedMeteorSprite.setPosition(meteorPosition.x, meteorPosition.y);
             selectedMeteorSprite.setSize(selectedMeteorTexture.getRegionWidth() * METEOR_RESIZE_WIDTH_FACTOR, selectedMeteorTexture.getRegionHeight() * METEOR_RESIZE_HEIGHT_FACTOR);
             selectedMeteorSprite.draw(batch);
+            //batch.draw(testOverlapsMeteor, meteorPosition.x + selectedMeteorTexture.getRegionWidth()* METEOR_RESIZE_WIDTH_FACTOR/4, meteorPosition.y + selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR/4, (float) (selectedMeteorTexture.getRegionWidth()*METEOR_RESIZE_WIDTH_FACTOR)/2, (float) (selectedMeteorTexture.getRegionHeight()* METEOR_RESIZE_HEIGHT_FACTOR)/2);
         }
     }
 
@@ -133,11 +144,20 @@ public class Meteor {
             /*переходим в GAME_OVER при наложении области столкновения самолета и области столкновения метеора*/
             if (isPlaneCollideWithMeteor())
             {
-                if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
-                    gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                System.out.println("Plane collides with Meteor");
+                System.out.println("MeteorRect - x " + meteorRect.getX());
+                System.out.println("MeteorRect - y " + meteorRect.getY());
+                System.out.println("PlaneRect - x " + planeRect.getX());
+                System.out.println("PlaneRect - y " + planeRect.getY());
+                if(AirplaneScene1.isIsAirplaneScene1Initialized()){
+                    if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                        gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                    }
                 }
-                if (GameManager2.gameState != GameManager2.GameState.GAME_OVER){
-                    GameManager2.gameState = GameManager2.GameState.GAME_OVER;
+                if(AirplaneScene2.isIsAirplaneScene2Initialized()){
+                    if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                        gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                    }
                 }
             }
 
@@ -205,6 +225,7 @@ public class Meteor {
     }
 
     private boolean isPlaneCollideWithMeteor(){
+
         if (planeRect.overlaps(meteorRect)){
             crashSound.play();
             Gdx.input.vibrate(100);

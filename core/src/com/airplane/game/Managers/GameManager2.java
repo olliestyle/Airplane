@@ -37,12 +37,12 @@ public class GameManager2 {
         atlas = airplane.atlas;
         this.plane = plane;
         terrain = new Terrain(airplane, plane, this);
-        meteor = new Meteor(airplane);
-        meteor2 = new Meteor(airplane);
-        rockPillar = new RockPillar(airplane, plane);
-        rockPillar2 = new RockPillar(airplane, plane);
-        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane); // нам нужно получить именно ту скалу, которая отрисована на данный момент
-        textManager = new TextManager(pickUpSpawnManager);
+        meteor = new Meteor(airplane, this);
+        meteor2 = new Meteor(airplane, this);
+        rockPillar = new RockPillar(airplane, plane, this);
+        rockPillar2 = new RockPillar(airplane, plane, this);
+        pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane, this); // нам нужно получить именно ту скалу, которая отрисована на данный момент
+        textManager = new TextManager(pickUpSpawnManager,this);
     }
 
     public enum GameState{

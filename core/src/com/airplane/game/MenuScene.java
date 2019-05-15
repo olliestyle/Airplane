@@ -51,12 +51,15 @@ public class MenuScene extends ScreenAdapter {
         skin = new Skin(Gdx.files.internal("flat-earth-ui.json"));
 
         screenBg = new Image(game.atlas.findRegion("background"));
+        screenBg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         title = new Image(game.manager.get("title.png", Texture.class));
+        title.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
 
-        helpTip = new Label("Tap around the plane to move it!",skin);
+        helpTip = new Label("Tap around the plane to move it!", skin);
+        helpTip.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         helpTip.setColor(Color.NAVY);
 
-        table = new Table().debug();
+        table = new Table();
         Level1PlayButton = new TextButton("Level 1", skin);
         table.add(Level1PlayButton).padBottom(15);
         table.row();
@@ -73,24 +76,24 @@ public class MenuScene extends ScreenAdapter {
         table.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         table.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6 , -Gdx.graphics.getHeight()/3);
 
-        options = new Table().debug();
+        options = new Table();
         Label soundTitle = new Label("SOUND OPTIONS",skin);
         soundTitle.setColor(Color.NAVY);
         options.add(soundTitle).padBottom(25).colspan(2);
         options.row();
         muteCheckBox = new CheckBox(" MUTE ALL", skin);
         options.add(muteCheckBox).padBottom(10).colspan(2);
-        options.row();
-        options.add(new Label("VOLUME ",skin)).padBottom(10).padRight(10);
-        volumeSlider = new Slider(0, 2, 0.2f, false, skin);
-        options.add(volumeSlider).padTop(10).padBottom(20);
+        //options.row();
+        //options.add(new Label("VOLUME ",skin)).padBottom(10).padRight(10);
+        //volumeSlider = new Slider(0, 2, 0.2f, false, skin);
+        //options.add(volumeSlider).padTop(10).padBottom(20);
         options.row();
         backButton = new TextButton("BACK", skin);
         options.add(backButton).colspan(2).padTop(20);
         options.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         options.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
         muteCheckBox.setChecked(!game.soundEnabled);
-        volumeSlider.setValue(game.soundVolume);
+        //volumeSlider.setValue(game.soundVolume);
 
         stage.addActor(screenBg);
         stage.addActor(title);
@@ -124,11 +127,11 @@ public class MenuScene extends ScreenAdapter {
             }
         });
 
-        volumeSlider.addListener(new ChangeListener() {
+        /*volumeSlider.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.soundVolume = volumeSlider.getValue();
             }
-        });
+        });*/
         muteCheckBox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.soundEnabled =! muteCheckBox.isChecked();
@@ -146,7 +149,7 @@ public class MenuScene extends ScreenAdapter {
     public void show() {
 
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6);
-        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/20);
+        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/12, Gdx.graphics.getHeight()/20);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
         actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.5));
@@ -159,10 +162,6 @@ public class MenuScene extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-
-        screenBg.setSize(width, height);
-        title.setSize(width/3, height/8);
-        helpTip.setSize(width/3, height/8);
 
     }
 

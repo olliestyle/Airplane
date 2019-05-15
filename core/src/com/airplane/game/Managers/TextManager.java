@@ -2,6 +2,7 @@ package com.airplane.game.Managers;
 
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.Terrain;
@@ -22,6 +23,7 @@ public class TextManager {
     private float heightTextManager;
     private PickUpSpawnManager pickUpSpawnManager;
     private GameManager gameManager;
+    private GameManager2 gameManager2;
 
     public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager gameManager) {
 
@@ -30,17 +32,22 @@ public class TextManager {
 
     }
 
+    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager2 gameManager2) {
+
+        this.pickUpSpawnManager = pickUpSpawnManager;
+        this.gameManager2 = gameManager2;
+
+    }
+
     public void initialize (float width, float height){
 
-        font = new BitmapFont(Gdx.files.internal("impact-40.fnt"));
-        fontGameOver = new BitmapFont(Gdx.files.internal("impact-40.fnt"));
+        font = new BitmapFont(Gdx.files.internal("june.fnt"));
+        fontGameOver = new BitmapFont(Gdx.files.internal("june.fnt"));
         widthTextManager = width;
         heightTextManager = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
         font.getData().setScale(width/1500); // масштабируем размер шрифта
-        fontGameOver.setColor(Color.RED);
         fontGameOver.getData().setScale(width/1000);
-
     }
 
     public void displayMessage(SpriteBatch batch){
@@ -71,11 +78,21 @@ public class TextManager {
             fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
         */
 
-        if (gameManager.getGameState() == GameManager.GameState.INIT)
-            font.draw(batch, glyphLayoutINIT, (float) (widthTextManager/3.4), (float) (heightTextManager/2.1));
+        if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() == GameManager.GameState.INIT)
+                font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
 
-        if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
-            fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager/2 - 100, heightTextManager/2 );
+            if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+        }
+
+        if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
+            if (gameManager2.getGameState() == GameManager2.GameState.INIT)
+                font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
+
+            if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+        }
 
         if (pickUpSpawnManager.getShieldCount() > 0){
             font.draw(batch, glyphLayoutSHIELD,widthTextManager/100 , heightTextManager - heightTextManager/40);

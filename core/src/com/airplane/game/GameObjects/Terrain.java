@@ -1,6 +1,8 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.Managers.GameManager;
 import com.airplane.game.Managers.GameManager2;
 import com.badlogic.gdx.Gdx;
@@ -186,11 +188,17 @@ public class Terrain {
         }
 
         if (isPlaneCollisionWithTerrain()){
-            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
-                gameManager.setGameState(GameManager.GameState.GAME_OVER);
+            System.out.println("Plane collides with Terrain");
+            if(AirplaneScene1.isIsAirplaneScene1Initialized()){
+                if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                    gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                }
             }
-            if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
-                gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+
+            if(AirplaneScene2.isIsAirplaneScene2Initialized()){
+                if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                    gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                }
             }
         }
 

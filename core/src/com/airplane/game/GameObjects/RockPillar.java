@@ -2,6 +2,7 @@ package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.Managers.GameManager;
 import com.airplane.game.Managers.GameManager2;
 import com.airplane.game.Managers.PickUpSpawnManager;
@@ -35,6 +36,7 @@ public class RockPillar {
     private AssetManager manager;
     private Plane plane;
     private GameManager gameManager;
+    private GameManager2 gameManager2;
 
     public RockPillar(Airplane airplane, Plane plane, GameManager gameManager) {
 
@@ -43,6 +45,15 @@ public class RockPillar {
         manager = airplane.manager;
         this.plane = plane;
         this.gameManager = gameManager;
+    }
+
+    public RockPillar(Airplane airplane, Plane plane, GameManager2 gameManager2) {
+
+        System.out.println("game in rockpillar = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager2 = gameManager2;
     }
 
 
@@ -135,11 +146,16 @@ public class RockPillar {
                         }
                     }
                     if (isPlaneCollisionWithPillar()){
-                        if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
-                            gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                        System.out.println("Plane collides with Pillar");
+                        if(AirplaneScene1.isIsAirplaneScene1Initialized()){
+                            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                                gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                            }
                         }
-                        if (GameManager2.gameState != GameManager2.GameState.GAME_OVER){
-                            GameManager2.gameState = GameManager2.GameState.GAME_OVER;
+                        if(AirplaneScene2.isIsAirplaneScene2Initialized()){
+                            if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                                gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                            }
                         }
                     }
                     break;

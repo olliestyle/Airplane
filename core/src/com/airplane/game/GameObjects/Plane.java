@@ -1,6 +1,8 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
 import com.airplane.game.Managers.GameManager;
 import com.airplane.game.Managers.GameManager2;
 import com.airplane.game.Managers.InputManager;
@@ -49,15 +51,14 @@ public class Plane{
     private ParticleEffect smoke;
     private ParticleEffect explosion;
     private GameManager gameManager;
+    private GameManager2 gameManager2;
 
     public Plane(Airplane airplane) {
 
         System.out.println("game in plane = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
-
     }
-
 
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public void initialize(float width, float height){
@@ -119,17 +120,35 @@ public class Plane{
     /*метод render служит для отрисовки объектов и анимаций*/
     public void renderPlane(SpriteBatch batch){
 
-        if (GameManager.gameState == GameManager.GameState.INIT || GameManager2.gameState == GameManager2.GameState.INIT){
-            batch.draw(tapIndicator, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
-            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+        if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() == GameManager.GameState.INIT) {
+                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            }
+            if (gameManager.getGameState() == GameManager.GameState.ACTION) {
+                smoke.draw(batch);
+                batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            }
+            if (gameManager.getGameState() == GameManager.GameState.GAME_OVER){
+                explosion.draw(batch);
+            }
         }
-        if (GameManager.gameState == GameManager.GameState.ACTION || GameManager2.gameState == GameManager2.GameState.ACTION) {
-            smoke.draw(batch);
-            batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+
+        if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
+            if (gameManager2.getGameState() == GameManager2.GameState.INIT) {
+                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            }
+            if (gameManager2.getGameState() == GameManager2.GameState.ACTION) {
+                smoke.draw(batch);
+                batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+                //batch.draw(testOverlapsPlane, planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+            }
+            if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER){
+                explosion.draw(batch);
+            }
         }
-        if (GameManager.gameState == GameManager.GameState.GAME_OVER || GameManager2.gameState == GameManager2.GameState.GAME_OVER) {
-            explosion.draw(batch);
-        }
+
         //batch.draw(testOverlapsPlane, planePosition.x + planeTexture.getRegionWidth()*PLANE_RESIZE_WIDTH_FACTOR/4, planePosition.y + planeTexture.getRegionHeight()*PLANE_RESIZE_HEIGHT_FACTOR/4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR/2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR/2);
         if(tapDrawTime > 0)
             if (Gdx.graphics.getWidth() <= 800){
@@ -148,43 +167,91 @@ public class Plane{
     /*метод update служит для обновления позиций объектов и времени*/
     public void update(){
 
-        if (GameManager.gameState == GameManager.GameState.ACTION || GameManager2.gameState == GameManager2.GameState.ACTION) {
-            deltaTime = Gdx.graphics.getDeltaTime();
-            planeAnimTime += deltaTime;
-            planeVelocity.scl(damping);
-            planeVelocity.add(gravity);
-            planeVelocity.add(scrollVelocity);
-            planePosition.mulAdd(planeVelocity, deltaTime);
-            smoke.setPosition(planePosition.x + (20*PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (30+PLANE_RESIZE_HEIGHT_FACTOR));
-            smoke.update(deltaTime);
+        if (AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() == GameManager.GameState.ACTION) {
+                deltaTime = Gdx.graphics.getDeltaTime();
+                planeAnimTime += deltaTime;
+                planeVelocity.scl(damping);
+                planeVelocity.add(gravity);
+                planeVelocity.add(scrollVelocity);
+                planePosition.mulAdd(planeVelocity, deltaTime);
+                smoke.setPosition(planePosition.x + (20 * PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (30 + PLANE_RESIZE_HEIGHT_FACTOR));
+                smoke.update(deltaTime);
 
-            tapDrawTime -= deltaTime;
+                tapDrawTime -= deltaTime;
 
-            if (Gdx.graphics.getWidth() <= 800) {
-                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
-            } else if (Gdx.graphics.getWidth() > 1280) {
-                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
-            } else {
-                planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                if (Gdx.graphics.getWidth() <= 800) {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                } else {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                }
             }
         }
 
-        if (GameManager.gameState != GameManager.GameState.GAME_OVER){
+        if (AirplaneScene2.isIsAirplaneScene2Initialized()){
+            if (gameManager2.getGameState() == GameManager2.GameState.ACTION){
+                deltaTime = Gdx.graphics.getDeltaTime();
+                planeAnimTime += deltaTime;
+                planeVelocity.scl(damping);
+                planeVelocity.add(gravity);
+                planeVelocity.add(scrollVelocity);
+                planePosition.mulAdd(planeVelocity, deltaTime);
+                smoke.setPosition(planePosition.x + (20 * PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (30 + PLANE_RESIZE_HEIGHT_FACTOR));
+                smoke.update(deltaTime);
+
+                tapDrawTime -= deltaTime;
+
+                if (Gdx.graphics.getWidth() <= 800) {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                } else {
+                    planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
+                }
+            }
+        }
+        /*if (GameManager.gameState != GameManager.GameState.GAME_OVER){
             explosion.reset();
             explosion.setPosition(planePosition.x + (30*PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (40+PLANE_RESIZE_HEIGHT_FACTOR));
         }
         if (GameManager2.gameState != GameManager2.GameState.GAME_OVER){
             explosion.reset();
             explosion.setPosition(planePosition.x + (30*PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (40+PLANE_RESIZE_HEIGHT_FACTOR));
+        }*/
+
+        if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER) {
+                explosion.reset();
+                explosion.setPosition(planePosition.x + (30 * PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (40 + PLANE_RESIZE_HEIGHT_FACTOR));
+            }
         }
 
-        if (GameManager.gameState == GameManager.GameState.GAME_OVER){
+        if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
+            if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER) {
+                explosion.reset();
+                explosion.setPosition(planePosition.x + (30 * PLANE_RESIZE_WIDTH_FACTOR), planePosition.y + (40 + PLANE_RESIZE_HEIGHT_FACTOR));
+            }
+        }
+        /*if (GameManager.gameState == GameManager.GameState.GAME_OVER){
             explosion.update(deltaTime);
         }
         if (GameManager2.gameState == GameManager2.GameState.GAME_OVER){
             explosion.update(deltaTime);
+        }*/
+
+        if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() == GameManager.GameState.GAME_OVER) {
+                explosion.update(deltaTime);
+            }
         }
 
+        if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
+            if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER) {
+                explosion.update(deltaTime);
+            }
+        }
     }
 
     public void handleTouch(float x, float y){
@@ -216,5 +283,13 @@ public class Plane{
 
     public Vector2 getPlaneDefaultPosition() {
         return planeDefaultPosition;
+    }
+
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
+    public void setGameManager2(GameManager2 gameManager2) {
+        this.gameManager2 = gameManager2;
     }
 }
