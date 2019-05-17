@@ -28,13 +28,16 @@ public class MenuScene extends ScreenAdapter {
     private Skin skin;
     private Image title;
     private Label helpTip;
-    private Table table;
-    private Table options;
+    private Table mainTable;
+    private Table chooseLevelTable;
+    private Table optionsTable;
     private CheckBox muteCheckBox;
-    private Slider volumeSlider;
-    private TextButton backButton;
-    private TextButton Level1PlayButton;
-    private TextButton Level2PlayButton;
+    private TextButton backButtonChooseLevel;
+    private TextButton backButtonOptions;
+    private TextButton chooseLevelButton;
+    private TextButton level1PlayButton;
+    private TextButton level2PlayButton;
+    private TextButton level3PlayButton;
     private TextButton optionsButton;
     private TextButton exitButton;
     private boolean menuShown;
@@ -55,68 +58,98 @@ public class MenuScene extends ScreenAdapter {
         title = new Image(game.manager.get("title.png", Texture.class));
         title.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
 
-        helpTip = new Label("Tap around the plane to move it!", skin);
+        helpTip = new Label("Tap around the plane to move it!\nCollect the Stars to get the HighScore!\n" +
+                "Collect Fuel to keep fly!\nCollect Shield to be invincible to Rocks and Meteors ", skin);
         helpTip.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         helpTip.setColor(Color.NAVY);
 
-        table = new Table();
-        Level1PlayButton = new TextButton("Level 1", skin);
-        table.add(Level1PlayButton).padBottom(15);
-        table.row();
-        Level2PlayButton = new TextButton("Level 2", skin);
-        table.add(Level2PlayButton).padBottom(15);
-        table.row();
-        optionsButton=new TextButton("Sound Options", skin);
-        table.add(optionsButton).padBottom(15);
-        table.row();
-        table.add(new TextButton("LeadetBoard", skin)).padBottom(15);
-        table.row();
+        mainTable = new Table();
+        chooseLevelButton = new TextButton("Choose Level", skin);
+        mainTable.add(chooseLevelButton).padBottom(15);
+        mainTable.add().row();
+        optionsButton = new TextButton("Sound Options", skin);
+        mainTable.add(optionsButton).padBottom(15);
+        mainTable.row();
+        mainTable.add(new TextButton("LeaderBoard", skin)).padBottom(15);
+        mainTable.row();
         exitButton = new TextButton("Exit Game", skin);
-        table.add(exitButton);
-        table.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
-        table.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6 , -Gdx.graphics.getHeight()/3);
+        mainTable.add(exitButton);
+        mainTable.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
+        mainTable.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6 , -Gdx.graphics.getHeight()/3);
 
-        options = new Table();
+        chooseLevelTable = new Table();
+        Label chooseLevelTitle = new Label("Choose Level", skin);
+        chooseLevelTitle.setColor(Color.NAVY);
+        chooseLevelTable.add(chooseLevelTitle).padBottom(25).colspan(2);
+        chooseLevelTable.row();
+        level1PlayButton = new TextButton("Level 1", skin);
+        chooseLevelTable.add(level1PlayButton).padBottom(15);
+        chooseLevelTable.row();
+        level2PlayButton = new TextButton("Level 2", skin);
+        chooseLevelTable.add(level2PlayButton).padBottom(15);
+        chooseLevelTable.row();
+        level3PlayButton = new TextButton("Level 3", skin);
+        chooseLevelTable.add(level3PlayButton).padBottom(15);
+        chooseLevelTable.row();
+        backButtonChooseLevel = new TextButton("BACK", skin);
+        chooseLevelTable.add(backButtonChooseLevel).padTop(25);
+        chooseLevelTable.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
+        chooseLevelTable.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6 , -Gdx.graphics.getHeight()/3);
+
+        optionsTable = new Table();
         Label soundTitle = new Label("SOUND OPTIONS",skin);
         soundTitle.setColor(Color.NAVY);
-        options.add(soundTitle).padBottom(25).colspan(2);
-        options.row();
+        optionsTable.add(soundTitle).padBottom(25).colspan(2);
+        optionsTable.row();
         muteCheckBox = new CheckBox(" MUTE ALL", skin);
-        options.add(muteCheckBox).padBottom(10).colspan(2);
+        optionsTable.add(muteCheckBox).padBottom(10).colspan(2);
         //options.row();
         //options.add(new Label("VOLUME ",skin)).padBottom(10).padRight(10);
         //volumeSlider = new Slider(0, 2, 0.2f, false, skin);
         //options.add(volumeSlider).padTop(10).padBottom(20);
-        options.row();
-        backButton = new TextButton("BACK", skin);
-        options.add(backButton).colspan(2).padTop(20);
-        options.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
-        options.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
+        optionsTable.row();
+        backButtonOptions = new TextButton("BACK", skin);
+        optionsTable.add(backButtonOptions).colspan(2).padTop(25);
+        optionsTable.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
+        optionsTable.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
         muteCheckBox.setChecked(!game.soundEnabled);
         //volumeSlider.setValue(game.soundVolume);
 
         stage.addActor(screenBg);
         stage.addActor(title);
         stage.addActor(helpTip);
-        stage.addActor(table);
-        stage.addActor(options);
+        stage.addActor(mainTable);
+        stage.addActor(chooseLevelTable);
+        stage.addActor(optionsTable);
 
-        Level1PlayButton.addListener(new ClickListener(){
+        chooseLevelButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                showMenu(false, true, false);
+            }
+        });
+        level1PlayButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new AirplaneScene1(game));
             }
         });
-        Level2PlayButton.addListener(new ClickListener(){
+        level2PlayButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new AirplaneScene2(game));
             }
         });
+        level3PlayButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new AirplaneScene3(game));
+            }
+        });
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                showMenu(false);
+                showMenu(false, false, true);
             }
         });
         exitButton.addListener(new ClickListener(){
@@ -126,30 +159,37 @@ public class MenuScene extends ScreenAdapter {
                 // or System.exit(0);
             }
         });
+        muteCheckBox.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                game.soundEnabled =! muteCheckBox.isChecked();
+                System.out.println("game.soundEnabled is " + game.soundEnabled);
+            }
+        });
+        backButtonOptions.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showMenu(true, false, false);
+            }
+        });
+        backButtonChooseLevel.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showMenu(true, false, false);
+            }
+        });
 
         /*volumeSlider.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.soundVolume = volumeSlider.getValue();
             }
         });*/
-        muteCheckBox.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-                game.soundEnabled =! muteCheckBox.isChecked();
-            }
-        });
-        backButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                showMenu(true);
-            }
-        });
     }
 
     @Override
     public void show() {
 
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6);
-        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/12, Gdx.graphics.getHeight()/20);
+        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/16);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
         actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.5));
@@ -157,7 +197,7 @@ public class MenuScene extends ScreenAdapter {
         actionMove.setInterpolation(Interpolation.elasticOut);
         title.addAction(actionMove);
 
-        showMenu(true);
+        showMenu(true, false, false);
     }
 
     @Override
@@ -165,7 +205,7 @@ public class MenuScene extends ScreenAdapter {
 
     }
 
-    private void showMenu(boolean flag) {
+    private void showMenu(boolean showMenuFlag, boolean showChooseLevel, boolean showSoundOptions) {
 
         MoveToAction actionMove1 = Actions.action(MoveToAction.class);//out
         actionMove1.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
@@ -177,14 +217,41 @@ public class MenuScene extends ScreenAdapter {
         actionMove2.setDuration(1.5f);
         actionMove2.setInterpolation(Interpolation.swing);
 
-        if(flag){
-            table.addAction(actionMove2);
-            options.addAction(actionMove1);
-        }else{
-            options.addAction(actionMove2);
-            table.addAction(actionMove1);
+        MoveToAction actionMove3 = Actions.action(MoveToAction.class);//in
+        actionMove3.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/2.5));
+        actionMove3.setDuration(1.5f);
+        actionMove3.setInterpolation(Interpolation.swing);
+
+        MoveToAction actionMove4 = Actions.action(MoveToAction.class);//out
+        actionMove4.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
+        actionMove4.setDuration(1);
+        actionMove4.setInterpolation(Interpolation.swingIn);
+
+        if (showMenuFlag){
+            mainTable.addAction(actionMove2);
+            optionsTable.addAction(actionMove1);
+            chooseLevelTable.addAction(actionMove4);
+        } else if(showChooseLevel){
+            chooseLevelTable.addAction(actionMove2);
+            mainTable.addAction(actionMove1);
+            optionsTable.addAction(actionMove4);
+        } else if(showSoundOptions){
+            optionsTable.addAction(actionMove2);
+            mainTable.addAction(actionMove1);
+            chooseLevelTable.addAction(actionMove4);
         }
-        menuShown = flag;
+
+        /*if(showMenuFlag){
+            mainTable.addAction(actionMove2);
+            optionsTable.addAction(actionMove1);
+            chooseLevelTable.addAction(actionMove3);
+        }else{
+            optionsTable.addAction(actionMove2);
+            chooseLevelTable.addAction(actionMove1);
+            mainTable.addAction(actionMove1);
+        }*/
+
+        menuShown = showMenuFlag;
     }
 
     @Override
@@ -196,19 +263,19 @@ public class MenuScene extends ScreenAdapter {
         stage.act();
         stage.draw();
 
-        System.out.println("stage.getViewport().getScreenHeight() = " + stage.getViewport().getScreenHeight());
-        System.out.println("stage.getViewport().getScreenWidth() = " + stage.getViewport().getScreenWidth());
+        //System.out.println("stage.getViewport().getScreenHeight() = " + stage.getViewport().getScreenHeight());
+        //System.out.println("stage.getViewport().getScreenWidth() = " + stage.getViewport().getScreenWidth());
 
         //Table.drawDebug(stage);
         super.render(delta);
     }
 
-    //@Override
+   /* //@Override
     protected void handleBackPress() {
         if(!menuShown){
             showMenu(!menuShown);
         }
-    }
+    }*/
 
     @Override
     public void dispose () {

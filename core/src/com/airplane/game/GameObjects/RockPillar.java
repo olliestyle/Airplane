@@ -3,8 +3,10 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.AirplaneScene2;
+import com.airplane.game.AirplaneScene3;
 import com.airplane.game.Managers.GameManager;
 import com.airplane.game.Managers.GameManager2;
+import com.airplane.game.Managers.GameManager3;
 import com.airplane.game.Managers.PickUpSpawnManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -13,7 +15,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -37,9 +38,12 @@ public class RockPillar {
     private Plane plane;
     private GameManager gameManager;
     private GameManager2 gameManager2;
+    private GameManager3 gameManager3;
+    private Airplane airplane;
 
     public RockPillar(Airplane airplane, Plane plane, GameManager gameManager) {
 
+        this.airplane = airplane;
         System.out.println("game in rockpillar = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
@@ -49,6 +53,7 @@ public class RockPillar {
 
     public RockPillar(Airplane airplane, Plane plane, GameManager2 gameManager2) {
 
+        this.airplane = airplane;
         System.out.println("game in rockpillar = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
@@ -56,6 +61,15 @@ public class RockPillar {
         this.gameManager2 = gameManager2;
     }
 
+    public RockPillar(Airplane airplane, Plane plane, GameManager3 gameManager3) {
+
+        this.airplane = airplane;
+        System.out.println("game in rockpillar = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager3 = gameManager3;
+    }
 
     public void initializePillar(){
 
@@ -157,6 +171,11 @@ public class RockPillar {
                                 gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
                             }
                         }
+                        if(AirplaneScene3.isIsAirplaneScene3Initialized()){
+                            if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER){
+                                gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
+                            }
+                        }
                     }
                     break;
                 }
@@ -216,7 +235,9 @@ public class RockPillar {
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
             Gdx.input.vibrate(100);
-            crashSound.play();
+            if(airplane.soundEnabled) {
+                crashSound.play();
+            }
             return true;
         }
         return false;

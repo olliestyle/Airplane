@@ -29,9 +29,11 @@ public class GameManager {
     private TextureAtlas atlas;
     private PickUpSpawnManager pickUpSpawnManager;
     private Plane plane;
+    private Airplane airplane;
 
     public GameManager(Airplane airplane, Plane plane) {
 
+        this.airplane = airplane;
         atlas = airplane.atlas;
         this.plane = plane;
         terrain = new Terrain(airplane, plane, this);
@@ -59,9 +61,12 @@ public class GameManager {
         //atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
         backGroundRegion = atlas.findRegion("background");
 
-        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
-        mainMusic.setLooping(true);
-        mainMusic.play();
+        if (airplane.soundEnabled) {
+            System.out.println("soundEnabled = " + airplane.soundEnabled);
+            mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
+            mainMusic.setLooping(true);
+            mainMusic.play();
+        }
 
         gameState = GameState.INIT;
 
@@ -127,6 +132,4 @@ public class GameManager {
         //atlas.dispose();
         mainMusic.dispose();
     }
-
-
 }

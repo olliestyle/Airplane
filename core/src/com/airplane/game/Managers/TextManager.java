@@ -1,18 +1,14 @@
 package com.airplane.game.Managers;
 
-import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.AirplaneScene2;
-import com.airplane.game.GameObjects.Meteor;
-import com.airplane.game.GameObjects.Plane;
-import com.airplane.game.GameObjects.Terrain;
+import com.airplane.game.AirplaneScene3;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 
 public class TextManager {
@@ -24,29 +20,37 @@ public class TextManager {
     private PickUpSpawnManager pickUpSpawnManager;
     private GameManager gameManager;
     private GameManager2 gameManager2;
+    private GameManager3 gameManager3;
+    private TextureAtlas atlas;
 
     public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager gameManager) {
 
         this.pickUpSpawnManager = pickUpSpawnManager;
         this.gameManager = gameManager;
-
     }
 
     public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager2 gameManager2) {
 
         this.pickUpSpawnManager = pickUpSpawnManager;
         this.gameManager2 = gameManager2;
+    }
 
+    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager3 gameManager3) {
+
+        this.pickUpSpawnManager = pickUpSpawnManager;
+        this.gameManager3 = gameManager3;
     }
 
     public void initialize (float width, float height){
 
         font = new BitmapFont(Gdx.files.internal("june.fnt"));
         fontGameOver = new BitmapFont(Gdx.files.internal("june.fnt"));
+
         widthTextManager = width;
         heightTextManager = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
         font.getData().setScale(width/1500); // масштабируем размер шрифта
+        fontGameOver.setColor(Color.BLACK);
         fontGameOver.getData().setScale(width/1000);
     }
 
@@ -91,6 +95,14 @@ public class TextManager {
                 font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
 
             if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+        }
+
+        if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
+            if (gameManager3.getGameState() == GameManager3.GameState.INIT)
+                font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
+
+            if (gameManager3.getGameState() == GameManager3.GameState.GAME_OVER)
                 fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
         }
 

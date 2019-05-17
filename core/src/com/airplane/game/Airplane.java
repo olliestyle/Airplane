@@ -25,7 +25,6 @@ public class Airplane extends Game {
     //private ParticleEffectLoader.ParticleEffectParameter pep;
     private Viewport viewport;
     public boolean soundEnabled;
-    public float soundVolume;
 
     public Airplane() {
         System.out.println("In Airplane constructor");

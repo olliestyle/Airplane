@@ -103,7 +103,7 @@ public class LoadingScreen extends ScreenAdapter {
 		pep.atlasFile = "Airplane.pack";
 
 		game.manager.load("title.png", Texture.class);
-		game.manager.load("impact-40.fnt", BitmapFont.class);
+		game.manager.load("june.fnt", BitmapFont.class);
 		game.manager.load("journey.mp3", Music.class);
 		game.manager.load("pop.ogg", Sound.class);
 		game.manager.load("alarm.ogg", Sound.class);

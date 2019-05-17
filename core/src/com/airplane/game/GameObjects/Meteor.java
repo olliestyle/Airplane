@@ -3,17 +3,15 @@ package com.airplane.game.GameObjects;
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.AirplaneScene2;
+import com.airplane.game.AirplaneScene3;
 import com.airplane.game.Managers.GameManager;
-
 import com.airplane.game.Managers.GameManager2;
+import com.airplane.game.Managers.GameManager3;
 import com.airplane.game.Managers.PickUpSpawnManager;
-import com.badlogic.gdx.Game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -48,9 +46,12 @@ public class Meteor {
     private AssetManager manager;
     private GameManager gameManager;
     private GameManager2 gameManager2;
+    private GameManager3 gameManager3;
+    private Airplane airplane;
 
     public Meteor(Airplane airplane, GameManager gameManager) {
 
+        this.airplane = airplane;
         System.out.println("game in meteor = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
@@ -59,10 +60,20 @@ public class Meteor {
 
     public Meteor(Airplane airplane, GameManager2 gameManager2) {
 
+        this.airplane = airplane;
         System.out.println("game in meteor = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.gameManager2 = gameManager2;
+    }
+
+    public Meteor(Airplane airplane, GameManager3 gameManager3) {
+
+        this.airplane = airplane;
+        System.out.println("game in meteor = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.gameManager3 = gameManager3;
     }
 
     public void initializeMeteor(){
@@ -159,6 +170,11 @@ public class Meteor {
                         gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
                     }
                 }
+                if(AirplaneScene3.isIsAirplaneScene3Initialized()){
+                    if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER){
+                        gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
+                    }
+                }
             }
 
             /*Если метеор вылетел за левый край экрана - он больше не на экране*/
@@ -186,7 +202,10 @@ public class Meteor {
         {
             return;
         }
-        meteorSpawnSound.play();
+
+        if (airplane.soundEnabled) {
+            meteorSpawnSound.play();
+        }
         meteorVelocity.set(0,0);
         meteorInScene = true; // метеора отображается на экране
         int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
@@ -227,7 +246,9 @@ public class Meteor {
     private boolean isPlaneCollideWithMeteor(){
 
         if (planeRect.overlaps(meteorRect)){
-            crashSound.play();
+            if (airplane.soundEnabled) {
+                crashSound.play();
+            }
             Gdx.input.vibrate(100);
             return true;
         }

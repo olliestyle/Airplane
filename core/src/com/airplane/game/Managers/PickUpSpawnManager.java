@@ -3,6 +3,7 @@ package com.airplane.game.Managers;
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.AirplaneScene2;
+import com.airplane.game.AirplaneScene3;
 import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
@@ -48,6 +49,8 @@ public class PickUpSpawnManager{
     private float SHIELD_RESIZE_HEIGHT_FACTOR;
     private GameManager gameManager;
     private GameManager2 gameManager2;
+    private GameManager3 gameManager3;
+    private Airplane airplane;
 
     public void setPlaneResizeWidthFactor(){
 
@@ -77,6 +80,7 @@ public class PickUpSpawnManager{
     // экземпляр rockPillar нужен для того, чтобы пикапы не создавались внутри скалы
     PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager gameManager){
 
+        this.airplane = airplane;
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.plane = plane;
@@ -91,11 +95,27 @@ public class PickUpSpawnManager{
 
     PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager2 gameManager2){
 
+        this.airplane = airplane;
         atlas = airplane.atlas;
         manager = airplane.manager;
         this.plane = plane;
         this.rockPillar = rockPillar;
         this.gameManager2 = gameManager2;
+        fuelIndicator = manager.get("fuelBar.png");
+        shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
+                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
+        shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
+    }
+
+    PickUpSpawnManager (Airplane airplane, RockPillar rockPillar, Plane plane, GameManager3 gameManager3){
+
+        this.airplane = airplane;
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.rockPillar = rockPillar;
+        this.gameManager3 = gameManager3;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
                 , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
@@ -218,6 +238,11 @@ public class PickUpSpawnManager{
                     gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
                 }
             }
+            if(AirplaneScene3.isIsAirplaneScene3Initialized()){
+                if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER){
+                    gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
+                }
+            }
         }
 
         for(Pickup pickup: pickupsInScene) {
@@ -246,7 +271,10 @@ public class PickUpSpawnManager{
     }
 
     private void pickIt(Pickup pickup) {
-        pickup.getPickUpSound().play();
+
+        if(airplane.soundEnabled) {
+            pickup.getPickUpSound().play();
+        }
         switch(pickup.getPickUpType()){
             case Pickup.STAR:
                 starCount += pickup.getPickUpValue();
