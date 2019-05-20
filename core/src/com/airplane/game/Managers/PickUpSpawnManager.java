@@ -23,6 +23,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -121,6 +122,10 @@ public class PickUpSpawnManager{
                 , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
                 , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
         shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
+    }
+
+    public Array<Pickup> getPickupsInScene() {
+        return pickupsInScene;
     }
 
     public void checkAndCreatePickUp(float delta){
@@ -287,6 +292,14 @@ public class PickUpSpawnManager{
                 break;
         }
         pickupsInScene.removeValue(pickup, false);
+    }
+
+    public void resetPickup(){
+
+        starCount = 0;
+        shieldCount = 0;
+        fuelCount = 100;
+        pickupsInScene.clear();
     }
 
     public float getShieldCount() {

@@ -223,7 +223,6 @@ public class Terrain {
                 }
             }
         }
-
     }
 
     private boolean isPlaneCollisionWithTerrain(){

@@ -42,7 +42,7 @@ public class Meteor {
     private float METEOR_RESIZE_HEIGHT_FACTOR;
     private Texture testOverlapsMeteor;
     private TextureAtlas atlas;
-    private Sound crashSound, meteorSpawnSound;
+    private Sound crashSound;
     private AssetManager manager;
     private GameManager gameManager;
     private GameManager2 gameManager2;
@@ -91,7 +91,6 @@ public class Meteor {
         nextMeteorIn = (float) (Math.random()*5);
         meteorRect = new Rectangle();
         crashSound = manager.get("crash.ogg");
-        meteorSpawnSound = manager.get("alarm.ogg");
         setMeteorResizeHeightFactor();
         setMeteorResizeWidthFactor();
         launchMeteor();
@@ -203,9 +202,6 @@ public class Meteor {
             return;
         }
 
-        if (airplane.soundEnabled) {
-            meteorSpawnSound.play();
-        }
         meteorVelocity.set(0,0);
         meteorInScene = true; // метеора отображается на экране
         int id = (int)(Math.random()*meteorTextures.size); // определяем, какой метеор взять из массива
@@ -253,8 +249,12 @@ public class Meteor {
             return true;
         }
         return false;
+    }
 
-
+    public void resetMeteor(){
+        meteorInScene = false;
+        nextMeteorIn = (float) (Math.random()*5);
+        launchMeteor();
     }
 
 }

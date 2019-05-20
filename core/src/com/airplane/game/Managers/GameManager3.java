@@ -133,12 +133,29 @@ public class GameManager3 {
 
             case GAME_OVER:
 
+                if(Gdx.input.justTouched()){
+
+                    gameState = GameState.INIT;
+                    resetScene();
+                }
                 break;
 
             default:
 
                 break;
         }
+    }
+
+    public void resetScene(){
+
+        meteor.resetMeteor();
+        meteor2.resetMeteor();
+        meteor3.resetMeteor();
+        plane.resetPlane();
+        pickUpSpawnManager.resetPickup();
+        rockPillar.resetPillar();
+        rockPillar2.resetPillar();
+        rockPillar3.resetPillar();
     }
 
     public RockPillar getRockPillar(){

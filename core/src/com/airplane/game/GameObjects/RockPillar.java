@@ -40,6 +40,7 @@ public class RockPillar {
     private GameManager2 gameManager2;
     private GameManager3 gameManager3;
     private Airplane airplane;
+    private boolean isCollide;
 
     public RockPillar(Airplane airplane, Plane plane, GameManager gameManager) {
 
@@ -115,7 +116,6 @@ public class RockPillar {
 
                 for (Vector2 vec: pillars)
                 {
-
                     vec.x -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // перемещение скал относительно "движения" самолета
                     //System.out.println("vec.x = " + vec.x);
                     //System.out.println("pillars = " + pillars.size);
@@ -159,8 +159,11 @@ public class RockPillar {
 
                         }
                     }
-                    if (isPlaneCollisionWithPillar()){
+                    if (isPlaneCollideWithPillar()){
                         System.out.println("Plane collides with Pillar");
+                        System.out.println("isCollide = " + isCollide);
+                        System.out.println("isPlaneCollideWithPillar = " + isPlaneCollideWithPillar());
+
                         if(AirplaneScene1.isIsAirplaneScene1Initialized()){
                             if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
                                 gameManager.setGameState(GameManager.GameState.GAME_OVER);
@@ -224,23 +227,33 @@ public class RockPillar {
                         else {
                             //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
                             batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                            batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                            batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
                         }
                     }
                 }
     }
 
-    private boolean isPlaneCollisionWithPillar(){
+    private boolean isPlaneCollideWithPillar(){
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
+            isCollide = true;
             Gdx.input.vibrate(100);
             if(airplane.soundEnabled) {
                 crashSound.play();
             }
-            return true;
         }
-        return false;
+        return isCollide;
+    }
+
+    public void resetPillar() {
+
+        pillars.clear();
+        addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        System.out.println("Set isCollide to false");
+        isCollide = false;
+        isPlaneCollideWithPillar();
+
     }
 
     public Array<Vector2> getPillars() {

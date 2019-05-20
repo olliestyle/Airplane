@@ -106,7 +106,6 @@ public class LoadingScreen extends ScreenAdapter {
 		game.manager.load("june.fnt", BitmapFont.class);
 		game.manager.load("journey.mp3", Music.class);
 		game.manager.load("pop.ogg", Sound.class);
-		game.manager.load("alarm.ogg", Sound.class);
 		game.manager.load("crash.ogg", Sound.class);
 		game.manager.load("star.ogg", Sound.class);
 		game.manager.load("shield.ogg", Sound.class);

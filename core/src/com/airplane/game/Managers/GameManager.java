@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class GameManager {
@@ -88,6 +89,8 @@ public class GameManager {
         terrain.renderTerrain(batch);
         textManager.displayMessage(batch);
         pickUpSpawnManager.drawPickUp(batch);
+        //System.out.println("Size is " + pickUpSpawnManager.getPickupsInScene().size);
+
     }
 
     public void updateScene(){
@@ -115,12 +118,25 @@ public class GameManager {
 
             case GAME_OVER:
 
+                if(Gdx.input.justTouched()){
+
+                    resetScene();
+                    gameState = GameState.INIT;
+                }
                 break;
 
             default:
 
                 break;
         }
+    }
+
+    public void resetScene(){
+
+        meteor.resetMeteor();
+        plane.resetPlane();
+        pickUpSpawnManager.resetPickup();
+        rockPillar.resetPillar();
     }
 
     public RockPillar getRockPillar(){

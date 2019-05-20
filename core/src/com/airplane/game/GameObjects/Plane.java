@@ -30,14 +30,14 @@ public class Plane{
     private Vector2 planeDefaultPosition;
     private Vector2 planePosition;
     private Vector2 planeVelocity;
-    private Vector2 scrollVelocity;
+    private final Vector2 scrollVelocity = new Vector2(4, 0);
     public Vector2 tempVector = new Vector2(); // временный вектор для хранения координат касания
     private final int TOUCH_IMPULSE = 500;
     public float tapDrawTime;
     private final float TAP_DRAW_TIME_MAX = 1.0f;
     public float planeAnimTime;
     private final Vector2 damping = new Vector2(0.99f,0.99f);
-    private Vector2 gravity = new Vector2();
+    private final Vector2 gravity = new Vector2(0, -2f);
     public float deltaTime;
     private TextureRegion tapIndicator;
     public static Rectangle planeRect = new Rectangle();
@@ -72,12 +72,9 @@ public class Plane{
         plane = new Animation(0.05f, atlas.findRegion("planeGreen1"), atlas.findRegion("planeGreen2"), atlas.findRegion("planeGreen3")); // инициализация анимации объекта plane
         plane.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
         planeDefaultPosition = new Vector2(); // инициализация начальной позиции самолета
-        planeDefaultPosition.set(width/10, height/1.5f); // установка начальной позиции самолета
-        gravity.set(0, -2f); // установка "гравитации"
+        planeDefaultPosition.set(width/10, height/1.8f); // установка начальной позиции самолета
         planeVelocity = new Vector2(); // инициализация вектора скорости самолета
-        planeVelocity.set(100,0); // установка скорости самолета
-        scrollVelocity = new Vector2();
-        scrollVelocity.set(4,0);
+        planeVelocity.set(100, 0); // установка скорости самолета
         planePosition = new Vector2(); // инициализация вектора позиции самолета
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
         testOverlapsPlane = new Texture(Gdx.files.internal("testoverlaps.png")); // Инициализация текстуры для тестовой отработки коллизий
@@ -185,10 +182,14 @@ public class Plane{
 
     /*метод update служит для обновления позиций объектов и времени*/
     public void update(){
-
+        //System.out.println("gravity = " + gravity);
+        //System.out.println("planePosition.y = " + planePosition.y);
+        //System.out.println("planeVelocity = " + planeVelocity);
         if (AirplaneScene1.isIsAirplaneScene1Initialized()) {
+
             if (gameManager.getGameState() == GameManager.GameState.ACTION) {
                 deltaTime = Gdx.graphics.getDeltaTime();
+
                 planeAnimTime += deltaTime;
                 planeVelocity.scl(damping);
                 planeVelocity.add(gravity);
@@ -207,6 +208,7 @@ public class Plane{
                     planeRect.set(planePosition.x + planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 4, planePosition.y + planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 4, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR / 2, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR / 2);
                 }
             }
+
         }
 
         if (AirplaneScene2.isIsAirplaneScene2Initialized()){
@@ -311,29 +313,90 @@ public class Plane{
         }
     }
 
-    public void handleTouch(float x, float y){
+    public void handleTouch(float x, float y) {
 
-        if(airplane.soundEnabled) {
-            tapSound.play();
-        }
-        tempVector.set(planePosition.x, planePosition.y);
-        //System.out.println("tempVector before subtract = " + tempVector);
-        //System.out.println("touchPosition.x = " + x);
-        //System.out.println("touchPosition.y = " + y);
-        tempVector.sub(x, y).nor();
-        //System.out.println("tempVector after subtract = " + tempVector);
-        if (Gdx.graphics.getWidth() <= 800){
-            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*0.7 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
-        }
-        else if (Gdx.graphics.getWidth() > 1280){
-            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
-        }
-        else{
-            //System.out.println("planeVelocity = " + planeVelocity);
-            planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE*1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+        if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
+            if (gameManager.getGameState() == GameManager.GameState.ACTION) {
+
+                if (airplane.soundEnabled) {
+                    tapSound.play();
+                }
+                tempVector.set(planePosition.x, planePosition.y);
+                //System.out.println("tempVector before subtract = " + tempVector);
+                //System.out.println("touchPosition.x = " + x);
+                //System.out.println("touchPosition.y = " + y);
+                tempVector.sub(x, y).nor();
+                //System.out.println("tempVector after subtract = " + tempVector);
+                if (Gdx.graphics.getWidth() <= 800) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 0.7 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else {
+                    //System.out.println("planeVelocity = " + planeVelocity);
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                }
+
+                tapDrawTime = TAP_DRAW_TIME_MAX;
+            }
         }
 
-        tapDrawTime = TAP_DRAW_TIME_MAX;
+        if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
+            if (gameManager2.getGameState() == GameManager2.GameState.ACTION) {
+                if (airplane.soundEnabled) {
+                    tapSound.play();
+                }
+                tempVector.set(planePosition.x, planePosition.y);
+                //System.out.println("tempVector before subtract = " + tempVector);
+                //System.out.println("touchPosition.x = " + x);
+                //System.out.println("touchPosition.y = " + y);
+                tempVector.sub(x, y).nor();
+                //System.out.println("tempVector after subtract = " + tempVector);
+                if (Gdx.graphics.getWidth() <= 800) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 0.7 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else {
+                    //System.out.println("planeVelocity = " + planeVelocity);
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                }
+
+                tapDrawTime = TAP_DRAW_TIME_MAX;
+            }
+        }
+
+        if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
+            if (gameManager3.getGameState() == GameManager3.GameState.ACTION) {
+                if (airplane.soundEnabled) {
+                    tapSound.play();
+                }
+                tempVector.set(planePosition.x, planePosition.y);
+                //System.out.println("tempVector before subtract = " + tempVector);
+                //System.out.println("touchPosition.x = " + x);
+                //System.out.println("touchPosition.y = " + y);
+                tempVector.sub(x, y).nor();
+                //System.out.println("tempVector after subtract = " + tempVector);
+                if (Gdx.graphics.getWidth() <= 800) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 0.7 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 2.5 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                } else {
+                    //System.out.println("planeVelocity = " + planeVelocity);
+                    planeVelocity.mulAdd(tempVector, (float) (TOUCH_IMPULSE * 1.2 - MathUtils.clamp(Vector2.dst(x, y, planePosition.x, planePosition.y), 0, TOUCH_IMPULSE)));
+                }
+
+                tapDrawTime = TAP_DRAW_TIME_MAX;
+            }
+        }
+    }
+
+    public void resetPlane(){
+
+        tempVector.set(0, 0);
+        scrollVelocity.set(4, 0);
+        planeVelocity.set(100, 0);
+        planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
+        tapDrawTime = 0;
+        deltaTime = 0;
     }
 
     public Vector2 getPlanePosition() {
@@ -355,4 +418,5 @@ public class Plane{
     public void setGameManager3(GameManager3 gameManager3) {
         this.gameManager3 = gameManager3;
     }
+
 }

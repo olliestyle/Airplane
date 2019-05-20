@@ -70,7 +70,7 @@ public class TextManager {
         glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
         glyphLayoutTouchPositionY.setText(font, "touchPosition Y = " + InputManager.touchPosition.y);
         glyphLayoutINIT.setText(font, "Tap next to the airplane to make it move ");
-        glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over");
+        glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over. Tap to try again.");
         glyphLayoutSHIELD.setText(font, "Shield " + (int)pickUpSpawnManager.getShieldCount() + " sec.");
         glyphLayoutSTAR.setText(font, "Stars collected " + pickUpSpawnManager.getStarCount());
 
@@ -87,7 +87,7 @@ public class TextManager {
                 font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
 
             if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
         }
 
         if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
@@ -95,7 +95,7 @@ public class TextManager {
                 font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
 
             if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
         }
 
         if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
@@ -103,7 +103,7 @@ public class TextManager {
                 font.draw(batch, glyphLayoutINIT, (float) (widthTextManager / 3.4), (float) (heightTextManager / 2.1));
 
             if (gameManager3.getGameState() == GameManager3.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - 100, heightTextManager / 2);
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
         }
 
         if (pickUpSpawnManager.getShieldCount() > 0){
