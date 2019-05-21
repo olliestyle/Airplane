@@ -40,7 +40,6 @@ public class RockPillar {
     private GameManager2 gameManager2;
     private GameManager3 gameManager3;
     private Airplane airplane;
-    private boolean isCollide;
 
     public RockPillar(Airplane airplane, Plane plane, GameManager gameManager) {
 
@@ -112,147 +111,141 @@ public class RockPillar {
         pillars.add(pillarPosition);
     }
 
-    public void updatePillar(PickUpSpawnManager pickUpSpawnManager){
+    public void updatePillar(PickUpSpawnManager pickUpSpawnManager) {
 
-                for (Vector2 vec: pillars)
-                {
-                    vec.x -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // перемещение скал относительно "движения" самолета
-                    //System.out.println("vec.x = " + vec.x);
-                    //System.out.println("pillars = " + pillars.size);
+        for (Vector2 vec : pillars) {
+            vec.x -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // перемещение скал относительно "движения" самолета
+            //System.out.println("vec.x = " + vec.x);
+            //System.out.println("pillars = " + pillars.size);
 
-                    if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth())
-                    {
-                        //System.out.println("UDALIAU VECTOR");
-                        pillars.removeValue(vec,false); // удаляем скалу, если она вылезла за пределы экрана слева
+            if (vec.x + pillarUp.getRegionWidth() < 0 + pillarUp.getRegionWidth()) {
+                //System.out.println("UDALIAU VECTOR");
+                pillars.removeValue(vec, false); // удаляем скалу, если она вылезла за пределы экрана слева
+            }
+
+            if (pickUpSpawnManager.getShieldCount() < 0) {
+                if (vec.y == 1) {
+                    if (Gdx.graphics.getWidth() <= 800) {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
+
+                    } else if (Gdx.graphics.getWidth() > 1280) {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
+                    } else {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
+                    }
+                } else {
+                    if (Gdx.graphics.getWidth() <= 800) {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
+                    } else if (Gdx.graphics.getWidth() > 1280) {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
+                    } else {
+                        pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
+                        pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
+                        pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
                     }
 
-                    if (pickUpSpawnManager.getShieldCount() < 0) {
-                        if (vec.y == 1) {
-                            if (Gdx.graphics.getWidth() <= 800) {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-
-                            } else if (Gdx.graphics.getWidth() > 1280) {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-                            } else {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 38, 0, Gdx.graphics.getWidth() / 18, (float) (Gdx.graphics.getHeight() / 4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 38, (float) (Gdx.graphics.getHeight() / 5.5));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, 0, Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-                            }
-                        } else {
-                            if (Gdx.graphics.getWidth() <= 800) {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-                            } else if (Gdx.graphics.getWidth() > 1280) {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-                            } else {
-                                pillarRect1.set(vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 65, (float) (Gdx.graphics.getHeight() / 4.4));
-                                pillarRect2.set(vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 6, Gdx.graphics.getWidth() / 25, (float) (Gdx.graphics.getHeight() / 2));
-                                pillarRect3.set(vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3));
-                            }
-
-                        }
-                    }
-                    if (isPlaneCollideWithPillar()){
-                        System.out.println("Plane collides with Pillar");
-                        System.out.println("isCollide = " + isCollide);
-                        System.out.println("isPlaneCollideWithPillar = " + isPlaneCollideWithPillar());
-
-                        if(AirplaneScene1.isIsAirplaneScene1Initialized()){
-                            if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
-                                gameManager.setGameState(GameManager.GameState.GAME_OVER);
-                            }
-                        }
-                        if(AirplaneScene2.isIsAirplaneScene2Initialized()){
-                            if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
-                                gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
-                            }
-                        }
-                        if(AirplaneScene3.isIsAirplaneScene3Initialized()){
-                            if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER){
-                                gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
-                            }
-                        }
-                    }
-                    break;
                 }
-                if (lastPillarPosition.x <= Gdx.graphics.getWidth()/1000){ // <= потому что на экранах <1000 будет 0.9, 0.8... что = 0
-                    //System.out.println("DOBAVLIAU VECTOR");
-                    addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            }
+
+            if (isPlaneCollideWithPillar()){
+                //System.out.println("isPlaneCollideWithPillar = " + isPlaneCollideWithPillar());
+
+                if (AirplaneScene1.isIsAirplaneScene1Initialized()) {
+                    if (gameManager.getGameState() != GameManager.GameState.GAME_OVER) {
+                        gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                    }
                 }
+                if (AirplaneScene2.isIsAirplaneScene2Initialized()) {
+                    if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER) {
+                        gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                    }
+                }
+                if (AirplaneScene3.isIsAirplaneScene3Initialized()) {
+                    if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER) {
+                        gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
+                    }
+                }
+            }
+            break;
         }
+        if (lastPillarPosition.x <= Gdx.graphics.getWidth() / 1000) { // <= потому что на экранах <1000 будет 0.9, 0.8... что = 0
+            //System.out.println("DOBAVLIAU VECTOR");
+            addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+    }
 
-    public void renderPillar(SpriteBatch batch){
+    public void renderPillar(SpriteBatch batch) {
 
         //System.out.println("renderPillar here");
-                for (Vector2 vec: pillars){
-                    if (vec.y == 1){
-                        if (Gdx.graphics.getWidth() <= 800){
-                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                        else if (Gdx.graphics.getWidth() > 1280){
-                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                        else {
-                            batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                    }
-                    else{
-                        if (Gdx.graphics.getWidth() <= 800){
-                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                        else if (Gdx.graphics.getWidth() > 1280){
-                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
-                            //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                        else {
-                            //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
-                            batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
-                            batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                            batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
-                        }
-                    }
+        for (Vector2 vec : pillars) {
+            if (vec.y == 1) {
+                if (Gdx.graphics.getWidth() <= 800) {
+                    batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 38,0, Gdx.graphics.getWidth()/18, (float) (Gdx.graphics.getHeight()/4)); // Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
+                } else {
+                    batch.draw(pillarUp, vec.x, 0, Gdx.graphics.getWidth() / 10, (float) (Gdx.graphics.getHeight() / 2.3)); // Отрисовка скалы внизу экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80,0, Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); // Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 19, Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth()/38, (float) (Gdx.graphics.getHeight()/5.5)); //Отрисовка черной области для проверки коллизий между объектами
                 }
+            } else {
+                if (Gdx.graphics.getWidth() <= 800) {
+                    batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
+                } else if (Gdx.graphics.getWidth() > 1280) {
+                    batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/12, (float) (Gdx.graphics.getHeight()/2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 33, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/2.4), Gdx.graphics.getWidth()/65, (float) (Gdx.graphics.getHeight()/4.4)); //Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 47, Gdx.graphics.getHeight()- Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/25, (float) (Gdx.graphics.getHeight()/2)); //Отрисовка черной области для проверки коллизий между объектами
+                } else {
+                    //batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - pillarDown.getRegionHeight());// Отрисовка скалы сверху экрана
+                    batch.draw(pillarDown, vec.x, Gdx.graphics.getHeight() - (float) (Gdx.graphics.getHeight() / 2.3), Gdx.graphics.getHeight() / 10, (float) (Gdx.graphics.getHeight() / 2.3));// Отрисовка скалы сверху экрана
+                    //batch.draw(testOverlapsPillar1, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                    //batch.draw(testOverlapsPillar2, vec.x + Gdx.graphics.getWidth() / 80, (float) (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2.4), Gdx.graphics.getWidth() / 12, (float) (Gdx.graphics.getHeight() / 2.3)); //Отрисовка черной области для проверки коллизий между объектами
+                }
+            }
+        }
     }
 
     private boolean isPlaneCollideWithPillar(){
 
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
-            isCollide = true;
+
             Gdx.input.vibrate(100);
             if(airplane.soundEnabled) {
                 crashSound.play();
             }
+            return true;
         }
-        return isCollide;
+        return false;
     }
+
+
 
     public void resetPillar() {
 
         pillars.clear();
         addPillar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        System.out.println("Set isCollide to false");
-        isCollide = false;
-        isPlaneCollideWithPillar();
+        pillarRect1.set(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0,0);
+        pillarRect2.set(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0,0);
 
     }
 

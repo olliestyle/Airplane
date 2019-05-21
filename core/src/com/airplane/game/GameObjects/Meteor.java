@@ -255,6 +255,7 @@ public class Meteor {
         meteorInScene = false;
         nextMeteorIn = (float) (Math.random()*5);
         launchMeteor();
+        meteorRect.set(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),0,0);
     }
 
 }
