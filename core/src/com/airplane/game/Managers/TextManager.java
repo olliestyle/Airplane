@@ -1,5 +1,6 @@
 package com.airplane.game.Managers;
 
+import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
 import com.airplane.game.AirplaneScene2;
 import com.airplane.game.AirplaneScene3;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class TextManager {
 
-    private BitmapFont font; // отображаем текст на экране через эту переменную
+    private BitmapFont font;
     private BitmapFont fontGameOver;
     private float widthTextManager;
     private float heightTextManager;
@@ -22,29 +23,35 @@ public class TextManager {
     private GameManager2 gameManager2;
     private GameManager3 gameManager3;
     private TextureAtlas atlas;
+    private Airplane airplane;
 
-    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager gameManager) {
+    public TextManager(Airplane airplane, PickUpSpawnManager pickUpSpawnManager, GameManager gameManager) {
 
+        this.airplane = airplane;
         this.pickUpSpawnManager = pickUpSpawnManager;
         this.gameManager = gameManager;
     }
 
-    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager2 gameManager2) {
+    public TextManager(Airplane airplane, PickUpSpawnManager pickUpSpawnManager, GameManager2 gameManager2) {
 
+        this.airplane = airplane;
         this.pickUpSpawnManager = pickUpSpawnManager;
         this.gameManager2 = gameManager2;
     }
 
-    public TextManager(PickUpSpawnManager pickUpSpawnManager, GameManager3 gameManager3) {
+    public TextManager(Airplane airplane, PickUpSpawnManager pickUpSpawnManager, GameManager3 gameManager3) {
 
+        this.airplane = airplane;
         this.pickUpSpawnManager = pickUpSpawnManager;
         this.gameManager3 = gameManager3;
     }
 
     public void initialize (float width, float height){
 
-        font = new BitmapFont(Gdx.files.internal("june.fnt"));
-        fontGameOver = new BitmapFont(Gdx.files.internal("june.fnt"));
+        //font = new BitmapFont(Gdx.files.internal("june.fnt"));
+        font = airplane.manager.get("june.fnt");
+        //fontGameOver = new BitmapFont(Gdx.files.internal("june.fnt"));
+        fontGameOver = airplane.manager.get("june.fnt");
 
         widthTextManager = width;
         heightTextManager = height;

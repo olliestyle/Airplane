@@ -130,7 +130,7 @@ public class PickUpSpawnManager{
 
     public void checkAndCreatePickUp(float delta){
 
-        testOverlapsPickup = new Texture(Gdx.files.internal("testoverlaps.png"));
+        //testOverlapsPickup = new Texture(Gdx.files.internal("testoverlaps.png"));
 
         pickUpTiming.sub(delta);
         if(pickUpTiming.x <= 0){

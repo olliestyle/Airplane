@@ -238,8 +238,6 @@ public class RockPillar {
         return false;
     }
 
-
-
     public void resetPillar() {
 
         pillars.clear();

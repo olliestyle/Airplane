@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Scaling;
 //import com.csharks.thrustcopter.MenuScene;
 //import com.csharks.thrustcopter.ThrustCopter;
@@ -102,6 +103,7 @@ public class LoadingScreen extends ScreenAdapter {
 		pep = new ParticleEffectLoader.ParticleEffectParameter();
 		pep.atlasFile = "Airplane.pack";
 
+		//game.manager.load("flat-earth-ui.json", Json.class);
 		game.manager.load("title.png", Texture.class);
 		game.manager.load("june.fnt", BitmapFont.class);
 		game.manager.load("journey.mp3", Music.class);

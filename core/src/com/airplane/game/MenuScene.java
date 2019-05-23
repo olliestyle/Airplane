@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MenuScene extends ScreenAdapter {
 
@@ -40,6 +43,10 @@ public class MenuScene extends ScreenAdapter {
     private TextButton level3PlayButton;
     private TextButton optionsButton;
     private TextButton exitButton;
+    private ImageButton.ImageButtonStyle chooseLevelImageButtonStyle;
+    private ImageButton chooseLevelImageButton;
+    private TextButton.TextButtonStyle chooseLevelTextButtonStyle;
+    private TextButton chooseLevelTextButton;
     private boolean menuShown;
     private Airplane game;
 
@@ -52,6 +59,7 @@ public class MenuScene extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("flat-earth-ui.json"));
+        //skin = game.manager.get("flat-earth-ui.json");
 
         screenBg = new Image(game.atlas.findRegion("background"));
         screenBg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -63,9 +71,26 @@ public class MenuScene extends ScreenAdapter {
         helpTip.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         helpTip.setColor(Color.NAVY);
 
+        /*chooseLevelImageButtonStyle = new ImageButton.ImageButtonStyle();
+        chooseLevelImageButtonStyle.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture("b_4.png")));
+        chooseLevelImageButtonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(new Texture("b_5.png")));
+        chooseLevelImageButton = new ImageButton(chooseLevelImageButtonStyle);
+        //chooseLevelImageButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("b_4.png"))));
+        //chooseLevelImageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("b_5.png"))));
+        chooseLevelImageButton.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);*/
+
+        chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
+        chooseLevelTextButtonStyle.font = game.manager.get("june.fnt");
+        chooseLevelTextButtonStyle.font.getData().setScale((float) 1.2);
+        chooseLevelTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("playButtonUp.png"))));
+        chooseLevelTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("playButtonDown.png"))));
+        chooseLevelTextButton = new TextButton("", chooseLevelTextButtonStyle);
+        chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
+        chooseLevelTextButton.setPosition(Gdx.graphics.getWidth()/2 - chooseLevelTextButton.getWidth()/2, (float) (Gdx.graphics.getHeight()/1.5));
+
         mainTable = new Table();
-        chooseLevelButton = new TextButton("Choose Level", skin);
-        mainTable.add(chooseLevelButton).padBottom(15);
+        //chooseLevelButton = new TextButton("Choose Level", skin);
+        mainTable.add(chooseLevelTextButton).padBottom(20);
         mainTable.add().row();
         optionsButton = new TextButton("Sound Options", skin);
         mainTable.add(optionsButton).padBottom(15);
@@ -121,8 +146,9 @@ public class MenuScene extends ScreenAdapter {
         stage.addActor(mainTable);
         stage.addActor(chooseLevelTable);
         stage.addActor(optionsTable);
+        stage.addActor(chooseLevelTextButton);
 
-        chooseLevelButton.addListener(new ClickListener(){
+        chooseLevelTextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 showMenu(false, true, false);
@@ -188,11 +214,11 @@ public class MenuScene extends ScreenAdapter {
     @Override
     public void show() {
 
-        title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6);
+        title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/10);
         helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/16);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
-        actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.5));
+        actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.2));
         actionMove.setDuration(2);
         actionMove.setInterpolation(Interpolation.elasticOut);
         title.addAction(actionMove);

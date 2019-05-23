@@ -397,6 +397,7 @@ public class Plane{
         planePosition.set(planeDefaultPosition); // установка позиции самолета начальной позицией
         tapDrawTime = 0;
         deltaTime = 0;
+        smoke.dispose();
     }
 
     public Vector2 getPlanePosition() {

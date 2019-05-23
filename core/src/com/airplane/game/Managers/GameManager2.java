@@ -44,7 +44,7 @@ public class GameManager2 {
         rockPillar = new RockPillar(airplane, plane, this);
         rockPillar2 = new RockPillar(airplane, plane, this);
         pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane, this); // нам нужно получить именно ту скалу, которая отрисована на данный момент
-        textManager = new TextManager(pickUpSpawnManager,this);
+        textManager = new TextManager(airplane, pickUpSpawnManager,this);
     }
 
     public enum GameState{
@@ -66,7 +66,8 @@ public class GameManager2 {
         backGroundRegion = atlas.findRegion("background");
 
         if (airplane.soundEnabled) {
-            mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
+            //mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
+            mainMusic = airplane.manager.get("journey.mp3");
             mainMusic.setLooping(true);
             mainMusic.play();
         }
