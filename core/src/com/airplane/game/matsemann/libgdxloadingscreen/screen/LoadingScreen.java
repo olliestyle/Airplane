@@ -104,6 +104,7 @@ public class LoadingScreen extends ScreenAdapter {
 		pep.atlasFile = "Airplane.pack";
 
 		//game.manager.load("flat-earth-ui.json", Json.class);
+		game.manager.load("menuAtlas.txt", TextureAtlas.class);
 		game.manager.load("title.png", Texture.class);
 		game.manager.load("june.fnt", BitmapFont.class);
 		game.manager.load("journey.mp3", Music.class);
@@ -173,6 +174,7 @@ public class LoadingScreen extends ScreenAdapter {
 			waitTime -= delta;
 			if(waitTime <= 0){
 			game.atlas = game.manager.get("Airplane.pack", TextureAtlas.class);
+			game.menuAtlas = game.manager.get("menuAtlas.txt", TextureAtlas.class);
 			//game.font = game.manager.get("impact-40.fnt", BitmapFont.class);
 			//game.setScreen(new MenuScene(game));
 			game.setScreen(new MenuScene(game));

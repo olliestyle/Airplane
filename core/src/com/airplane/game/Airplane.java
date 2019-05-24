@@ -22,6 +22,7 @@ public class Airplane extends Game {
     public OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
     public SpriteBatch batch; // область для отрисовки спрайтов нашей игры
     public TextureAtlas atlas;
+    public TextureAtlas menuAtlas;
     //private ParticleEffectLoader.ParticleEffectParameter pep;
     private Viewport viewport;
     public boolean soundEnabled;

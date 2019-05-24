@@ -2,9 +2,12 @@ package com.airplane.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,9 +26,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public class MenuScene extends ScreenAdapter {
 
+
+    private TextureAtlas menuAtlas;
     private Stage stage;
     private Image screenBg;
     private Skin skin;
@@ -35,18 +42,21 @@ public class MenuScene extends ScreenAdapter {
     private Table chooseLevelTable;
     private Table optionsTable;
     private CheckBox muteCheckBox;
-    private TextButton backButtonChooseLevel;
-    private TextButton backButtonOptions;
-    private TextButton chooseLevelButton;
+    private TextButton backChooseLevelTextButton;
+    private TextButton.TextButtonStyle backChooseLevelTextButtonStyle;
+    private TextButton.TextButtonStyle chooseLevelTextButtonStyle;
+    private TextButton chooseLevelTextButton;
+    private TextButton.TextButtonStyle backOptionsTextButtonStyle;
+    private TextButton backOptionsTextButton;
     private TextButton level1PlayButton;
     private TextButton level2PlayButton;
     private TextButton level3PlayButton;
     private TextButton optionsButton;
+    private TextButton.TextButtonStyle optionsTextButtonStyle;
+    private TextButton optionsTextButton;
     private TextButton exitButton;
-    private ImageButton.ImageButtonStyle chooseLevelImageButtonStyle;
-    private ImageButton chooseLevelImageButton;
-    private TextButton.TextButtonStyle chooseLevelTextButtonStyle;
-    private TextButton chooseLevelTextButton;
+
+
     private boolean menuShown;
     private Airplane game;
 
@@ -54,7 +64,7 @@ public class MenuScene extends ScreenAdapter {
 
         //super(airplane);
         game = airplane;
-
+        menuAtlas = game.manager.get("menuAtlas.txt", TextureAtlas.class);
         stage = new Stage(game.getViewport());
         Gdx.input.setInputProcessor(stage);
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -70,26 +80,27 @@ public class MenuScene extends ScreenAdapter {
                 "Collect Fuel to keep fly!\nCollect Shield to be invincible to Rocks and Meteors ", skin);
         helpTip.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         helpTip.setColor(Color.NAVY);
-
-        /*chooseLevelImageButtonStyle = new ImageButton.ImageButtonStyle();
-        chooseLevelImageButtonStyle.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture("b_4.png")));
-        chooseLevelImageButtonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(new Texture("b_5.png")));
-        chooseLevelImageButton = new ImageButton(chooseLevelImageButtonStyle);
-        //chooseLevelImageButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("b_4.png"))));
-        //chooseLevelImageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("b_5.png"))));
-        chooseLevelImageButton.setPosition(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);*/
+        helpTip.setAlignment(Align.center);
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
-        chooseLevelTextButtonStyle.font = game.manager.get("june.fnt");
-        chooseLevelTextButtonStyle.font.getData().setScale((float) 1.2);
-        chooseLevelTextButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("playButtonUp.png"))));
-        chooseLevelTextButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("playButtonDown.png"))));
+        chooseLevelTextButtonStyle.font = game.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
+        chooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("playButtonUp")) ;
+        chooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("playButtonDown"));
         chooseLevelTextButton = new TextButton("", chooseLevelTextButtonStyle);
-        chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
-        chooseLevelTextButton.setPosition(Gdx.graphics.getWidth()/2 - chooseLevelTextButton.getWidth()/2, (float) (Gdx.graphics.getHeight()/1.5));
+        chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/9);
+
+        backChooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
+        backChooseLevelTextButtonStyle.font = game.manager.get("june.fnt");
+        backChooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("backButtonUp"));
+        backChooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("backButtonDown"));
+        backChooseLevelTextButton = new TextButton("", backChooseLevelTextButtonStyle);
+        backChooseLevelTextButton.setSize(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/9);
+
+        backOptionsTextButton = new TextButton("", backChooseLevelTextButtonStyle);
+        backOptionsTextButton.setSize(Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()/15);
+
 
         mainTable = new Table();
-        //chooseLevelButton = new TextButton("Choose Level", skin);
         mainTable.add(chooseLevelTextButton).padBottom(20);
         mainTable.add().row();
         optionsButton = new TextButton("Sound Options", skin);
@@ -116,8 +127,7 @@ public class MenuScene extends ScreenAdapter {
         level3PlayButton = new TextButton("Level 3", skin);
         chooseLevelTable.add(level3PlayButton).padBottom(15);
         chooseLevelTable.row();
-        backButtonChooseLevel = new TextButton("BACK", skin);
-        chooseLevelTable.add(backButtonChooseLevel).padTop(25);
+        chooseLevelTable.add(backChooseLevelTextButton).padTop(25);
         chooseLevelTable.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         chooseLevelTable.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6 , -Gdx.graphics.getHeight()/3);
 
@@ -133,8 +143,7 @@ public class MenuScene extends ScreenAdapter {
         //volumeSlider = new Slider(0, 2, 0.2f, false, skin);
         //options.add(volumeSlider).padTop(10).padBottom(20);
         optionsTable.row();
-        backButtonOptions = new TextButton("BACK", skin);
-        optionsTable.add(backButtonOptions).colspan(2).padTop(25);
+        optionsTable.add(backOptionsTextButton).colspan(2).padTop(25);
         optionsTable.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         optionsTable.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, -Gdx.graphics.getHeight()/3);
         muteCheckBox.setChecked(!game.soundEnabled);
@@ -146,7 +155,7 @@ public class MenuScene extends ScreenAdapter {
         stage.addActor(mainTable);
         stage.addActor(chooseLevelTable);
         stage.addActor(optionsTable);
-        stage.addActor(chooseLevelTextButton);
+        //stage.addActor(chooseLevelTextButton);
 
         chooseLevelTextButton.addListener(new ClickListener(){
             @Override
@@ -191,13 +200,13 @@ public class MenuScene extends ScreenAdapter {
                 System.out.println("game.soundEnabled is " + game.soundEnabled);
             }
         });
-        backButtonOptions.addListener(new ClickListener(){
+        backOptionsTextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 showMenu(true, false, false);
             }
         });
-        backButtonChooseLevel.addListener(new ClickListener(){
+        backChooseLevelTextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 showMenu(true, false, false);
@@ -215,7 +224,7 @@ public class MenuScene extends ScreenAdapter {
     public void show() {
 
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/10);
-        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/16);
+        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/16);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
         actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.2));
