@@ -1,117 +1,117 @@
 menuAtlas.png
-size: 1806, 1830
+size: 690, 1432
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 backButtonDown
   rotate: false
   xy: 0, 0
-  size: 602, 305
-  orig: 602, 305
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 backButtonUp
   rotate: false
-  xy: 602, 0
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 0
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 exitButtonDown
   rotate: false
-  xy: 1204, 0
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 179
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 exitButtonUp
   rotate: false
-  xy: 0, 305
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 179
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 leaderBoardButtonDown
   rotate: false
-  xy: 602, 305
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 358
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 leaderBoardButtonUp
   rotate: false
-  xy: 1204, 305
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 358
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level1ButtonDown
   rotate: false
-  xy: 0, 610
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 537
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level1ButtonUp
   rotate: false
-  xy: 602, 610
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 537
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level2ButtonDown
   rotate: false
-  xy: 1204, 610
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 716
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level2ButtonUp
   rotate: false
-  xy: 0, 915
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 716
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level3ButtonDown
   rotate: false
-  xy: 602, 915
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 895
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 level3ButtonUp
   rotate: false
-  xy: 1204, 915
-  size: 602, 305
-  orig: 602, 305
-  offset: 0, 0
-  index: -1
-optionsButtonDown
-  rotate: false
-  xy: 0, 1220
-  size: 602, 305
-  orig: 602, 305
-  offset: 0, 0
-  index: -1
-optionsButtonUp
-  rotate: false
-  xy: 602, 1220
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 895
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 playButtonDown
   rotate: false
-  xy: 1204, 1220
-  size: 602, 305
-  orig: 602, 305
+  xy: 0, 1074
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1
 playButtonUp
   rotate: false
-  xy: 0, 1525
-  size: 602, 305
-  orig: 602, 305
+  xy: 345, 1074
+  size: 345, 179
+  orig: 345, 179
+  offset: 0, 0
+  index: -1
+soundButtonDown
+  rotate: false
+  xy: 0, 1253
+  size: 345, 179
+  orig: 345, 179
+  offset: 0, 0
+  index: -1
+soundButtonUp
+  rotate: false
+  xy: 345, 1253
+  size: 345, 179
+  orig: 345, 179
   offset: 0, 0
   index: -1

@@ -87,7 +87,8 @@ public class MenuScene extends ScreenAdapter {
         chooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("playButtonUp")) ;
         chooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("playButtonDown"));
         chooseLevelTextButton = new TextButton("", chooseLevelTextButtonStyle);
-        chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/9);
+        chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
+
 
         backChooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
         backChooseLevelTextButtonStyle.font = game.manager.get("june.fnt");
@@ -101,8 +102,8 @@ public class MenuScene extends ScreenAdapter {
 
 
         mainTable = new Table();
-        mainTable.add(chooseLevelTextButton).padBottom(20);
-        mainTable.add().row();
+        //mainTable.add(chooseLevelTextButton).padBottom(20);
+        //mainTable.add().row();
         optionsButton = new TextButton("Sound Options", skin);
         mainTable.add(optionsButton).padBottom(15);
         mainTable.row();
@@ -155,7 +156,7 @@ public class MenuScene extends ScreenAdapter {
         stage.addActor(mainTable);
         stage.addActor(chooseLevelTable);
         stage.addActor(optionsTable);
-        //stage.addActor(chooseLevelTextButton);
+        stage.addActor(chooseLevelTextButton);
 
         chooseLevelTextButton.addListener(new ClickListener(){
             @Override
@@ -225,6 +226,7 @@ public class MenuScene extends ScreenAdapter {
 
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/10);
         helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/16);
+        chooseLevelTextButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/10 , Gdx.graphics.getHeight()/1.4f);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
         actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.2));
