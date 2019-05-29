@@ -1,5 +1,5 @@
 menuAtlas.png
-size: 690, 1432
+size: 690, 1611
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -111,6 +111,20 @@ soundButtonDown
 soundButtonUp
   rotate: false
   xy: 345, 1253
+  size: 345, 179
+  orig: 345, 179
+  offset: 0, 0
+  index: -1
+soundOffCheckBox
+  rotate: false
+  xy: 0, 1432
+  size: 345, 179
+  orig: 345, 179
+  offset: 0, 0
+  index: -1
+soundOnCheckBox
+  rotate: false
+  xy: 345, 1432
   size: 345, 179
   orig: 345, 179
   offset: 0, 0
