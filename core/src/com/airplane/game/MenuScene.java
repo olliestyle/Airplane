@@ -1,14 +1,11 @@
 package com.airplane.game;
 
+import com.airplane.game.Managers.TextManager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,25 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 
-public class MenuScene extends ScreenAdapter {
+public class MenuScene extends BaseScene {
 
     private TextureAtlas menuAtlas;
     private Stage stage;
     private Image screenBg;
-    private Skin skin;
     private Image title;
     private Label helpTip;
     private CheckBox.CheckBoxStyle muteCheckBoxStyle;
@@ -58,36 +48,41 @@ public class MenuScene extends ScreenAdapter {
     private TextButton.TextButtonStyle level3TextButtonStyle;
     private TextButton level3TextButton;
     private boolean menuShown;
+    private static boolean isMenuSceneInitialised;
     private Airplane game;
+    private TextManager textManager;
+    private SpriteBatch batch;
 
     public MenuScene(final Airplane airplane) {
 
-        //super(airplane);
+        super(airplane);
         game = airplane;
         menuAtlas = game.manager.get("menuAtlas.txt", TextureAtlas.class);
         stage = new Stage(game.getViewport());
         Gdx.input.setInputProcessor(stage);
-        //skin = new Skin(Gdx.files.internal("uiskin.json"));
-        skin = new Skin(Gdx.files.internal("flat-earth-ui.json"));
-        //skin = game.manager.get("flat-earth-ui.json");
+        batch = game.batch;
+        textManager = new TextManager(game);
 
         screenBg = new Image(game.atlas.findRegion("background"));
         screenBg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         title = new Image(game.manager.get("title.png", Texture.class));
         title.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
+        title.setScaling(Scaling.stretch);
 
+        /*
         helpTip = new Label("Tap around the plane to move it!\nCollect the Stars to get the HighScore!\n" +
                 "Collect Fuel to keep fly!\nCollect Shield to be invincible to Rocks and Meteors!", skin);
-        helpTip.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
+        helpTip.debug();
+        helpTip.setSize(Gdx.graphics.getWidth()/1.3f, Gdx.graphics.getHeight()/4);
         helpTip.setColor(Color.NAVY);
         helpTip.setAlignment(Align.center);
+        */
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
         chooseLevelTextButtonStyle.font = game.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
         chooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("playButtonUp")) ;
         chooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("playButtonDown"));
         chooseLevelTextButton = new TextButton("", chooseLevelTextButtonStyle);
-        chooseLevelTextButton.debugActor();
         chooseLevelTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
         chooseLevelTextButton.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.45f);
 
@@ -149,16 +144,17 @@ public class MenuScene extends ScreenAdapter {
 
         muteCheckBoxStyle = new CheckBox.CheckBoxStyle();
         muteCheckBoxStyle.font = game.manager.get("june.fnt");
-        muteCheckBoxStyle.checkboxOff = new TextureRegionDrawable(menuAtlas.findRegion("soundOffCheckBox"));
-        muteCheckBoxStyle.checkboxOn = new TextureRegionDrawable(menuAtlas.findRegion("soundOnCheckBox"));
+        muteCheckBoxStyle.checkboxOff = new TextureRegionDrawable(menuAtlas.findRegion("soundOnCheckBox"));
+        muteCheckBoxStyle.checkboxOn = new TextureRegionDrawable(menuAtlas.findRegion("soundOffCheckBox"));
         muteCheckBox = new CheckBox("", muteCheckBoxStyle);
-        muteCheckBox.debugActor();
         muteCheckBox.getImageCell().size(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
         muteCheckBox.getImage().setScaling(Scaling.stretch);
-        muteCheckBox.getLabel().setAlignment(Align.center);
+        muteCheckBox.add(muteCheckBox.getLabel()).expand();
+        muteCheckBox.setBounds(0,0, 0,300);//без этой строки происходит срабатывание кнопки, при нажатии рядом с ней.
+
+        //muteCheckBox.getLabel().setAlignment(Align.center);
         //muteCheckBox.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
         muteCheckBox.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.36f);
-
 
         backOptionsTextButton = new TextButton("", backChooseLevelTextButtonStyle);
         backOptionsTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
@@ -166,7 +162,7 @@ public class MenuScene extends ScreenAdapter {
 
         stage.addActor(screenBg);
         stage.addActor(title);
-        stage.addActor(helpTip);
+        //stage.addActor(helpTip);
         stage.addActor(chooseLevelTextButton);
         stage.addActor(soundOptionsTextButton);
         stage.addActor(leaderBoardTextButton);
@@ -241,11 +237,22 @@ public class MenuScene extends ScreenAdapter {
         });*/
     }
 
+    public static boolean isIsMenuSceneInitialised() {
+        return isMenuSceneInitialised;
+    }
+
+    public static void setIsMenuSceneInitialised(boolean isMenuSceneInitialised) {
+        MenuScene.isMenuSceneInitialised = isMenuSceneInitialised;
+    }
+
     @Override
     public void show() {
 
+        isMenuSceneInitialised = true;
+        textManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/10);
-        helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/16);
+        //helpTip.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/16);
 
         MoveToAction actionMove = Actions.action(MoveToAction.class);
         actionMove.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, (float) (Gdx.graphics.getHeight()/1.2));
@@ -377,25 +384,25 @@ public class MenuScene extends ScreenAdapter {
         // Show the loading screen
         stage.act();
         stage.draw();
-
+        batch.begin();
+        textManager.displayMenuMessage(batch);
+        batch.end();
         //System.out.println("stage.getViewport().getScreenHeight() = " + stage.getViewport().getScreenHeight());
         //System.out.println("stage.getViewport().getScreenWidth() = " + stage.getViewport().getScreenWidth());
 
         //Table.drawDebug(stage);
         super.render(delta);
+
     }
 
-   /* //@Override
+   @Override
     protected void handleBackPress() {
-        if(!menuShown){
-            showMenu(!menuShown);
-        }
-    }*/
+       Gdx.app.exit();
+    }
 
     @Override
     public void dispose () {
         stage.dispose();
-        skin.dispose();
     }
 
 

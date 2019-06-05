@@ -89,8 +89,8 @@ public class PickUpSpawnManager{
         this.gameManager = gameManager;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
-                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
-                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield4"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield2"), atlas.findRegion("shield1")); // инициализация анимации объекта plane
         shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
     }
 
@@ -104,8 +104,8 @@ public class PickUpSpawnManager{
         this.gameManager2 = gameManager2;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
-                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
-                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield4"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield2"), atlas.findRegion("shield1")); // инициализация анимации объекта plane
         shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
     }
 
@@ -119,8 +119,8 @@ public class PickUpSpawnManager{
         this.gameManager3 = gameManager3;
         fuelIndicator = manager.get("fuelBar.png");
         shield = new Animation(0.05f, atlas.findRegion("shield1"), atlas.findRegion("shield2"), atlas.findRegion("shield3")
-                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield6"), atlas.findRegion("shield7")
-                , atlas.findRegion("shield8"), atlas.findRegion("shield9"), atlas.findRegion("shield10"), atlas.findRegion("shield11")); // инициализация анимации объекта plane
+                , atlas.findRegion("shield4"), atlas.findRegion("shield5"), atlas.findRegion("shield4"), atlas.findRegion("shield3")
+                , atlas.findRegion("shield2"), atlas.findRegion("shield1")); // инициализация анимации объекта plane
         shield.setPlayMode(Animation.PlayMode.LOOP); // "запуск" анимации
     }
 
@@ -204,22 +204,22 @@ public class PickUpSpawnManager{
         if (Gdx.graphics.getWidth() <= 800){
             batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
             if (getShieldCount() > 0) {
-                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth() / 65, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 38,
-                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 7);
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x + Gdx.graphics.getWidth() / 35, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 38,
+                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 5);
             }
         }
         else if (Gdx.graphics.getWidth() > 1280){
-            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
+            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage*3, Gdx.graphics.getHeight()/40);
             if (getShieldCount() > 0) {
-                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth() / 55, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 30,
-                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 7);
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x + Gdx.graphics.getWidth() / 35, plane.getPlanePosition().y - Gdx.graphics.getHeight() / 30,
+                        Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 5);
             }
         }
         else{
-            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage, Gdx.graphics.getHeight()/40);
+            batch.draw(fuelIndicator, Gdx.graphics.getWidth()/100, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, fuelPercentage*2, Gdx.graphics.getHeight()/40);
             if (getShieldCount() > 0){
-                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x - Gdx.graphics.getWidth()/45, plane.getPlanePosition().y - Gdx.graphics.getHeight()/30,
-                    Gdx.graphics.getWidth()/10 , Gdx.graphics.  getHeight()/7 );
+                batch.draw((TextureRegion) shield.getKeyFrame(shieldAnimTime), plane.getPlaneDefaultPosition().x + Gdx.graphics.getWidth() / 35, plane.getPlanePosition().y - Gdx.graphics.getHeight()/30,
+                    Gdx.graphics.getWidth()/10 , Gdx.graphics.  getHeight()/5 );
             }
         }
     }

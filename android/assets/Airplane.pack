@@ -3,227 +3,185 @@ Airplane.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-background
-  rotate: false
-  xy: 1, 542
-  size: 800, 480
-  orig: 800, 480
-  offset: 0, 0
-  index: -1
 groundSnow
   rotate: false
-  xy: 1, 469
+  xy: 1, 882
   size: 808, 71
   orig: 808, 71
   offset: 0, 0
   index: -1
-textGameOver
-  rotate: false
-  xy: 1, 389
-  size: 412, 78
-  orig: 412, 78
-  offset: 0, 0
-  index: -1
-textGetReady
-  rotate: false
-  xy: 1, 314
-  size: 400, 73
-  orig: 400, 73
-  offset: 0, 0
-  index: -1
-rockSnow
-  rotate: false
-  xy: 803, 783
-  size: 108, 239
-  orig: 108, 239
-  offset: 0, 0
-  index: -1
-rockSnowDown
-  rotate: false
-  xy: 803, 542
-  size: 108, 239
-  orig: 108, 239
-  offset: 0, 0
-  index: -1
-planeGreen1
-  rotate: false
-  xy: 415, 394
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
-planeGreen2
-  rotate: false
-  xy: 1, 239
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
-planeGreen3
-  rotate: false
-  xy: 913, 949
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
 shield1
   rotate: false
-  xy: 811, 476
-  size: 64, 64
-  orig: 64, 64
+  xy: 811, 556
+  size: 154, 397
+  orig: 154, 397
   offset: 0, 0
   index: -1
-shield10
+background
   rotate: false
-  xy: 505, 403
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield11
-  rotate: false
-  xy: 1, 173
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield2
-  rotate: false
-  xy: 91, 248
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield3
-  rotate: false
-  xy: 913, 883
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield4
-  rotate: false
-  xy: 571, 403
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield5
-  rotate: false
-  xy: 1, 107
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield6
-  rotate: false
-  xy: 157, 248
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield7
-  rotate: false
-  xy: 913, 817
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield8
-  rotate: false
-  xy: 637, 403
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shield9
-  rotate: false
-  xy: 1, 41
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-tap
-  rotate: false
-  xy: 223, 253
-  size: 59, 59
-  orig: 59, 59
-  offset: 0, 0
-  index: -1
-tap2
-  rotate: false
-  xy: 913, 756
-  size: 59, 59
-  orig: 59, 59
-  offset: 0, 0
-  index: -1
-meteorBrown_med1
-  rotate: false
-  xy: 703, 424
-  size: 43, 43
-  orig: 43, 43
+  xy: 1, 400
+  size: 800, 480
+  orig: 800, 480
   offset: 0, 0
   index: -1
 meteorBrown_med2
   rotate: false
-  xy: 284, 272
+  xy: 967, 913
   size: 45, 40
   orig: 45, 40
   offset: 0, 0
   index: -1
+meteorBrown_med1
+  rotate: false
+  xy: 967, 868
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
 star_pickup
   rotate: false
-  xy: 1, 1
+  xy: 967, 828
   size: 39, 38
   orig: 39, 38
   offset: 0, 0
   index: -1
 particle
   rotate: false
-  xy: 877, 508
+  xy: 967, 794
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-shield_pickup
-  rotate: false
-  xy: 913, 724
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-meteorBrown_small1
-  rotate: false
-  xy: 748, 439
-  size: 28, 28
-  orig: 28, 28
-  offset: 0, 0
-  index: -1
-meteorBrown_small2
-  rotate: false
-  xy: 331, 286
-  size: 29, 26
-  orig: 29, 26
-  offset: 0, 0
-  index: -1
 fuel_pickup
   rotate: false
-  xy: 1003, 992
+  xy: 1001, 796
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 meteorBrown_tiny1
   rotate: false
-  xy: 67, 219
+  xy: 1001, 776
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
+shield_pickup
+  rotate: false
+  xy: 967, 762
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
 meteorBrown_tiny2
   rotate: false
-  xy: 979, 932
+  xy: 999, 759
   size: 16, 15
   orig: 16, 15
+  offset: 0, 0
+  index: -1
+meteorBrown_small2
+  rotate: false
+  xy: 967, 734
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorBrown_small1
+  rotate: false
+  xy: 967, 704
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+shield2
+  rotate: false
+  xy: 803, 157
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+tap
+  rotate: false
+  xy: 959, 495
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+tap2
+  rotate: false
+  xy: 959, 434
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+shield3
+  rotate: false
+  xy: 1, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+shield4
+  rotate: false
+  xy: 157, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+shield5
+  rotate: false
+  xy: 313, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+textGameOver
+  rotate: false
+  xy: 469, 77
+  size: 412, 78
+  orig: 412, 78
+  offset: 0, 0
+  index: -1
+rockSnow
+  rotate: false
+  xy: 469, 159
+  size: 108, 239
+  orig: 108, 239
+  offset: 0, 0
+  index: -1
+rockSnowDown
+  rotate: false
+  xy: 579, 159
+  size: 108, 239
+  orig: 108, 239
+  offset: 0, 0
+  index: -1
+planeGreen1
+  rotate: false
+  xy: 689, 325
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+planeGreen2
+  rotate: false
+  xy: 689, 250
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+planeGreen3
+  rotate: false
+  xy: 689, 175
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+textGetReady
+  rotate: false
+  xy: 469, 2
+  size: 400, 73
+  orig: 400, 73
   offset: 0, 0
   index: -1

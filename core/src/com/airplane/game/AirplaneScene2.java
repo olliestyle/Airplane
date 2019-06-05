@@ -9,14 +9,16 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
-public class AirplaneScene2 extends ScreenAdapter {
+public class AirplaneScene2 extends BaseScene {
 
     //private static SpriteBatch batch; // область для отрисовки спрайтов нашей игры
     //OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
     //private static Viewport viewport;
 
+    private Stage stage;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private GameManager2 gameManager2;
@@ -26,6 +28,7 @@ public class AirplaneScene2 extends ScreenAdapter {
 
     public AirplaneScene2 (Airplane airplane){
 
+        super(airplane);
         batch = airplane.batch;
         camera = airplane.camera;
         plane = new Plane(airplane);
@@ -43,6 +46,8 @@ public class AirplaneScene2 extends ScreenAdapter {
         gameManager2.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(new InputManager(camera, plane));// доступ класса InputManager для получения касаний/нажатий
         AirplaneScene1.setIsAirplaneScene1Initialized(false);
+        AirplaneScene3.setIsAirplaneScene3Initialized(false);
+        MenuScene.setIsMenuSceneInitialised(false);
         isAirplaneScene2Initialized = true;
     }
 

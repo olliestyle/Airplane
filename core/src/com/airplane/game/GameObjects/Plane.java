@@ -123,7 +123,7 @@ public class Plane{
 
         if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
             if (gameManager.getGameState() == GameManager.GameState.INIT) {
-                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 30, Gdx.graphics.getHeight() / 1.8f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             }
             if (gameManager.getGameState() == GameManager.GameState.ACTION) {
@@ -137,7 +137,7 @@ public class Plane{
 
         if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
             if (gameManager2.getGameState() == GameManager2.GameState.INIT) {
-                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 30, Gdx.graphics.getHeight() / 1.8f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             }
             if (gameManager2.getGameState() == GameManager2.GameState.ACTION) {
@@ -152,7 +152,7 @@ public class Plane{
 
         if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
             if (gameManager3.getGameState() == GameManager3.GameState.INIT) {
-                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
+                batch.draw(tapIndicator, Gdx.graphics.getWidth() / 30, Gdx.graphics.getHeight() / 1.8f, tapIndicator.getRegionWidth() * TAP_INDICATOR_RESIZE_WIDTH_FACTOR, tapIndicator.getRegionHeight() * TAP_INDICATOR_RESIZE_HEIGHT_FACTOR);
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             }
             if (gameManager3.getGameState() == GameManager3.GameState.ACTION) {
