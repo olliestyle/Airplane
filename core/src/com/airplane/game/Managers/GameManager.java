@@ -2,20 +2,28 @@ package com.airplane.game.Managers;
 
 import com.airplane.game.Airplane;
 import com.airplane.game.AirplaneScene1;
+import com.airplane.game.BaseScene;
 import com.airplane.game.GameObjects.Meteor;
 import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
+import com.airplane.game.MenuScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class GameManager {
@@ -31,8 +39,21 @@ public class GameManager {
     private PickUpSpawnManager pickUpSpawnManager;
     private Plane plane;
     private Airplane airplane;
+    private InputManager inputManager;
 
-    public GameManager(Airplane airplane, Plane plane) {
+    private Stage stageTryAgain;
+    private Stage stageResume;
+    private TextButton.TextButtonStyle resumeButtonStyle;
+    private TextButton resumeButton;
+    private TextButton.TextButtonStyle tryAgainButtonStyle;
+    private TextButton tryAgainButton;
+    private TextButton.TextButtonStyle menuButtonStyle;
+    private TextButton menuButton;
+    private TextButton.TextButtonStyle menuPauseButtonStyle;
+    private TextButton menuPauseButton;
+
+
+    public GameManager(final Airplane airplane, Plane plane) {
 
         this.airplane = airplane;
         atlas = airplane.atlas;
@@ -42,10 +63,84 @@ public class GameManager {
         rockPillar = new RockPillar(airplane, plane, this);
         pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane, this); // нам нужно получить именно ту скалу, которая отрисована на данный момент
         textManager = new TextManager(airplane ,pickUpSpawnManager, this);
+        inputManager = new InputManager(airplane.camera, plane);
+        Gdx.input.setInputProcessor(inputManager);// доступ класса InputManager для получения касаний/нажатий
+
+        stageTryAgain = new Stage(airplane.getViewport());
+        stageResume = new Stage(airplane.getViewport());
+
+        resumeButtonStyle = new TextButton.TextButtonStyle();
+        resumeButtonStyle.font = airplane.manager.get("june.fnt");
+        resumeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("resumeButtonUp.png"))));
+        resumeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("resumeButtonDown.png"))));
+        resumeButton = new TextButton("", resumeButtonStyle);
+        resumeButton.setPosition(100, 100);
+        resumeButton.setSize(200,200);
+
+        tryAgainButtonStyle = new TextButton.TextButtonStyle();
+        tryAgainButtonStyle.font = airplane.manager.get("june.fnt");
+        tryAgainButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("tryAgainButtonUp.png"))));
+        tryAgainButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("tryAgainButtonDown.png"))));
+        tryAgainButton = new TextButton("", tryAgainButtonStyle);
+        tryAgainButton.setPosition(500, 500);
+        tryAgainButton.setSize(200, 200);
+
+        menuButtonStyle = new TextButton.TextButtonStyle();
+        menuButtonStyle.font = airplane.manager.get("june.fnt");
+        menuButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonUp.png"))));
+        menuButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonDown.png"))));
+        menuButton = new TextButton("", menuButtonStyle);
+        menuButton.setPosition(800, 500);
+        menuButton.setSize(200, 200);
+
+        menuPauseButtonStyle = new TextButton.TextButtonStyle();
+        menuPauseButtonStyle.font = airplane.manager.get("june.fnt");
+        menuPauseButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonUp.png"))));
+        menuPauseButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonDown.png"))));
+        menuPauseButton = new TextButton("", menuButtonStyle);
+        menuPauseButton.setPosition(800, 500);
+        menuPauseButton.setSize(200, 200);
+
+        stageTryAgain.addActor(tryAgainButton);
+        stageTryAgain.addActor(menuButton);
+
+        stageResume.addActor(resumeButton);
+        stageResume.addActor(menuPauseButton);
+
+
+        resumeButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                System.out.println("resume Clicked");
+            }
+        });
+
+        tryAgainButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                resetScene();
+                gameState = GameState.INIT;
+            }
+        });
+
+        menuButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                airplane.setScreen(new MenuScene(airplane));
+            }
+        });
+
+        menuPauseButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                airplane.setScreen(new MenuScene(airplane));
+            }
+        });
+
     }
 
     public enum GameState{
-        INIT, ACTION, GAME_OVER
+        INIT, ACTION, PAUSE, GAME_OVER
     }
 
     public GameState getGameState() {
@@ -117,13 +212,25 @@ public class GameManager {
 
                 break;
 
+            case PAUSE:
+
+                System.out.println("In case pause");
+                stageResume.act();
+                stageResume.draw();
+                Gdx.input.setInputProcessor(stageResume);
+                break;
+
             case GAME_OVER:
 
-                if(Gdx.input.justTouched()){
+                /*if(Gdx.input.justTouched()){
 
                     resetScene();
                     gameState = GameState.INIT;
-                }
+                }*/
+
+                stageTryAgain.act();
+                stageTryAgain.draw();
+                Gdx.input.setInputProcessor(stageTryAgain);
                 break;
 
             default:
@@ -138,6 +245,7 @@ public class GameManager {
         plane.resetPlane();
         pickUpSpawnManager.resetPickup();
         rockPillar.resetPillar();
+        Gdx.input.setInputProcessor(inputManager);
     }
 
     public RockPillar getRockPillar(){
@@ -147,6 +255,8 @@ public class GameManager {
     public void dispose(){
 
         //atlas.dispose();
-        mainMusic.dispose();
+        //mainMusic.dispose();
+        stageTryAgain.dispose();
+        stageResume.dispose();
     }
 }
