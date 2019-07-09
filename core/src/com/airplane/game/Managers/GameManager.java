@@ -112,6 +112,8 @@ public class GameManager {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 System.out.println("resume Clicked");
+                Gdx.input.setInputProcessor(inputManager);
+                gameState = GameState.ACTION;
             }
         });
 

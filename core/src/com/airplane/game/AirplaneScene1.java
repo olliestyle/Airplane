@@ -79,10 +79,11 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void render(float delta) {
 
+		System.out.println("In AirplaneScene1 render method");
 		super.render(delta);
-		if(gamePaused){
+		/*if(gamePaused){
 			return;
-		}
+		}*/
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -107,7 +108,8 @@ public class AirplaneScene1 extends BaseScene{
 	public void pause() {
 
         System.out.println("In AirplaneScene1 pause method");
-        gamePaused = true;
+        //gamePaused = true;
+        gameManager.setGameState(GameManager.GameState.PAUSE);
 	}
 
 	@Override
