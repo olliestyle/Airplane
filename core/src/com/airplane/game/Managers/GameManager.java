@@ -107,7 +107,6 @@ public class GameManager {
         stageResume.addActor(resumeButton);
         stageResume.addActor(menuPauseButton);
 
-
         resumeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){

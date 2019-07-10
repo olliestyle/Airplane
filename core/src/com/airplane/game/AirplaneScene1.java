@@ -3,25 +3,10 @@ package com.airplane.game;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.Managers.GameManager;
 
-import com.airplane.game.Managers.InputManager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class AirplaneScene1 extends BaseScene{
@@ -63,11 +48,22 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	protected void handleBackPress() {
 		System.out.println("back");
-		if(gamePaused){
+
+		if (gameManager.getGameState() == GameManager.GameState.PAUSE){
+//			Gdx.input.setInputProcessor(inputManager);
+			System.out.println("back in PAUSE");
+			resume();
+
+		} else {
+			System.out.println("back in RESUME");
+			pause();
+
+		}
+		/*if(gamePaused){
 			resume();
 		}else{
 			pause();
-		}
+		}*/
 	}
 
 	@Override
@@ -79,7 +75,7 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void render(float delta) {
 
-		System.out.println("In AirplaneScene1 render method");
+		//System.out.println("In AirplaneScene1 render method");
 		super.render(delta);
 		/*if(gamePaused){
 			return;
@@ -109,14 +105,16 @@ public class AirplaneScene1 extends BaseScene{
 
         System.out.println("In AirplaneScene1 pause method");
         //gamePaused = true;
-        gameManager.setGameState(GameManager.GameState.PAUSE);
+		gameManager.setGameState(GameManager.GameState.PAUSE);
+
 	}
 
 	@Override
 	public void resume() {
 
 		System.out.println("In AirplaneScene1 resume method");
-		gamePaused = false;
+		//gamePaused = false;
+		gameManager.setGameState(GameManager.GameState.ACTION);
 	}
 
 	@Override

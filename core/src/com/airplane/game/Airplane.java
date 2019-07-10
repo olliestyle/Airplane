@@ -85,5 +85,4 @@ public class Airplane extends Game {
     public Viewport getViewport() {
         return viewport;
     }
-
 }
