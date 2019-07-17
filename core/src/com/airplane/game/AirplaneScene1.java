@@ -16,6 +16,7 @@ public class AirplaneScene1 extends BaseScene{
 	private GameManager gameManager;
 	private Plane plane;
 	private static boolean isAirplaneScene1Initialized;
+	private int firstEnter = 0;
 
 	private boolean gamePaused = false;
 
@@ -34,7 +35,6 @@ public class AirplaneScene1 extends BaseScene{
 		AirplaneScene3.setIsAirplaneScene3Initialized(false);
 		MenuScene.setIsMenuSceneInitialised(false);
 		isAirplaneScene1Initialized = true;
-
 	}
 
 	public static boolean isIsAirplaneScene1Initialized() {
@@ -52,6 +52,7 @@ public class AirplaneScene1 extends BaseScene{
 		if (gameManager.getGameState() == GameManager.GameState.PAUSE){
 //			Gdx.input.setInputProcessor(inputManager);
 			System.out.println("back in PAUSE");
+			//Gdx.input.setInputProcessor(gameManager.getInputManager());
 			resume();
 
 		} else {
@@ -69,6 +70,7 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void show() {
 
+		firstEnter = 1;
 		System.out.println("In AirplaneScene1 show method");
 	}
 
@@ -97,24 +99,29 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void resize(int width, int height) {
 
+		// При первом входе нам не нужно сюда заходить. А после того как кнопка HOME будет нажата, нужно чтобы при возврате в игру стояла пауза.
+		if (firstEnter != 1) {
+			gameManager.setGameState(GameManager.GameState.PAUSE);
+		}
+		firstEnter = 2;
         System.out.println("In AirplaneScene1 resize method");
 	}
 
 	@Override
 	public void pause() {
 
-        System.out.println("In AirplaneScene1 pause method");
         //gamePaused = true;
 		gameManager.setGameState(GameManager.GameState.PAUSE);
-
+		System.out.println("In AirplaneScene1 pause method");
 	}
 
 	@Override
 	public void resume() {
 
-		System.out.println("In AirplaneScene1 resume method");
 		//gamePaused = false;
+		Gdx.input.setInputProcessor(gameManager.getInputManager());
 		gameManager.setGameState(GameManager.GameState.ACTION);
+		System.out.println("In AirplaneScene1 resume method");
 	}
 
 	@Override

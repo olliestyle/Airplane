@@ -74,32 +74,36 @@ public class GameManager {
         resumeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("resumeButtonUp.png"))));
         resumeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("resumeButtonDown.png"))));
         resumeButton = new TextButton("", resumeButtonStyle);
-        resumeButton.setPosition(100, 100);
-        resumeButton.setSize(200,200);
+        resumeButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);
+        resumeButton.setPosition(Gdx.graphics.getWidth()/2 - resumeButton.getWidth()*1.3f , Gdx.graphics.getHeight()/2 - resumeButton.getHeight()/2);
+
 
         tryAgainButtonStyle = new TextButton.TextButtonStyle();
         tryAgainButtonStyle.font = airplane.manager.get("june.fnt");
         tryAgainButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("tryAgainButtonUp.png"))));
         tryAgainButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("tryAgainButtonDown.png"))));
         tryAgainButton = new TextButton("", tryAgainButtonStyle);
-        tryAgainButton.setPosition(500, 500);
-        tryAgainButton.setSize(200, 200);
+        tryAgainButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);
+        tryAgainButton.setPosition(Gdx.graphics.getWidth()/2 - tryAgainButton.getWidth()*1.3f , Gdx.graphics.getHeight()/2 - tryAgainButton.getHeight()/2);
+
 
         menuButtonStyle = new TextButton.TextButtonStyle();
         menuButtonStyle.font = airplane.manager.get("june.fnt");
         menuButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonUp.png"))));
         menuButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonDown.png"))));
         menuButton = new TextButton("", menuButtonStyle);
-        menuButton.setPosition(800, 500);
-        menuButton.setSize(200, 200);
+        menuButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);
+        menuButton.setPosition(Gdx.graphics.getWidth()/2 + menuButton.getWidth()*0.3f , Gdx.graphics.getHeight()/2 - menuButton.getHeight()/2);
+
 
         menuPauseButtonStyle = new TextButton.TextButtonStyle();
         menuPauseButtonStyle.font = airplane.manager.get("june.fnt");
         menuPauseButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonUp.png"))));
         menuPauseButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menuButtonDown.png"))));
         menuPauseButton = new TextButton("", menuButtonStyle);
-        menuPauseButton.setPosition(800, 500);
-        menuPauseButton.setSize(200, 200);
+        menuPauseButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/6);
+        menuPauseButton.setPosition(Gdx.graphics.getWidth()/2 + menuPauseButton.getWidth()*0.3f , Gdx.graphics.getHeight()/2 - menuButton.getHeight()/2);
+
 
         stageTryAgain.addActor(tryAgainButton);
         stageTryAgain.addActor(menuButton);
@@ -138,6 +142,10 @@ public class GameManager {
             }
         });
 
+    }
+
+    public InputManager getInputManager() {
+        return inputManager;
     }
 
     public enum GameState{
@@ -215,7 +223,6 @@ public class GameManager {
 
             case PAUSE:
 
-                System.out.println("In case pause");
                 stageResume.act();
                 stageResume.draw();
                 Gdx.input.setInputProcessor(stageResume);

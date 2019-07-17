@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class TextManager {
 
     private BitmapFont font;
-    private BitmapFont fontGameOver;
+    //private BitmapFont fontGameOver;
     private float widthTextManager;
     private float heightTextManager;
     private PickUpSpawnManager pickUpSpawnManager;
@@ -56,14 +56,14 @@ public class TextManager {
         //font = new BitmapFont(Gdx.files.internal("june.fnt"));
         font = airplane.manager.get("june.fnt");
         //fontGameOver = new BitmapFont(Gdx.files.internal("june.fnt"));
-        fontGameOver = airplane.manager.get("june.fnt");
+        //fontGameOver = airplane.manager.get("june.fnt");
 
         widthTextManager = width;
         heightTextManager = height;
         font.setColor(Color.BLACK); // устанавливаем цвет шрифта
         font.getData().setScale(width/2000); // масштабируем размер шрифта
-        fontGameOver.setColor(Color.BLACK);
-        fontGameOver.getData().setScale(width/1500);
+        //fontGameOver.setColor(Color.BLACK);
+        //fontGameOver.getData().setScale(width/1500);
     }
 
     public void displayMenuMessage(SpriteBatch batch){
@@ -94,7 +94,7 @@ public class TextManager {
         GlyphLayout glyphLayoutTouchPositionX = new GlyphLayout();
         GlyphLayout glyphLayoutTouchPositionY = new GlyphLayout();
         GlyphLayout glyphLayoutINIT = new GlyphLayout();
-        GlyphLayout glyphLayoutGAMEOVER = new GlyphLayout();
+        //GlyphLayout glyphLayoutGAMEOVER = new GlyphLayout();
         GlyphLayout glyphLayoutSHIELD = new GlyphLayout();
         GlyphLayout glyphLayoutSTAR = new GlyphLayout();
 
@@ -103,7 +103,7 @@ public class TextManager {
         glyphLayoutTouchPositionX.setText(font, "touchPosition X = " + InputManager.touchPosition.x);
         glyphLayoutTouchPositionY.setText(font, "touchPosition Y = " + InputManager.touchPosition.y);
         glyphLayoutINIT.setText(font, "The closer you touch the plane, the faster it will fly");
-        glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over. Tap to try again.");
+        //glyphLayoutGAMEOVER.setText(fontGameOver, "Game Over. Tap to try again.");
         glyphLayoutSHIELD.setText(font, "Shield " + (int)pickUpSpawnManager.getShieldCount() + " sec.");
         glyphLayoutSTAR.setText(font, "Stars collected  " + pickUpSpawnManager.getStarCount());
 
@@ -119,24 +119,24 @@ public class TextManager {
             if (gameManager.getGameState() == GameManager.GameState.INIT)
                 font.draw(batch, glyphLayoutINIT, (widthTextManager/2 - glyphLayoutINIT.width/2), (float) (heightTextManager / 2.1));
 
-            if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
+            /*if (gameManager.getGameState() == GameManager.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);*/
         }
 
         if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
             if (gameManager2.getGameState() == GameManager2.GameState.INIT)
                 font.draw(batch, glyphLayoutINIT, (widthTextManager/2 - glyphLayoutINIT.width/2), (float) (heightTextManager / 2.1));
 
-            if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
+           /* if (gameManager2.getGameState() == GameManager2.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);*/
         }
 
         if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
             if (gameManager3.getGameState() == GameManager3.GameState.INIT)
                 font.draw(batch, glyphLayoutINIT, (widthTextManager/2 - glyphLayoutINIT.width/2), (float) (heightTextManager / 2.1));
 
-            if (gameManager3.getGameState() == GameManager3.GameState.GAME_OVER)
-                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);
+            /*if (gameManager3.getGameState() == GameManager3.GameState.GAME_OVER)
+                fontGameOver.draw(batch, glyphLayoutGAMEOVER, widthTextManager / 2 - glyphLayoutGAMEOVER.width/2, heightTextManager / 2);*/
         }
 
         if (pickUpSpawnManager.getShieldCount() > 0){

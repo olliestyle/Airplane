@@ -20,13 +20,13 @@ public class BaseScene extends ScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            if (keyHandled){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            if (keyHandled) {
                 return;
             }
             handleBackPress();
             keyHandled = true;
-        }else {
+        } else {
             keyHandled = false;
         }
     }
@@ -34,4 +34,5 @@ public class BaseScene extends ScreenAdapter {
     protected void handleBackPress(){
 
     }
+
 }
