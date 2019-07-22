@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 
 public class AirplaneScene1 extends BaseScene{
 
@@ -17,6 +19,7 @@ public class AirplaneScene1 extends BaseScene{
 	private Plane plane;
 	private static boolean isAirplaneScene1Initialized;
 	private int firstEnter = 0;
+	private boolean doNotEnterInRender;
 
 	private boolean gamePaused = false;
 
@@ -54,11 +57,15 @@ public class AirplaneScene1 extends BaseScene{
 			System.out.println("back in PAUSE");
 			//Gdx.input.setInputProcessor(gameManager.getInputManager());
 			resume();
-
-		} else {
+		}
+		else if (gameManager.getGameState() == GameManager.GameState.GAME_OVER){
+			System.out.println("back in GAME_OVER");
+			doNotEnterInRender = true;
+			gameManager.setMenuSceneScreen();
+		}
+		else {
 			System.out.println("back in RESUME");
 			pause();
-
 		}
 		/*if(gamePaused){
 			resume();
@@ -83,9 +90,15 @@ public class AirplaneScene1 extends BaseScene{
 			return;
 		}*/
 
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if(doNotEnterInRender){
+			return; // без этого после касания BACK в GAME_OVER выдает glUseProgram:1573 GL error 0x501 после gameManager.updateScene()
+		}
 
+        gl.glClearColor(1, 0, 0, 1);
+        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //camera.position.x = plane.getPlanePosition().x;
+        //camera.position.y = plane.getPlanePosition().y;
         camera.update();
 		batch.setProjectionMatrix(camera.combined); // устанавливаем в экземпляр spritebatch вид с камеры (области просмотра)
         batch.begin();

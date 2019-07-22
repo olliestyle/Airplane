@@ -235,6 +235,7 @@ public class MenuScene extends BaseScene {
                 game.soundVolume = volumeSlider.getValue();
             }
         });*/
+
     }
 
     public static boolean isIsMenuSceneInitialised() {
@@ -249,6 +250,7 @@ public class MenuScene extends BaseScene {
     public void show() {
 
         isMenuSceneInitialised = true;
+
         textManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         title.setPosition( Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/10);
@@ -259,8 +261,8 @@ public class MenuScene extends BaseScene {
         actionMove.setDuration(2);
         actionMove.setInterpolation(Interpolation.elasticOut);
         title.addAction(actionMove);
-
         showMenu(true, false, false);
+
     }
 
     @Override
@@ -404,6 +406,5 @@ public class MenuScene extends BaseScene {
     public void dispose () {
         stage.dispose();
     }
-
 
 }

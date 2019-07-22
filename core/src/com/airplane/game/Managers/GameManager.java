@@ -52,7 +52,6 @@ public class GameManager {
     private TextButton.TextButtonStyle menuPauseButtonStyle;
     private TextButton menuPauseButton;
 
-
     public GameManager(final Airplane airplane, Plane plane) {
 
         this.airplane = airplane;
@@ -142,6 +141,10 @@ public class GameManager {
             }
         });
 
+    }
+
+    public void setMenuSceneScreen(){
+        airplane.setScreen(new MenuScene(airplane));
     }
 
     public InputManager getInputManager() {
@@ -239,6 +242,8 @@ public class GameManager {
                 stageTryAgain.act();
                 stageTryAgain.draw();
                 Gdx.input.setInputProcessor(stageTryAgain);
+
+
                 break;
 
             default:
@@ -258,6 +263,10 @@ public class GameManager {
 
     public RockPillar getRockPillar(){
         return rockPillar;
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
     }
 
     public void dispose(){

@@ -208,4 +208,5 @@ public class LoadingScreen extends ScreenAdapter {
 	public void dispose () {
 		stage.dispose();
 	}
+
 }

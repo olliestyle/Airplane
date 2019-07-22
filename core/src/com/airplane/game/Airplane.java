@@ -25,7 +25,7 @@ public class Airplane extends Game {
     public TextureAtlas menuAtlas;
     //private ParticleEffectLoader.ParticleEffectParameter pep;
     private Viewport viewport;
-    public boolean soundEnabled;
+    public boolean soundEnabled = true ;
 
     public Airplane() {
         System.out.println("In Airplane constructor");
