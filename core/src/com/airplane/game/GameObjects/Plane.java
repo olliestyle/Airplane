@@ -64,6 +64,10 @@ public class Plane{
         manager = airplane.manager;
     }
 
+    public void setPlaneAnimTime(float planeAnimTime) {
+        this.planeAnimTime = planeAnimTime;
+    }
+
     /*метод initialize служит для инициализации ранее созданных объектов перед их применением (отрисовка и т.д.)*/
     public void initialize(float width, float height){
 
@@ -128,6 +132,9 @@ public class Plane{
             }
             if (gameManager.getGameState() == GameManager.GameState.ACTION) {
                 smoke.draw(batch);
+                batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
+            }
+            if (gameManager.getGameState() == GameManager.GameState.PAUSE){
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             }
             if (gameManager.getGameState() == GameManager.GameState.GAME_OVER){

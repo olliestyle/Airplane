@@ -1,24 +1,17 @@
 package com.airplane.game.Managers;
 
 import com.airplane.game.Airplane;
-import com.airplane.game.AirplaneScene1;
-import com.airplane.game.BaseScene;
 import com.airplane.game.GameObjects.Meteor;
-import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
 import com.airplane.game.MenuScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -140,7 +133,6 @@ public class GameManager {
                 airplane.setScreen(new MenuScene(airplane));
             }
         });
-
     }
 
     public void setMenuSceneScreen(){
@@ -166,12 +158,9 @@ public class GameManager {
     public void initialize(float width, float height){
 
         System.out.println("atlas = " + atlas);
-        //atlas = new TextureAtlas(Gdx.files.internal("Airplane.pack"));
         backGroundRegion = atlas.findRegion("background");
 
         if (airplane.soundEnabled) {
-            System.out.println("soundEnabled = " + airplane.soundEnabled);
-            //mainMusic = Gdx.audio.newMusic(Gdx.files.internal("journey.mp3"));
             mainMusic = airplane.manager.get("journey.mp3");
             mainMusic.setLooping(true);
             mainMusic.play();
@@ -182,7 +171,7 @@ public class GameManager {
         terrain.initializeTerrain();
         textManager.initialize(width,height);
         rockPillar.initializePillar();
-        System.out.println("rockPillar in GM" + rockPillar);
+        System.out.println("rockPillar in GM " + rockPillar);
         meteor.initializeMeteor();
 
     }
@@ -197,11 +186,10 @@ public class GameManager {
         terrain.renderTerrain(batch);
         textManager.displayMessage(batch);
         pickUpSpawnManager.drawPickUp(batch);
-        //System.out.println("Size is " + pickUpSpawnManager.getPickupsInScene().size);
 
     }
 
-    public void updateScene(){
+    public void updateScene(SpriteBatch batch){
 
         switch (gameState){
 
@@ -226,6 +214,8 @@ public class GameManager {
 
             case PAUSE:
 
+                //plane.setPlaneAnimTime(1);
+                //plane.renderPlane(batch);
                 stageResume.act();
                 stageResume.draw();
                 Gdx.input.setInputProcessor(stageResume);
@@ -233,16 +223,10 @@ public class GameManager {
 
             case GAME_OVER:
 
-                /*if(Gdx.input.justTouched()){
-
-                    resetScene();
-                    gameState = GameState.INIT;
-                }*/
-
+                //plane.renderPlane(batch);
                 stageTryAgain.act();
                 stageTryAgain.draw();
                 Gdx.input.setInputProcessor(stageTryAgain);
-
 
                 break;
 
@@ -261,18 +245,12 @@ public class GameManager {
         Gdx.input.setInputProcessor(inputManager);
     }
 
-    public RockPillar getRockPillar(){
-        return rockPillar;
-    }
-
     public Airplane getAirplane() {
         return airplane;
     }
 
     public void dispose(){
 
-        //atlas.dispose();
-        //mainMusic.dispose();
         stageTryAgain.dispose();
         stageResume.dispose();
     }

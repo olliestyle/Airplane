@@ -2,14 +2,12 @@ package com.airplane.game;
 
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.Managers.GameManager;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.badlogic.gdx.Gdx.gl;
-
 
 public class AirplaneScene1 extends BaseScene{
 
@@ -20,8 +18,6 @@ public class AirplaneScene1 extends BaseScene{
 	private static boolean isAirplaneScene1Initialized;
 	private int firstEnter = 0;
 	private boolean doNotEnterInRender;
-
-	private boolean gamePaused = false;
 
 	public AirplaneScene1 (Airplane airplane){
 
@@ -50,28 +46,17 @@ public class AirplaneScene1 extends BaseScene{
 
 	@Override
 	protected void handleBackPress() {
-		System.out.println("back");
 
 		if (gameManager.getGameState() == GameManager.GameState.PAUSE){
-//			Gdx.input.setInputProcessor(inputManager);
-			System.out.println("back in PAUSE");
-			//Gdx.input.setInputProcessor(gameManager.getInputManager());
 			resume();
 		}
-		else if (gameManager.getGameState() == GameManager.GameState.GAME_OVER){
-			System.out.println("back in GAME_OVER");
+		else if (gameManager.getGameState() == GameManager.GameState.GAME_OVER || gameManager.getGameState() == GameManager.GameState.INIT){
 			doNotEnterInRender = true;
 			gameManager.setMenuSceneScreen();
 		}
 		else {
-			System.out.println("back in RESUME");
 			pause();
 		}
-		/*if(gamePaused){
-			resume();
-		}else{
-			pause();
-		}*/
 	}
 
 	@Override
@@ -84,14 +69,9 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void render(float delta) {
 
-		//System.out.println("In AirplaneScene1 render method");
 		super.render(delta);
-		/*if(gamePaused){
-			return;
-		}*/
-
 		if(doNotEnterInRender){
-			return; // без этого после касания BACK в GAME_OVER выдает glUseProgram:1573 GL error 0x501 после gameManager.updateScene()
+			return; // без этого после касания BACK в GAME_OVER выдает glUseProgram:1573 GL error 0x501 после строки gameManager.updateScene()
 		}
 
         gl.glClearColor(1, 0, 0, 1);
@@ -103,8 +83,8 @@ public class AirplaneScene1 extends BaseScene{
 		batch.setProjectionMatrix(camera.combined); // устанавливаем в экземпляр spritebatch вид с камеры (области просмотра)
         batch.begin();
         gameManager.renderGame(batch);
-        gameManager.updateScene();
-		plane.renderPlane(batch);
+        gameManager.updateScene(batch);
+        plane.renderPlane(batch);
 		plane.update();
         batch.end();
 	}
@@ -123,7 +103,6 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void pause() {
 
-        //gamePaused = true;
 		gameManager.setGameState(GameManager.GameState.PAUSE);
 		System.out.println("In AirplaneScene1 pause method");
 	}
@@ -131,7 +110,6 @@ public class AirplaneScene1 extends BaseScene{
 	@Override
 	public void resume() {
 
-		//gamePaused = false;
 		Gdx.input.setInputProcessor(gameManager.getInputManager());
 		gameManager.setGameState(GameManager.GameState.ACTION);
 		System.out.println("In AirplaneScene1 resume method");
