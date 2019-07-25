@@ -230,7 +230,7 @@ public class RockPillar {
         if(Plane.planeRect.overlaps(pillarRect1) || Plane.planeRect.overlaps(pillarRect2)){
 
             Gdx.input.vibrate(100);
-            if(airplane.soundEnabled) {
+            if(airplane.isSoundEnabled()) {
                 crashSound.play();
             }
             return true;

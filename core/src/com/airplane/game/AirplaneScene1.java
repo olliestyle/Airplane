@@ -85,7 +85,7 @@ public class AirplaneScene1 extends BaseScene{
         gameManager.renderGame(batch);
         gameManager.updateScene(batch);
         plane.renderPlane(batch);
-		plane.update();
+        plane.update();
         batch.end();
 	}
 

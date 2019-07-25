@@ -168,7 +168,7 @@ public class GameManager3 {
         System.out.println("atlas = " + atlas);
         backGroundRegion = atlas.findRegion("background");
 
-        if (airplane.soundEnabled) {
+        if (airplane.isSoundEnabled()) {
             mainMusic = airplane.manager.get("journey.mp3");
             mainMusic.setLooping(true);
             mainMusic.play();
@@ -271,8 +271,8 @@ public class GameManager3 {
 
     public void dispose(){
 
-        //atlas.dispose();
-        mainMusic.dispose();
+        stageTryAgain.dispose();
+        stageResume.dispose();
     }
 
 }

@@ -242,7 +242,7 @@ public class Meteor {
     private boolean isPlaneCollideWithMeteor(){
 
         if (planeRect.overlaps(meteorRect)){
-            if (airplane.soundEnabled) {
+            if (airplane.isSoundEnabled()) {
                 crashSound.play();
             }
             Gdx.input.vibrate(100);

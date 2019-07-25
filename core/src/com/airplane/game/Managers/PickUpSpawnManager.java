@@ -277,7 +277,7 @@ public class PickUpSpawnManager{
 
     private void pickIt(Pickup pickup) {
 
-        if(airplane.soundEnabled) {
+        if(airplane.isSoundEnabled()) {
             pickup.getPickUpSound().play();
         }
         switch(pickup.getPickUpType()){

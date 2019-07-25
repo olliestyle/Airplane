@@ -3,6 +3,7 @@ package com.airplane.game;
 import com.airplane.game.matsemann.libgdxloadingscreen.screen.LoadingScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.audio.Music;
@@ -25,11 +26,50 @@ public class Airplane extends Game {
     public TextureAtlas menuAtlas;
     //private ParticleEffectLoader.ParticleEffectParameter pep;
     private Viewport viewport;
-    public boolean soundEnabled = true ;
+    private boolean soundEnabled;
+    private Preferences preferences;
 
     public Airplane() {
         System.out.println("In Airplane constructor");
     }
+
+    public boolean isSoundEnabled() {
+        return soundEnabled;
+    }
+
+    public void setSoundEnabled(boolean soundEnabled) {
+        this.soundEnabled = soundEnabled;
+    }
+
+    protected Preferences getPrefs(){
+
+        if (preferences == null){
+            preferences = Gdx.app.getPreferences("Airplane");
+        }
+        if (preferences == null){
+            Gdx.app.log("info", "null preferences");
+        }
+        return preferences;
+    }
+
+    public void saveSoundStatus(){
+        getPrefs().putBoolean("soundStatus", soundEnabled);
+    }
+
+    public boolean loadSoundStatus(){
+        return getPrefs().getBoolean("soundStatus", true);
+    }
+
+    public void flushPref(){
+        getPrefs().flush();
+    }
+
+    public void saveAll(){
+        System.out.println("Saving Preferences");
+        saveSoundStatus();
+        flushPref();
+    }
+
 
     @Override
     public void create() {
@@ -39,6 +79,8 @@ public class Airplane extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
         viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        soundEnabled = loadSoundStatus();
+        System.out.println("SoundEnabled is " + soundEnabled);
         setScreen(new LoadingScreen(this)); //this - экземпляр класса Airplane, который мы создаем и для которого вызывается этот конструктор
 
         //pep = new ParticleEffectLoader.ParticleEffectParameter();

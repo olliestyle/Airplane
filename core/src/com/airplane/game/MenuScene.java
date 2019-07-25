@@ -49,23 +49,23 @@ public class MenuScene extends BaseScene {
     private TextButton level3TextButton;
     private boolean menuShown;
     private static boolean isMenuSceneInitialised;
-    private Airplane game;
+    private Airplane airplane;
     private TextManager textManager;
     private SpriteBatch batch;
 
     public MenuScene(final Airplane airplane) {
 
         super(airplane);
-        game = airplane;
-        menuAtlas = game.manager.get("menuAtlas.txt", TextureAtlas.class);
-        stage = new Stage(game.getViewport());
+        this.airplane = airplane;
+        menuAtlas = this.airplane.manager.get("menuAtlas.txt", TextureAtlas.class);
+        stage = new Stage(this.airplane.getViewport());
         Gdx.input.setInputProcessor(stage);
-        batch = game.batch;
-        textManager = new TextManager(game);
+        batch = this.airplane.batch;
+        textManager = new TextManager(this.airplane);
 
-        screenBg = new Image(game.atlas.findRegion("background"));
+        screenBg = new Image(this.airplane.atlas.findRegion("background"));
         screenBg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        title = new Image(game.manager.get("title.png", Texture.class));
+        title = new Image(this.airplane.manager.get("title.png", Texture.class));
         title.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         title.setScaling(Scaling.stretch);
 
@@ -79,7 +79,7 @@ public class MenuScene extends BaseScene {
         */
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
-        chooseLevelTextButtonStyle.font = game.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
+        chooseLevelTextButtonStyle.font = this.airplane.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
         chooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("playButtonUp")) ;
         chooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("playButtonDown"));
         chooseLevelTextButton = new TextButton("", chooseLevelTextButtonStyle);
@@ -87,7 +87,7 @@ public class MenuScene extends BaseScene {
         chooseLevelTextButton.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.45f);
 
         soundOptionsTextButtonStyle = new TextButton.TextButtonStyle();
-        soundOptionsTextButtonStyle.font = game.manager.get("june.fnt");
+        soundOptionsTextButtonStyle.font = this.airplane.manager.get("june.fnt");
         soundOptionsTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("soundButtonUp"));
         soundOptionsTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("soundButtonDown"));
         soundOptionsTextButton = new TextButton("", soundOptionsTextButtonStyle);
@@ -95,7 +95,7 @@ public class MenuScene extends BaseScene {
         soundOptionsTextButton.setPosition(Gdx.graphics.getWidth() + Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.8f);
 
         leaderBoardTextButtonStyle = new TextButton.TextButtonStyle();
-        leaderBoardTextButtonStyle.font = game.manager.get("june.fnt");
+        leaderBoardTextButtonStyle.font = this.airplane.manager.get("june.fnt");
         leaderBoardTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("leaderBoardButtonUp"));
         leaderBoardTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("leaderBoardButtonDown"));
         leaderBoardTextButton = new TextButton("", leaderBoardTextButtonStyle);
@@ -103,7 +103,7 @@ public class MenuScene extends BaseScene {
         leaderBoardTextButton.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.36f);
 
         exitTextButtonStyle = new TextButton.TextButtonStyle();
-        exitTextButtonStyle.font = game.manager.get("june.fnt");
+        exitTextButtonStyle.font = this.airplane.manager.get("june.fnt");
         exitTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("exitButtonUp"));
         exitTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("exitButtonDown"));
         exitTextButton = new TextButton("", exitTextButtonStyle);
@@ -111,7 +111,7 @@ public class MenuScene extends BaseScene {
         exitTextButton.setPosition(Gdx.graphics.getWidth() + Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3.45f);
 
         level1TextButtonStyle = new TextButton.TextButtonStyle();
-        level1TextButtonStyle.font = game.manager.get("june.fnt");
+        level1TextButtonStyle.font = this.airplane.manager.get("june.fnt");
         level1TextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("level1ButtonUp"));
         level1TextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("level1ButtonDown"));
         level1TextButton = new TextButton("", level1TextButtonStyle);
@@ -119,7 +119,7 @@ public class MenuScene extends BaseScene {
         level1TextButton.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.45f);
 
         level2TextButtonStyle = new TextButton.TextButtonStyle();
-        level2TextButtonStyle.font = game.manager.get("june.fnt");
+        level2TextButtonStyle.font = this.airplane.manager.get("june.fnt");
         level2TextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("level2ButtonUp"));
         level2TextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("level2ButtonDown"));
         level2TextButton = new TextButton("", level2TextButtonStyle);
@@ -127,7 +127,7 @@ public class MenuScene extends BaseScene {
         level2TextButton.setPosition(Gdx.graphics.getWidth() + Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.8f);
 
         level3TextButtonStyle = new TextButton.TextButtonStyle();
-        level3TextButtonStyle.font = game.manager.get("june.fnt");
+        level3TextButtonStyle.font = this.airplane.manager.get("june.fnt");
         level3TextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("level3ButtonUp"));
         level3TextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("level3ButtonDown"));
         level3TextButton = new TextButton("", level3TextButtonStyle);
@@ -135,7 +135,7 @@ public class MenuScene extends BaseScene {
         level3TextButton.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.36f);
 
         backChooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
-        backChooseLevelTextButtonStyle.font = game.manager.get("june.fnt");
+        backChooseLevelTextButtonStyle.font = this.airplane.manager.get("june.fnt");
         backChooseLevelTextButtonStyle.up = new TextureRegionDrawable(menuAtlas.findRegion("backButtonUp"));
         backChooseLevelTextButtonStyle.down = new TextureRegionDrawable(menuAtlas.findRegion("backButtonDown"));
         backChooseLevelTextButton = new TextButton("", backChooseLevelTextButtonStyle);
@@ -143,7 +143,7 @@ public class MenuScene extends BaseScene {
         backChooseLevelTextButton.setPosition(Gdx.graphics.getWidth() + Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3.45f);
 
         muteCheckBoxStyle = new CheckBox.CheckBoxStyle();
-        muteCheckBoxStyle.font = game.manager.get("june.fnt");
+        muteCheckBoxStyle.font = this.airplane.manager.get("june.fnt");
         muteCheckBoxStyle.checkboxOff = new TextureRegionDrawable(menuAtlas.findRegion("soundOnCheckBox"));
         muteCheckBoxStyle.checkboxOn = new TextureRegionDrawable(menuAtlas.findRegion("soundOffCheckBox"));
         muteCheckBox = new CheckBox("", muteCheckBoxStyle);
@@ -155,6 +155,7 @@ public class MenuScene extends BaseScene {
         //muteCheckBox.getLabel().setAlignment(Align.center);
         //muteCheckBox.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
         muteCheckBox.setPosition(-Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.36f);
+        muteCheckBox.setChecked(airplane.isSoundEnabled());
 
         backOptionsTextButton = new TextButton("", backChooseLevelTextButtonStyle);
         backOptionsTextButton.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/8);
@@ -183,19 +184,19 @@ public class MenuScene extends BaseScene {
         level1TextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new AirplaneScene1(game));
+                MenuScene.this.airplane.setScreen(new AirplaneScene1(MenuScene.this.airplane));
             }
         });
         level2TextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new AirplaneScene2(game));
+                MenuScene.this.airplane.setScreen(new AirplaneScene2(MenuScene.this.airplane));
             }
         });
         level3TextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new AirplaneScene3(game));
+                MenuScene.this.airplane.setScreen(new AirplaneScene3(MenuScene.this.airplane));
             }
         });
         soundOptionsTextButton.addListener(new ClickListener(){
@@ -213,13 +214,19 @@ public class MenuScene extends BaseScene {
         });
         muteCheckBox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.soundEnabled =! muteCheckBox.isChecked();
-                System.out.println("game.soundEnabled is " + game.soundEnabled);
+                //MenuScene.this.airplane.soundEnabled =! muteCheckBox.isChecked();
+                if (airplane.isSoundEnabled() == true) {
+                    airplane.setSoundEnabled(false);
+                }
+                else {
+                    airplane.setSoundEnabled(true);
+                }
             }
         });
         backOptionsTextButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                airplane.saveAll();
                 showMenu(true, false, false);
             }
         });
@@ -232,7 +239,7 @@ public class MenuScene extends BaseScene {
 
         /*volumeSlider.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.soundVolume = volumeSlider.getValue();
+                airplane.soundVolume = volumeSlider.getValue();
             }
         });*/
 

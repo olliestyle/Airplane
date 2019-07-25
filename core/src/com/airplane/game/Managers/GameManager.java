@@ -160,7 +160,7 @@ public class GameManager {
         System.out.println("atlas = " + atlas);
         backGroundRegion = atlas.findRegion("background");
 
-        if (airplane.soundEnabled) {
+        if (airplane.isSoundEnabled()) {
             mainMusic = airplane.manager.get("journey.mp3");
             mainMusic.setLooping(true);
             mainMusic.play();
@@ -214,7 +214,7 @@ public class GameManager {
 
             case PAUSE:
 
-                //plane.setPlaneAnimTime(1);
+                /*не отображается самолет*/
                 //plane.renderPlane(batch);
                 stageResume.act();
                 stageResume.draw();
@@ -223,7 +223,7 @@ public class GameManager {
 
             case GAME_OVER:
 
-                //plane.renderPlane(batch);
+                plane.renderPlane(batch);
                 stageTryAgain.act();
                 stageTryAgain.draw();
                 Gdx.input.setInputProcessor(stageTryAgain);

@@ -134,9 +134,10 @@ public class Plane{
                 smoke.draw(batch);
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
             }
-            if (gameManager.getGameState() == GameManager.GameState.PAUSE){
+            /*не отображается самолет в этом блоке*/
+            /*if (gameManager.getGameState() == GameManager.GameState.PAUSE){
                 batch.draw((TextureRegion) plane.getKeyFrame(planeAnimTime), planePosition.x, planePosition.y, planeTexture.getRegionWidth() * PLANE_RESIZE_WIDTH_FACTOR, planeTexture.getRegionHeight() * PLANE_RESIZE_HEIGHT_FACTOR); // отрисовка самолета с параметрами (текстура с отрисвокой кадра в зависимости от planeAnimTime, координата по x, координата по y
-            }
+            }*/
             if (gameManager.getGameState() == GameManager.GameState.GAME_OVER){
                 explosion.draw(batch);
             }
@@ -325,7 +326,7 @@ public class Plane{
         if(AirplaneScene1.isIsAirplaneScene1Initialized()) {
             if (gameManager.getGameState() == GameManager.GameState.ACTION) {
 
-                if (airplane.soundEnabled) {
+                if (airplane.isSoundEnabled()) {
                     tapSound.play();
                 }
                 tempVector.set(planePosition.x, planePosition.y);
@@ -349,7 +350,7 @@ public class Plane{
 
         if(AirplaneScene2.isIsAirplaneScene2Initialized()) {
             if (gameManager2.getGameState() == GameManager2.GameState.ACTION) {
-                if (airplane.soundEnabled) {
+                if (airplane.isSoundEnabled()) {
                     tapSound.play();
                 }
                 tempVector.set(planePosition.x, planePosition.y);
@@ -373,7 +374,7 @@ public class Plane{
 
         if(AirplaneScene3.isIsAirplaneScene3Initialized()) {
             if (gameManager3.getGameState() == GameManager3.GameState.ACTION) {
-                if (airplane.soundEnabled) {
+                if (airplane.isSoundEnabled()) {
                     tapSound.play();
                 }
                 tempVector.set(planePosition.x, planePosition.y);
