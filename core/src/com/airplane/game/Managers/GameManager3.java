@@ -271,6 +271,9 @@ public class GameManager3 {
 
     public void dispose(){
 
+        if (airplane.isSoundEnabled()){
+            mainMusic.stop();
+        }
         stageTryAgain.dispose();
         stageResume.dispose();
     }
