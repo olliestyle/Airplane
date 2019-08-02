@@ -1,5 +1,6 @@
 package com.airplane.game;
 
+import com.airplane.game.Managers.SaveManager;
 import com.airplane.game.matsemann.libgdxloadingscreen.screen.LoadingScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -28,9 +29,14 @@ public class Airplane extends Game {
     private Viewport viewport;
     private boolean soundEnabled;
     private Preferences preferences;
+    private SaveManager saveManager;
 
     public Airplane() {
         System.out.println("In Airplane constructor");
+    }
+
+    public SaveManager getSaveManager(){
+        return saveManager;
     }
 
     public boolean isSoundEnabled() {
@@ -70,6 +76,15 @@ public class Airplane extends Game {
         flushPref();
     }
 
+    private void prepareLocalScores(){
+
+        saveManager = new SaveManager(true);
+        if (saveManager.loadDataValue("Score1", int.class) == null){
+            for (int i = 1; i <= 30; i++){
+                saveManager.saveDataValue("Score " + i, 0);
+            }
+        }
+    }
 
     @Override
     public void create() {
@@ -80,7 +95,7 @@ public class Airplane extends Game {
         camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
         viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         soundEnabled = loadSoundStatus();
-        System.out.println("SoundEnabled is " + soundEnabled);
+        prepareLocalScores();
         setScreen(new LoadingScreen(this)); //this - экземпляр класса Airplane, который мы создаем и для которого вызывается этот конструктор
 
         //pep = new ParticleEffectLoader.ParticleEffectParameter();

@@ -66,6 +66,10 @@ public class TextManager {
         //fontGameOver.getData().setScale(width/1500);
     }
 
+    public BitmapFont getFont() {
+        return font;
+    }
+
     public void displayMenuMessage(SpriteBatch batch){
 
         GlyphLayout glyphLayoutHelpTip1 = new GlyphLayout();

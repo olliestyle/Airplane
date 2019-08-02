@@ -2,6 +2,7 @@ package com.airplane.game;
 
 import com.airplane.game.Managers.TextManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,10 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 
 public class MenuScene extends BaseScene {
@@ -27,7 +30,13 @@ public class MenuScene extends BaseScene {
     private Stage stage;
     private Image screenBg;
     private Image title;
-    private Label helpTip;
+    private Label.LabelStyle bestScoreLableStyle;
+    private Label bestScoreLevel1;
+    private Label bestScoreLevel2;
+    private Label bestScoreLevel3;
+    private Table tableLevel1BestScore;
+    private Table tableLevel2BestScore;
+    private Table tableLevel3BestScore;
     private CheckBox.CheckBoxStyle muteCheckBoxStyle;
     private CheckBox muteCheckBox;
     private TextButton.TextButtonStyle backChooseLevelTextButtonStyle;
@@ -77,6 +86,30 @@ public class MenuScene extends BaseScene {
         helpTip.setColor(Color.NAVY);
         helpTip.setAlignment(Align.center);
         */
+
+        bestScoreLableStyle = new Label.LabelStyle();
+        bestScoreLableStyle.font = this.airplane.manager.get("june.fnt");
+        bestScoreLableStyle.fontColor = Color.BLACK;
+
+        tableLevel1BestScore = new Table().debug();
+        tableLevel1BestScore.setPosition(100,500);
+        for (int i = 1; i <= 10; i++){
+
+            bestScoreLevel1 = new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle);
+            tableLevel1BestScore.add(bestScoreLevel1).padBottom(2).align(Align.left);
+            tableLevel1BestScore.row();
+        }
+
+        tableLevel2BestScore = new Table().debug();
+        tableLevel2BestScore.setPosition(200, 500);
+        for(int i = 11; i <= 20; i++){
+
+            bestScoreLevel2 = new Label( " " +airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle );
+            tableLevel2BestScore.add(bestScoreLevel2).padBottom(2).align(Align.center);
+            tableLevel2BestScore.row();
+        }
+
+
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
         chooseLevelTextButtonStyle.font = this.airplane.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
@@ -174,6 +207,10 @@ public class MenuScene extends BaseScene {
         stage.addActor(backChooseLevelTextButton);
         stage.addActor(backOptionsTextButton);
         stage.addActor(muteCheckBox);
+        stage.addActor(tableLevel1BestScore);
+        stage.addActor(tableLevel2BestScore);
+        stage.addActor(bestScoreLevel1);
+        stage.addActor(bestScoreLevel2);
 
         chooseLevelTextButton.addListener(new ClickListener(){
             @Override
