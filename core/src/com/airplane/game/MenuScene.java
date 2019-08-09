@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 
 public class MenuScene extends BaseScene {
@@ -31,12 +32,9 @@ public class MenuScene extends BaseScene {
     private Image screenBg;
     private Image title;
     private Label.LabelStyle bestScoreLableStyle;
-    private Label bestScoreLevel1;
+    private Array<Label> bestScoreLevel1;
     private Label bestScoreLevel2;
     private Label bestScoreLevel3;
-    private Table tableLevel1BestScore;
-    private Table tableLevel2BestScore;
-    private Table tableLevel3BestScore;
     private CheckBox.CheckBoxStyle muteCheckBoxStyle;
     private CheckBox muteCheckBox;
     private TextButton.TextButtonStyle backChooseLevelTextButtonStyle;
@@ -78,38 +76,21 @@ public class MenuScene extends BaseScene {
         title.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/8);
         title.setScaling(Scaling.stretch);
 
-        /*
-        helpTip = new Label("Tap around the plane to move it!\nCollect the Stars to get the HighScore!\n" +
-                "Collect Fuel to keep fly!\nCollect Shield to be invincible to Rocks and Meteors!", skin);
-        helpTip.debug();
-        helpTip.setSize(Gdx.graphics.getWidth()/1.3f, Gdx.graphics.getHeight()/4);
-        helpTip.setColor(Color.NAVY);
-        helpTip.setAlignment(Align.center);
-        */
-
         bestScoreLableStyle = new Label.LabelStyle();
         bestScoreLableStyle.font = this.airplane.manager.get("june.fnt");
         bestScoreLableStyle.fontColor = Color.BLACK;
 
-        tableLevel1BestScore = new Table().debug();
-        tableLevel1BestScore.setPosition(100,500);
-        for (int i = 1; i <= 10; i++){
+        bestScoreLevel1 = new Array<Label>();
 
-            bestScoreLevel1 = new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle);
-            tableLevel1BestScore.add(bestScoreLevel1).padBottom(2).align(Align.left);
-            tableLevel1BestScore.row();
+        for(int i = 1; i <= 5; i++) {
+            bestScoreLevel1.add(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle));
+            System.out.println("bestScoreLevel1.size " + bestScoreLevel1.size);
+            System.out.println(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle));
         }
 
-        tableLevel2BestScore = new Table().debug();
-        tableLevel2BestScore.setPosition(200, 500);
-        for(int i = 11; i <= 20; i++){
-
-            bestScoreLevel2 = new Label( " " +airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle );
-            tableLevel2BestScore.add(bestScoreLevel2).padBottom(2).align(Align.center);
-            tableLevel2BestScore.row();
+        for (Label bestLevel1: bestScoreLevel1){
+            bestLevel1.setPosition(100, 500);
         }
-
-
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
         chooseLevelTextButtonStyle.font = this.airplane.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
@@ -196,7 +177,6 @@ public class MenuScene extends BaseScene {
 
         stage.addActor(screenBg);
         stage.addActor(title);
-        //stage.addActor(helpTip);
         stage.addActor(chooseLevelTextButton);
         stage.addActor(soundOptionsTextButton);
         stage.addActor(leaderBoardTextButton);
@@ -207,10 +187,11 @@ public class MenuScene extends BaseScene {
         stage.addActor(backChooseLevelTextButton);
         stage.addActor(backOptionsTextButton);
         stage.addActor(muteCheckBox);
-        stage.addActor(tableLevel1BestScore);
-        stage.addActor(tableLevel2BestScore);
-        stage.addActor(bestScoreLevel1);
-        stage.addActor(bestScoreLevel2);
+
+        for (Label label: bestScoreLevel1){
+            stage.addActor(label);
+        }
+
 
         chooseLevelTextButton.addListener(new ClickListener(){
             @Override
