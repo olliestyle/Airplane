@@ -3,136 +3,185 @@ Airplane.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-background
-  rotate: false
-  xy: 1, 435
-  size: 800, 480
-  orig: 800, 480
-  offset: 0, 0
-  index: -1
 groundSnow
   rotate: false
-  xy: 1, 362
+  xy: 1, 882
   size: 808, 71
   orig: 808, 71
   offset: 0, 0
   index: -1
-rockSnow
+shield1
   rotate: false
-  xy: 1, 121
-  size: 108, 239
-  orig: 108, 239
+  xy: 811, 556
+  size: 154, 397
+  orig: 154, 397
   offset: 0, 0
   index: -1
-rockSnowDown
+background
   rotate: false
-  xy: 803, 676
-  size: 108, 239
-  orig: 108, 239
-  offset: 0, 0
-  index: -1
-life
-  rotate: false
-  xy: 111, 241
-  size: 114, 119
-  orig: 114, 119
-  offset: 0, 0
-  index: -1
-planeGreen1
-  rotate: false
-  xy: 1, 46
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
-planeGreen2
-  rotate: false
-  xy: 803, 601
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
-planeGreen3
-  rotate: false
-  xy: 913, 842
-  size: 88, 73
-  orig: 88, 73
-  offset: 0, 0
-  index: -1
-tap1
-  rotate: false
-  xy: 111, 180
-  size: 59, 59
-  orig: 59, 59
-  offset: 0, 0
-  index: -1
-tap2
-  rotate: false
-  xy: 227, 301
-  size: 59, 59
-  orig: 59, 59
-  offset: 0, 0
-  index: -1
-meteorBrown_med1
-  rotate: false
-  xy: 1, 1
-  size: 43, 43
-  orig: 43, 43
+  xy: 1, 400
+  size: 800, 480
+  orig: 800, 480
   offset: 0, 0
   index: -1
 meteorBrown_med2
   rotate: false
-  xy: 803, 559
+  xy: 967, 913
   size: 45, 40
   orig: 45, 40
   offset: 0, 0
   index: -1
+meteorBrown_med1
+  rotate: false
+  xy: 967, 868
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
 star_pickup
   rotate: false
-  xy: 913, 802
+  xy: 967, 828
   size: 39, 38
   orig: 39, 38
   offset: 0, 0
   index: -1
-shield_pickup
+particle
   rotate: false
-  xy: 111, 148
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-meteorBrown_small1
-  rotate: false
-  xy: 172, 211
-  size: 28, 28
-  orig: 28, 28
-  offset: 0, 0
-  index: -1
-meteorBrown_small2
-  rotate: false
-  xy: 227, 273
-  size: 29, 26
-  orig: 29, 26
+  xy: 967, 794
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 fuel_pickup
   rotate: false
-  xy: 1003, 885
+  xy: 1001, 796
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 meteorBrown_tiny1
   rotate: false
-  xy: 91, 101
+  xy: 1001, 776
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
+shield_pickup
+  rotate: false
+  xy: 967, 762
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
 meteorBrown_tiny2
   rotate: false
-  xy: 893, 659
+  xy: 999, 759
   size: 16, 15
   orig: 16, 15
+  offset: 0, 0
+  index: -1
+meteorBrown_small2
+  rotate: false
+  xy: 967, 734
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorBrown_small1
+  rotate: false
+  xy: 967, 704
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+shield2
+  rotate: false
+  xy: 803, 157
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+tap
+  rotate: false
+  xy: 959, 495
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+tap2
+  rotate: false
+  xy: 959, 434
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+shield3
+  rotate: false
+  xy: 1, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+shield4
+  rotate: false
+  xy: 157, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+shield5
+  rotate: false
+  xy: 313, 1
+  size: 154, 397
+  orig: 154, 397
+  offset: 0, 0
+  index: -1
+textGameOver
+  rotate: false
+  xy: 469, 77
+  size: 412, 78
+  orig: 412, 78
+  offset: 0, 0
+  index: -1
+rockSnow
+  rotate: false
+  xy: 469, 159
+  size: 108, 239
+  orig: 108, 239
+  offset: 0, 0
+  index: -1
+rockSnowDown
+  rotate: false
+  xy: 579, 159
+  size: 108, 239
+  orig: 108, 239
+  offset: 0, 0
+  index: -1
+planeGreen1
+  rotate: false
+  xy: 689, 325
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+planeGreen2
+  rotate: false
+  xy: 689, 250
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+planeGreen3
+  rotate: false
+  xy: 689, 175
+  size: 88, 73
+  orig: 88, 73
+  offset: 0, 0
+  index: -1
+textGetReady
+  rotate: false
+  xy: 469, 2
+  size: 400, 73
+  orig: 400, 73
   offset: 0, 0
   index: -1

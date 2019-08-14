@@ -1,14 +1,19 @@
 package com.airplane.game.Managers;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
 import com.airplane.game.GameObjects.Meteor;
+import com.airplane.game.GameObjects.Pickup;
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.GameObjects.RockPillar;
 import com.airplane.game.GameObjects.Terrain;
 import com.airplane.game.MenuScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
-public class GameManager {
+public class GameManager2 {
 
     private TextureRegion backGroundRegion;
     private GameState gameState;
@@ -27,7 +32,9 @@ public class GameManager {
     private Terrain terrain;
     private TextManager textManager;
     private Meteor meteor;
+    private Meteor meteor2;
     private RockPillar rockPillar;
+    private RockPillar rockPillar2;
     private TextureAtlas atlas;
     private PickUpSpawnManager pickUpSpawnManager;
     private Plane plane;
@@ -45,18 +52,20 @@ public class GameManager {
     private TextButton.TextButtonStyle menuPauseButtonStyle;
     private TextButton menuPauseButton;
 
-    public GameManager(final Airplane airplane, Plane plane) {
+    public GameManager2(final Airplane airplane, Plane plane) {
 
         this.airplane = airplane;
         atlas = airplane.atlas;
         this.plane = plane;
         terrain = new Terrain(airplane, plane, this);
         meteor = new Meteor(airplane, this);
+        meteor2 = new Meteor(airplane, this);
         rockPillar = new RockPillar(airplane, plane, this);
+        rockPillar2 = new RockPillar(airplane, plane, this);
         pickUpSpawnManager = new PickUpSpawnManager(airplane, rockPillar, plane, this); // нам нужно получить именно ту скалу, которая отрисована на данный момент
-        textManager = new TextManager(airplane ,pickUpSpawnManager, this);
+        textManager = new TextManager(airplane, pickUpSpawnManager,this);
         inputManager = new InputManager(airplane.camera, plane);
-        Gdx.input.setInputProcessor(inputManager);// доступ класса InputManager для получения касаний/нажатий
+        Gdx.input.setInputProcessor(inputManager);
 
         stageTryAgain = new Stage(airplane.getViewport());
         stageResume = new Stage(airplane.getViewport());
@@ -165,14 +174,15 @@ public class GameManager {
             mainMusic.setLooping(true);
             mainMusic.play();
         }
-
         gameState = GameState.INIT;
 
         terrain.initializeTerrain();
         textManager.initialize(width,height);
         rockPillar.initializePillar();
-        System.out.println("rockPillar in GM " + rockPillar);
+        rockPillar2.initializePillar();
+        System.out.println("rockPillar in GM2 " + rockPillar);
         meteor.initializeMeteor();
+        meteor2.initializeMeteor();
 
     }
 
@@ -182,11 +192,12 @@ public class GameManager {
         batch.draw(backGroundRegion, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // отрисовываем задний фон
         batch.enableBlending(); // blending - смешивание
         rockPillar.renderPillar(batch);
+        rockPillar2.renderPillar(batch);
         meteor.renderMeteor(batch);
+        meteor2.renderMeteor(batch);
         terrain.renderTerrain(batch);
         textManager.displayMessage(batch);
         pickUpSpawnManager.drawPickUp(batch);
-
     }
 
     public void updateScene(SpriteBatch batch){
@@ -204,18 +215,18 @@ public class GameManager {
 
                 // объекты, движущиеся относительно самолета должны обновляться перед присваиванием дефолтной позиции самолета по x
                 rockPillar.updatePillar(pickUpSpawnManager);
+                rockPillar2.updatePillar(pickUpSpawnManager);
                 terrain.updateTerrain();
                 pickUpSpawnManager.updatePickUp();
                 plane.getPlanePosition().x = plane.getPlaneDefaultPosition().x; // Имитация нахождения самолета на одном месте по x. Самолет стоит на месте. Все остальные объекты перемещаются относительно него
                 meteor.updateMeteor(pickUpSpawnManager);
+                meteor2.updateMeteor(pickUpSpawnManager);
                 pickUpSpawnManager.checkAndCreatePickUp(Gdx.graphics.getDeltaTime());
 
                 break;
 
             case PAUSE:
 
-                /*не отображается самолет*/
-                //plane.renderPlane(batch);
                 stageResume.act();
                 stageResume.draw();
                 Gdx.input.setInputProcessor(stageResume);
@@ -239,13 +250,15 @@ public class GameManager {
     public void resetScene(){
 
         meteor.resetMeteor();
+        meteor2.resetMeteor();
         plane.resetPlane();
         pickUpSpawnManager.resetPickup();
         rockPillar.resetPillar();
+        rockPillar2.resetPillar();
         Gdx.input.setInputProcessor(inputManager);
     }
 
-    public Airplane getAirplane() {
+    public Airplane getAirplane(){
         return airplane;
     }
 

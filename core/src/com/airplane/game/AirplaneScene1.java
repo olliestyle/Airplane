@@ -2,117 +2,131 @@ package com.airplane.game;
 
 import com.airplane.game.GameObjects.Plane;
 import com.airplane.game.Managers.GameManager;
-
-import com.airplane.game.Managers.InputManager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
+import static com.badlogic.gdx.Gdx.gl;
 
-public class AirplaneScene1 extends ScreenAdapter {
-
-	//private static SpriteBatch batch; // область для отрисовки спрайтов нашей игры
-	//OrthographicCamera camera; // область просмотра нашей игры + устанавливаем переменные высоты и ширины в качестве области просмотра нашей игры
-	//private static Viewport viewport;
+public class AirplaneScene1 extends BaseScene{
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	public GameManager gameManager;
+	private GameManager gameManager;
 	private Plane plane;
+	private static boolean isAirplaneScene1Initialized;
+	private int firstEnter = 0;
+	private boolean doNotEnterInRender;
 
 	public AirplaneScene1 (Airplane airplane){
 
+		super(airplane);
 		batch = airplane.batch;
 		camera = airplane.camera;
 		plane = new Plane(airplane);
-		gameManager = new GameManager(airplane);
-
-		//float height = Gdx.graphics.getHeight();
-		//float width = Gdx.graphics.getWidth();
-		//camera = new OrthographicCamera();
-		//camera.setToOrtho(false);// этим методом мы центруем камеру на половину высоты и половину ширины экрана устройства и устанавливаем переменные высоты и ширины устройства в качестве области просмотра нашей игры
-		//viewport = new FillViewport(3000, 1200, camera);
-		//batch = new SpriteBatch();
+		gameManager = new GameManager(airplane, plane);
+		plane.setGameManager(gameManager);
 
         plane.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gameManager.initialize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(new InputManager(camera, plane));// доступ класса InputManager для получения касаний/нажатий
+		AirplaneScene2.setIsAirplaneScene2Initialized(false);
+		AirplaneScene3.setIsAirplaneScene3Initialized(false);
+		MenuScene.setIsMenuSceneInitialised(false);
+		isAirplaneScene1Initialized = true;
 	}
 
-	/*public GameManager getGameManager() {
-		return gameManager;
-	}*/
+	public static boolean isIsAirplaneScene1Initialized() {
+		return isAirplaneScene1Initialized;
+	}
+
+	public static void setIsAirplaneScene1Initialized(boolean isAirplaneScene1Initialized) {
+		AirplaneScene1.isAirplaneScene1Initialized = isAirplaneScene1Initialized;
+	}
+
+	@Override
+	protected void handleBackPress() {
+
+		if (gameManager.getGameState() == GameManager.GameState.PAUSE){
+			resume();
+		}
+		else if (gameManager.getGameState() == GameManager.GameState.GAME_OVER || gameManager.getGameState() == GameManager.GameState.INIT){
+			doNotEnterInRender = true;
+			gameManager.setMenuSceneScreen();
+		}
+		else {
+			pause();
+		}
+	}
 
 	@Override
 	public void show() {
 
+		firstEnter = 1;
+		System.out.println("In AirplaneScene1 show method");
 	}
 
 	@Override
 	public void render(float delta) {
 
-		/*System.out.println("RENDER HERE");
-		System.out.println("HEIGHT HERE " + Airplane.camera.viewportHeight);
-		System.out.println("WIDTH HERE " + Airplane.camera.viewportWidth);
-		System.out.println("Current State = " + gameState);*/
+		super.render(delta);
+		if(doNotEnterInRender){
+			return; // без этого после касания BACK в GAME_OVER выдает glUseProgram:1573 GL error 0x501 после строки gameManager.updateScene()
+		}
 
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        gl.glClearColor(1, 0, 0, 1);
+        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //camera.position.x = plane.getPlanePosition().x;
+        //camera.position.y = plane.getPlanePosition().y;
         camera.update();
 		batch.setProjectionMatrix(camera.combined); // устанавливаем в экземпляр spritebatch вид с камеры (области просмотра)
         batch.begin();
         gameManager.renderGame(batch);
-        gameManager.updateScene();
+        gameManager.updateScene(batch);
         plane.renderPlane(batch);
         plane.update();
         batch.end();
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 
-		System.out.println("RESIZE HERE");
-		System.out.println("width = " + width);
-		System.out.println("height = " + height);
-
-	    //viewport.update(width,height);
-
+		// При первом входе нам не нужно сюда заходить. А после того как кнопка HOME будет нажата, нужно чтобы при возврате в игру стояла пауза.
+		if (firstEnter != 1) {
+			gameManager.setGameState(GameManager.GameState.PAUSE);
+		}
+		firstEnter = 2;
+        System.out.println("In AirplaneScene1 resize method");
 	}
 
 	@Override
 	public void pause() {
 
-		System.out.println("PAUSE HERE");
-
+		gameManager.setGameState(GameManager.GameState.PAUSE);
+		System.out.println("In AirplaneScene1 pause method");
 	}
 
 	@Override
 	public void resume() {
 
-		System.out.println("RESUME HERE");
-
+		Gdx.input.setInputProcessor(gameManager.getInputManager());
+		gameManager.setGameState(GameManager.GameState.ACTION);
+		System.out.println("In AirplaneScene1 resume method");
 	}
 
 	@Override
 	public void hide() {
 
-		System.out.println("HIDE HERE");
+        System.out.println("In AirplaneScene1 hide method");
+		isAirplaneScene1Initialized = false;
 		dispose();
 	}
 
 	@Override
 	public void dispose () {
 
-		System.out.println("DISPOSE HERE");
+        System.out.println("In AirplaneScene1 dispose method");
 		gameManager.dispose();
-
 	}
-
 }

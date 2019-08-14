@@ -1,7 +1,12 @@
 package com.airplane.game.GameObjects;
 
 import com.airplane.game.Airplane;
+import com.airplane.game.AirplaneScene1;
+import com.airplane.game.AirplaneScene2;
+import com.airplane.game.AirplaneScene3;
 import com.airplane.game.Managers.GameManager;
+import com.airplane.game.Managers.GameManager2;
+import com.airplane.game.Managers.GameManager3;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -40,13 +45,42 @@ public class Terrain {
     private TextureAtlas atlas;
     private Sound crashSound;
     private AssetManager manager;
+    private Plane plane;
+    private GameManager gameManager;
+    private GameManager2 gameManager2;
+    private GameManager3 gameManager3;
+    private Airplane airplane;
 
-    public Terrain(Airplane airplane) {
+    public Terrain(Airplane airplane, Plane plane, GameManager gameManager) {
 
+        this.airplane = airplane;
         System.out.println("game in terrain = " + airplane);
         atlas = airplane.atlas;
         manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager = gameManager;
     }
+
+    public Terrain(Airplane airplane, Plane plane, GameManager2 gameManager2) {
+
+        this.airplane = airplane;
+        System.out.println("game in terrain = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager2 = gameManager2;
+    }
+
+    public Terrain(Airplane airplane, Plane plane, GameManager3 gameManager3) {
+
+        this.airplane = airplane;
+        System.out.println("game in terrain = " + airplane);
+        atlas = airplane.atlas;
+        manager = airplane.manager;
+        this.plane = plane;
+        this.gameManager3 = gameManager3;
+    }
+
 
     public void initializeTerrain(){
 
@@ -91,7 +125,7 @@ public class Terrain {
 
     public void updateTerrain(){
 
-        terrainOffset -= Plane.planePosition.x - Plane.planeDefaultPosition.x; // движение рельефа относительно самолета влево
+        terrainOffset -= plane.getPlanePosition().x - plane.getPlaneDefaultPosition().x; // движение рельефа относительно самолета влево
 
         //System.out.println("terrainOffset = " + terrainOffset);
         //System.out.println("planePosition.x = " + Plane.planePosition.x);
@@ -170,11 +204,25 @@ public class Terrain {
         }
 
         if (isPlaneCollisionWithTerrain()){
-            if (GameManager.gameState != GameManager.GameState.GAME_OVER){
-                GameManager.gameState = GameManager.GameState.GAME_OVER;
+            System.out.println("Plane collides with Terrain");
+            if(AirplaneScene1.isIsAirplaneScene1Initialized()){
+                if (gameManager.getGameState() != GameManager.GameState.GAME_OVER){
+                    gameManager.setGameState(GameManager.GameState.GAME_OVER);
+                }
+            }
+
+            if(AirplaneScene2.isIsAirplaneScene2Initialized()){
+                if (gameManager2.getGameState() != GameManager2.GameState.GAME_OVER){
+                    gameManager2.setGameState(GameManager2.GameState.GAME_OVER);
+                }
+            }
+
+            if(AirplaneScene3.isIsAirplaneScene3Initialized()){
+                if (gameManager3.getGameState() != GameManager3.GameState.GAME_OVER){
+                    gameManager3.setGameState(GameManager3.GameState.GAME_OVER);
+                }
             }
         }
-
     }
 
     private boolean isPlaneCollisionWithTerrain(){
@@ -184,13 +232,12 @@ public class Terrain {
                 || Plane.planeRect.overlaps(terrainBelowRectangle1) || Plane.planeRect.overlaps(terrainBelowRectangle2) || Plane.planeRect.overlaps(terrainBelowRectangle3)
                 || Plane.planeRect.overlaps(terrainBelowRectangle4) || Plane.planeRect.overlaps(terrainBelowRectangle5) || Plane.planeRect.overlaps(terrainBelowRectangle6)
                 || Plane.planeRect.overlaps(terrainBelowRectangle7) || Plane.planeRect.overlaps(terrainBelowRectangle8) || Plane.planeRect.overlaps(terrainBelowRectangle9)){
-            crashSound.play();
+            if(airplane.isSoundEnabled()) {
+                crashSound.play();
+            }
             Gdx.input.vibrate(100);
             return true;
         }
         return false;
     }
-
-
-
 }
