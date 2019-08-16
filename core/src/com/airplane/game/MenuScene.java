@@ -82,15 +82,19 @@ public class MenuScene extends BaseScene {
 
         bestScoreLevel1 = new Array<Label>();
 
-        for(int i = 1; i <= 5; i++) {
+        for(int i = 0; i <= 4; i++) {
             bestScoreLevel1.add(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle));
             System.out.println("bestScoreLevel1.size " + bestScoreLevel1.size);
             System.out.println(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle));
         }
 
-        for (Label bestLevel1: bestScoreLevel1){
-            bestLevel1.setPosition(100, 500);
+        for(int i = 0; i <= 4; i++) {
+            bestScoreLevel1.get(i).setPosition(100, 500 - i * 100);
         }
+
+        /*for (Label bestLevel1: bestScoreLevel1){
+            bestLevel1.setPosition(100, 500 - i*100);
+        }*/
 
         chooseLevelTextButtonStyle = new TextButton.TextButtonStyle();
         chooseLevelTextButtonStyle.font = this.airplane.manager.get("june.fnt"); // без этого выскакивает IllegalArgumentException: Missing LabelStyle font
