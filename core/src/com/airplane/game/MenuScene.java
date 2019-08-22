@@ -82,6 +82,7 @@ public class MenuScene extends BaseScene {
 
         bestScoreLevel1 = new Array<Label>();
 
+
         for(int i = 0; i <= 4; i++) {
             bestScoreLevel1.add(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i, int.class), bestScoreLableStyle));
             System.out.println("bestScoreLevel1.size " + bestScoreLevel1.size);
@@ -89,7 +90,9 @@ public class MenuScene extends BaseScene {
         }
 
         for(int i = 0; i <= 4; i++) {
-            bestScoreLevel1.get(i).setPosition(100, 500 - i * 100);
+            bestScoreLevel1.get(i).debug();
+            bestScoreLevel1.get(i).setAlignment(1);
+            bestScoreLevel1.get(i).setPosition(0 + Gdx.graphics.getWidth()/7, Gdx.graphics.getHeight()/1.5f - i * Gdx.graphics.getHeight()/12);
         }
 
         /*for (Label bestLevel1: bestScoreLevel1){
