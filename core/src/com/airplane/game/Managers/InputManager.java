@@ -22,7 +22,6 @@ public class InputManager extends InputAdapter {
         this.plane = plane;
     }
 
-
     @Override
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
 

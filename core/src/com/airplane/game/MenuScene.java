@@ -33,8 +33,8 @@ public class MenuScene extends BaseScene {
     private Image title;
     private Label.LabelStyle bestScoreLableStyle;
     private Array<Label> bestScoreLevel1;
-    private Label bestScoreLevel2;
-    private Label bestScoreLevel3;
+    private Array<Label> bestScoreLevel2;
+    private Array<Label> bestScoreLevel3;
     private CheckBox.CheckBoxStyle muteCheckBoxStyle;
     private CheckBox muteCheckBox;
     private TextButton.TextButtonStyle backChooseLevelTextButtonStyle;
@@ -89,7 +89,37 @@ public class MenuScene extends BaseScene {
         }
 
         for(int i = 0; i <= 4; i++) {
-            bestScoreLevel1.get(i).setPosition(100, 500 - i * 100);
+            bestScoreLevel1.get(i).debug();
+            bestScoreLevel1.get(i).setAlignment(1);
+            bestScoreLevel1.get(i).setPosition( Gdx.graphics.getWidth()/7, Gdx.graphics.getHeight()/1.5f - i * Gdx.graphics.getHeight()/12);
+        }
+
+        bestScoreLevel2 = new Array<Label>();
+
+        for (int i = 0; i <= 4; i++){
+            bestScoreLevel2.add(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i+5, int.class), bestScoreLableStyle));
+            System.out.println("bestScoreLevel2.size " + bestScoreLevel2.size);
+            System.out.println(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i+5, int.class), bestScoreLableStyle));
+        }
+
+        for (int i = 0; i <= 4; i++){
+            bestScoreLevel2.get(i).debug();
+            bestScoreLevel2.get(i).setAlignment(1);
+            bestScoreLevel2.get(i).setPosition(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/1.5f - i * Gdx.graphics.getHeight()/12);
+        }
+
+        bestScoreLevel3 = new Array<Label>();
+
+        for (int i = 0; i <= 4 ;i++){
+            bestScoreLevel3.add(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i+10, int.class), bestScoreLableStyle));
+            System.out.println("bestScoreLevel3.size " + bestScoreLevel3.size);
+            System.out.println(new Label(" " + airplane.getSaveManager().loadDataValue("Score" + i+10, int.class), bestScoreLableStyle));
+        }
+
+        for (int i = 0; i <= 4; i++){
+            bestScoreLevel3.get(i).debug();
+            bestScoreLevel3.get(i).setAlignment(1);
+            bestScoreLevel3.get(i).setPosition(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/1.5f - i * Gdx.graphics.getHeight()/12);
         }
 
         /*for (Label bestLevel1: bestScoreLevel1){
@@ -196,6 +226,13 @@ public class MenuScene extends BaseScene {
             stage.addActor(label);
         }
 
+        for (Label label: bestScoreLevel2){
+            stage.addActor(label);
+        }
+
+        for (Label label: bestScoreLevel3){
+            stage.addActor(label);
+        }
 
         chooseLevelTextButton.addListener(new ClickListener(){
             @Override
